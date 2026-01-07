@@ -1,0 +1,18 @@
+[MASTER]
+ignore = .venv,.mypy_cache,.ruff_cache,__pycache__
+
+[MESSAGES CONTROL]
+disable =
+    C0114,  # missing-module-docstring
+    C0115,  # missing-class-docstring
+    C0116,  # missing-function-docstring
+    C0301,  # line-too-long (Black/ruff handle formatting)
+    R0801,  # duplicate-code (acceptable for sync/async pairs and shared prompts)
+    R0903   # too-few-public-methods (mixins/helpers)
+
+[FORMAT]
+max-line-length = 100
+
+[BASIC]
+good-names = i,j,k,_,id,db,ok
+

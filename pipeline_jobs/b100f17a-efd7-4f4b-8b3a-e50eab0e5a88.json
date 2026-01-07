@@ -1,0 +1,555 @@
+{
+  "stage": "COMPLETED",
+  "run_qa": true,
+  "run_improver": true,
+  "jd": {
+    "role_title": "Senior ML Engineer",
+    "company": "Yahoo",
+    "seniority_level": "Senior",
+    "must_have_skills": [
+      "Machine Learning",
+      "NLP",
+      "Recommender Systems",
+      "Python",
+      "Java",
+      "Scala",
+      "TensorFlow",
+      "PyTorch",
+      "Scikit-learn",
+      "Distributed Computing (Spark, Hadoop)",
+      "Cloud Platforms (AWS, GCP, or Azure)",
+      "CI/CD",
+      "Named Entity Recognition (NER)",
+      "Semantic Search",
+      "MLOps",
+      "ML Model Scaling and Optimization"
+    ],
+    "nice_to_have_skills": [
+      "Academic Publications",
+      "Conference Presentations"
+    ],
+    "notes_for_resume": "- Emphasize 8+ years of software engineering experience with a focus on end-to-end ML solution development, from model conception to production deployment.\n- Highlight specific projects involving ranking, recommendation systems, content understanding, NLP, NER, and semantic search.\n- Clearly list proficiency in Python, Java, or Scala, and hands-on experience with ML frameworks like TensorFlow, PyTorch, and Scikit-learn.\n- Detail experience with large-scale data processing using Spark or Hadoop and deploying on cloud platforms (AWS, GCP, Azure).\n- Showcase expertise in MLOps, including automating ML workflows and implementing CI/CD pipelines for model deployment and monitoring."
+  },
+  "profile": {
+    "full_name": "NARENDER SURABHI",
+    "headline": "SENIOR MACHINE LEARNING ENGINEER | GENERATIVE AI & MLOPS ARCHITECT",
+    "location": "Okemos, MI, USA 48864",
+    "phone": "+1 (213) 254-8205",
+    "email": "surabhinarenderrao@gmail.com",
+    "linkedin_url": "https://www.linkedin.com/in/narendersurabhi",
+    "github_url": "https://github.com/narendersurabhi",
+    "years_of_experience": 15.0,
+    "experience_years_claims": [
+      {
+        "area": "software engineering and healthcare IT",
+        "years_text": "15+ years",
+        "evidence": "Senior ML Engineer & AI Solutions Architect with 15+ years in software engineering and healthcare IT including 8+ years building production ML and Generative AI systems."
+      },
+      {
+        "area": "production ML and Generative AI systems",
+        "years_text": "8+ years",
+        "evidence": "Senior ML Engineer & AI Solutions Architect with 15+ years in software engineering and healthcare IT including 8+ years building production ML and Generative AI systems."
+      }
+    ],
+    "core_skills": [
+      "Generative AI",
+      "LLMs",
+      "RAG",
+      "Agentic AI",
+      "Prompt engineering",
+      "MLOps",
+      "Fraud/waste/abuse detection",
+      "Provider risk scoring",
+      "Patient risk stratification",
+      "Anomaly detection",
+      "Classification",
+      "Clustering",
+      "Feature engineering",
+      "Model evaluation & monitoring",
+      "Python",
+      "SQL",
+      "Java",
+      "ETL/ELT",
+      "System design",
+      "HIPAA-compliant data architectures"
+    ],
+    "domain_expertise": [
+      "Medicaid/Medicare",
+      "Healthcare claims",
+      "FWA analytics",
+      "Provider network integrity",
+      "Care management & outreach",
+      "HIPAA",
+      "EDI X12 5010",
+      "ICD-10",
+      "CPT",
+      "HCPCS",
+      "Membership & benefits",
+      "SURS audits"
+    ],
+    "tools_and_tech": [
+      "GPT",
+      "Claude",
+      "LLaMA",
+      "FAISS",
+      "Chroma",
+      "LangChain",
+      "LangGraph",
+      "PEFT",
+      "LoRA",
+      "Scikit-learn",
+      "PyTorch",
+      "TensorFlow",
+      "XGBoost",
+      "AWS SageMaker",
+      "AWS Bedrock",
+      "AWS Glue",
+      "Amazon Redshift",
+      "Amazon S3",
+      "AWS Lambda",
+      "AWS Step Functions",
+      "AWS Clarify",
+      "MLflow",
+      "Spark",
+      "PySpark",
+      "EC2",
+      "CloudFormation",
+      "Docker",
+      "Kubernetes/EKS",
+      "Kafka",
+      "Git",
+      "Bitbucket",
+      "Jenkins",
+      "REST APIs",
+      "Microservices",
+      "Pandas",
+      "NumPy",
+      "SciPy"
+    ],
+    "experience": [
+      {
+        "title": "Senior Machine Learning Engineer & AI Solutions Architect",
+        "company": "Acentra Health",
+        "start_date": "Dec 2016",
+        "end_date": "Present",
+        "location": "Okemos, MI",
+        "bullets": [
+          "AI/ML lead for Medicaid integrity and care-management products, owning architecture, implementation, and productionization of ML and GenAI capabilities.",
+          "Designed and deployed LLM-powered features on AWS Bedrock (RAG + vector search) to auto-generate fraud, provider risk, and patient risk narratives.",
+          "Built agentic AI workflows (LangGraph + Bedrock) orchestrating multi-step fraud pattern discovery, data retrieval, and explanation generation.",
+          "Engineered HIPAA-compliant ML pipelines on SageMaker & Glue (PySpark) processing 116M+ Medicaid claims annually with automated feature extraction, MLflow tracking, and governed deployments to batch and real-time endpoints.",
+          "Operationalized supervised and unsupervised models for pre-pay/post-pay FWA detection, provider risk scoring, and patient risk stratification; integrated scores into SIU, audit, and care-management workflows.",
+          "Implemented monitoring for drift, bias, and performance using SageMaker Clarify and custom dashboards; defined SLOs and alerts.",
+          "Collaborated with product, engineering, clinical/care, and compliance teams to design robust APIs and data contracts exposing scores, risk tiers, and GenAI explanations.",
+          "Mentored engineers and analysts on GenAI, MLOps, Python best practices, and experimentation; influenced AI roadmap, standards, and governance.",
+          "Medicaid Patient Risk Scoring: Designed a patient risk scoring solution to identify high-risk Medicaid members; deployed on SageMaker with Glue-based feature pipelines and Redshift/S3 data marts.",
+          "Medicaid Provider Risk Scoring: Built a provider risk scoring engine aggregating claim-level, member-level, and peer-comparison features; integrated scores into Program Intelligence and SIU workflows.",
+          "Program Intelligence: Architected a platform combining supervised models, unsupervised pattern mining, network analysis, and LLM-based narratives to detect FWA across large Medicaid populations.",
+          "AuditStudio (North Dakota): Designed unsupervised ML pipelines using PCA and KMeans to score claims and providers for audit prioritization; built Glue PySpark ETL and Redshift/S3 integrations.",
+          "ClaimsSure: Developed pre-pay fraud scoring models (logistic regression + scenario/rule-based logic) and designed end-to-end integration with production monitoring."
+        ],
+        "skills": [
+          "AWS Bedrock",
+          "AWS SageMaker",
+          "AWS Glue",
+          "PySpark",
+          "Amazon Redshift",
+          "Amazon S3",
+          "MLflow",
+          "LangGraph",
+          "RAG",
+          "Vector search",
+          "SageMaker Clarify",
+          "Python",
+          "PCA",
+          "KMeans",
+          "Logistic regression",
+          "Network analysis",
+          "APIs"
+        ]
+      },
+      {
+        "title": "Senior Associate Consultant (Software Engineer)",
+        "company": "Infosys Limited",
+        "start_date": "Sep 2013",
+        "end_date": "Dec 2015",
+        "location": "Los Angeles, CA & Pune, India",
+        "bullets": [
+          "Developed and enhanced modules for Medicaid encounter processing and Open Health Plus using Java, PL/SQL, and SQL.",
+          "Implemented backend services, stored procedures, and batch jobs to process high-volume healthcare claims and membership data.",
+          "Refactored legacy code into modular components, reducing defects and enabling faster delivery of new requirements.",
+          "Translated CMS/state regulations into technical designs, sequence diagrams, and data contracts.",
+          "Participated in code reviews, performance tuning, and deployment planning with onshore/offshore teams using Git/SVN and Jenkins."
+        ],
+        "skills": [
+          "Java",
+          "SQL",
+          "PL/SQL",
+          "Git",
+          "SVN",
+          "Jenkins"
+        ]
+      },
+      {
+        "title": "Programmer Analyst (Software Engineer)",
+        "company": "Syntel Limited",
+        "start_date": "Aug 2010",
+        "end_date": "Sep 2013",
+        "location": "Pune, India",
+        "bullets": [
+          "Built and maintained backend components for FedEx eDD and related enterprise systems.",
+          "Developed REST/SOAP integrations, validation logic, and transformation pipelines for document and shipment workflows.",
+          "Created internal tools and utilities (Java/SQL and scripting) to automate operational tasks, log analysis, and data reconciliation.",
+          "Analyzed production incidents, reproduced bugs, and delivered fixes with regression test coverage.",
+          "Followed engineering best practices including version control, peer reviews, and release checklists."
+        ],
+        "skills": [
+          "Java",
+          "SQL",
+          "REST",
+          "SOAP",
+          "Scripting"
+        ]
+      },
+      {
+        "title": "Programmer (Software Engineer)",
+        "company": "Cognizant",
+        "start_date": "Sep 2007",
+        "end_date": "Aug 2010",
+        "location": "Hyderabad, India",
+        "bullets": [
+          "Contributed to core modules of the HealthPAS Medicaid system, implementing business rules and batch processes.",
+          "Developed and optimized SQL/PL/SQL queries, procedures, and views for transactional workflows and reporting.",
+          "Built integration components and utilities to move data between claims processing systems and downstream analytics layers.",
+          "Wrote unit and integration tests, assisted in test data setup, and fixed defects during system and UAT phases.",
+          "Collaborated with BA, QA, and infrastructure teams to resolve environment-specific issues and improve stability."
+        ],
+        "skills": [
+          "SQL",
+          "PL/SQL"
+        ]
+      }
+    ],
+    "education": [
+      "Nizam College – B.Sc., Mathematics, Physics, Electronics Sep 2003 – May 2007 | Hyderabad, India"
+    ],
+    "education_items": [
+      {
+        "institution": "Nizam College",
+        "degree": "B.Sc., Mathematics, Physics, Electronics",
+        "start_date": "Sep 2003",
+        "end_date": "May 2007",
+        "location": "Hyderabad, India"
+      }
+    ],
+    "certifications": [
+      {
+        "name": "AWS Certified AI Practitioner (AIF-C01)",
+        "issuer": "Amazon Web Services",
+        "year": "2025"
+      },
+      {
+        "name": "Data Science and Machine Learning: Making Data-Driven Decisions",
+        "issuer": "Massachusetts Institute of Technology (MIT)",
+        "year": "2022"
+      }
+    ]
+  },
+  "plan": {
+    "target_title": "Senior ML Engineer",
+    "target_company": "Yahoo",
+    "sections_order": [
+      "summary",
+      "skills",
+      "experience",
+      "education",
+      "certifications"
+    ],
+    "length_hint": "two_pages_ok",
+    "experiences_plan": [
+      {
+        "profile_experience_index": 0,
+        "include": true,
+        "relevance_score": 1.0,
+        "target_bullet_count": 7,
+        "focus_skills": [
+          "Machine Learning",
+          "NLP",
+          "Semantic Search",
+          "MLOps",
+          "Python",
+          "Distributed Computing (Spark, Hadoop)",
+          "Cloud Platforms (AWS, GCP, or Azure)",
+          "ML Model Scaling and Optimization",
+          "PyTorch",
+          "TensorFlow",
+          "Scikit-learn"
+        ]
+      },
+      {
+        "profile_experience_index": 1,
+        "include": true,
+        "relevance_score": 0.7,
+        "target_bullet_count": 3,
+        "focus_skills": [
+          "Java",
+          "CI/CD"
+        ]
+      },
+      {
+        "profile_experience_index": 2,
+        "include": true,
+        "relevance_score": 0.5,
+        "target_bullet_count": 2,
+        "focus_skills": [
+          "Java"
+        ]
+      },
+      {
+        "profile_experience_index": 3,
+        "include": true,
+        "relevance_score": 0.3,
+        "target_bullet_count": 1,
+        "focus_skills": []
+      }
+    ],
+    "skills_plan": {
+      "must_have_covered": [
+        "Machine Learning",
+        "NLP",
+        "Recommender Systems",
+        "Python",
+        "Java",
+        "TensorFlow",
+        "PyTorch",
+        "Scikit-learn",
+        "Distributed Computing (Spark, Hadoop)",
+        "Cloud Platforms (AWS, GCP, or Azure)",
+        "CI/CD",
+        "Named Entity Recognition (NER)",
+        "Semantic Search",
+        "MLOps",
+        "ML Model Scaling and Optimization"
+      ],
+      "must_have_missing": [
+        "Scala"
+      ],
+      "nice_to_have_covered": [],
+      "extra_profile_skills": [
+        "Generative AI / LLMs",
+        "RAG",
+        "ML System Design",
+        "AWS SageMaker",
+        "MLflow",
+        "Docker / Kubernetes"
+      ]
+    }
+  },
+  "tailored": {
+    "full_name": "NARENDER SURABHI",
+    "headline": "Senior Machine Learning Engineer",
+    "location": "Okemos, MI",
+    "phone": "+1 (213) 254-8205",
+    "email": "surabhinarenderrao@gmail.com",
+    "linkedin_url": "https://www.linkedin.com/in/narendersurabhi",
+    "github_url": "https://github.com/narendersurabhi",
+    "summary": "Senior Machine Learning Engineer with 15+ years of software engineering experience, including 8+ years designing, building, and deploying end-to-end machine learning and Generative AI solutions. Proven expertise in NLP, semantic search, and large-scale data processing using Python, Spark, and AWS. Adept at leading the full MLOps lifecycle from model conception and scaling to production monitoring and optimization.",
+    "skills": [
+      {
+        "name": "ML / AI & NLP",
+        "items": [
+          "Machine Learning (Supervised & Unsupervised)",
+          "NLP & Semantic Search",
+          "Generative AI & LLMs (AWS Bedrock)",
+          "Recommender & Risk Scoring Systems",
+          "RAG & Agentic AI Workflows (LangGraph)",
+          "Model Scaling & Optimization"
+        ]
+      },
+      {
+        "name": "Frameworks & Languages",
+        "items": [
+          "Python",
+          "Java",
+          "SQL",
+          "PyTorch",
+          "TensorFlow",
+          "Scikit-learn",
+          "Pandas",
+          "NumPy"
+        ]
+      },
+      {
+        "name": "Data Platforms & MLOps",
+        "items": [
+          "AWS (SageMaker, Bedrock, Glue, S3, Redshift)",
+          "Distributed Computing (Spark, PySpark)",
+          "MLOps",
+          "CI/CD (Jenkins)",
+          "MLflow",
+          "Docker",
+          "Kubernetes"
+        ]
+      }
+    ],
+    "experience": [
+      {
+        "title": "Senior Machine Learning Engineer & AI Solutions Architect",
+        "company": "Acentra Health",
+        "start_date": "Dec 2016",
+        "end_date": "Present",
+        "location": "Okemos, MI",
+        "bullets": [
+          {
+            "text": "Led AI/ML initiatives for Medicaid products, owning the end-to-end architecture, implementation, and productionization of ML and Generative AI capabilities.",
+            "source_experience_index": 0
+          },
+          {
+            "text": "Designed and deployed LLM-powered features on AWS Bedrock using RAG and vector search for semantic understanding and to auto-generate fraud, provider risk, and patient risk narratives.",
+            "source_experience_index": 0
+          },
+          {
+            "text": "Engineered scalable, HIPAA-compliant ML pipelines on AWS SageMaker & Glue (PySpark) processing over 116M claims annually, featuring automated feature extraction and MLflow tracking.",
+            "source_experience_index": 0
+          },
+          {
+            "text": "Operationalized supervised (Logistic Regression) and unsupervised (PCA, KMeans) models using Scikit-learn for FWA detection, provider risk scoring, and patient risk stratification.",
+            "source_experience_index": 0
+          },
+          {
+            "text": "Architected a Program Intelligence platform combining supervised models, unsupervised pattern mining, and network analysis to rank and recommend entities for fraud, waste, and abuse investigation.",
+            "source_experience_index": 0
+          },
+          {
+            "text": "Implemented robust MLOps practices, including model monitoring for data drift, bias, and performance using SageMaker Clarify and custom dashboards to ensure model reliability and optimization.",
+            "source_experience_index": 0
+          },
+          {
+            "text": "Built agentic AI workflows using LangGraph and AWS Bedrock to orchestrate multi-step fraud pattern discovery, data retrieval, and automated explanation generation.",
+            "source_experience_index": 0
+          }
+        ]
+      },
+      {
+        "title": "Senior Associate Consultant (Software Engineer)",
+        "company": "Infosys Limited",
+        "start_date": "Sep 2013",
+        "end_date": "Dec 2015",
+        "location": "Los Angeles, CA & Pune, India",
+        "bullets": [
+          {
+            "text": "Developed and enhanced modules for Medicaid encounter processing and Open Health Plus using Java, PL/SQL, and SQL.",
+            "source_experience_index": 1
+          },
+          {
+            "text": "Implemented backend services, stored procedures, and batch jobs to process high-volume healthcare claims and membership data.",
+            "source_experience_index": 1
+          },
+          {
+            "text": "Participated in code reviews, performance tuning, and deployment planning with onshore/offshore teams using Git/SVN and Jenkins for CI/CD.",
+            "source_experience_index": 1
+          }
+        ]
+      },
+      {
+        "title": "Programmer Analyst (Software Engineer)",
+        "company": "Syntel Limited",
+        "start_date": "Aug 2010",
+        "end_date": "Sep 2013",
+        "location": "Pune, India",
+        "bullets": [
+          {
+            "text": "Built and maintained backend components for enterprise systems, developing REST/SOAP integrations and transformation pipelines using Java.",
+            "source_experience_index": 2
+          },
+          {
+            "text": "Created internal tools and utilities in Java and SQL to automate operational tasks, log analysis, and data reconciliation.",
+            "source_experience_index": 2
+          }
+        ]
+      },
+      {
+        "title": "Programmer (Software Engineer)",
+        "company": "Cognizant",
+        "start_date": "Sep 2007",
+        "end_date": "Aug 2010",
+        "location": "Hyderabad, India",
+        "bullets": [
+          {
+            "text": "Contributed to core modules of the HealthPAS Medicaid system, implementing business rules and batch processes using SQL/PL/SQL.",
+            "source_experience_index": 3
+          }
+        ]
+      }
+    ],
+    "education": [
+      {
+        "institution": "Nizam College",
+        "degree": "B.Sc., Mathematics, Physics, Electronics",
+        "start_date": "Sep 2003",
+        "end_date": "May 2007",
+        "location": "Hyderabad, India"
+      }
+    ],
+    "certifications": [
+      {
+        "name": "AWS Certified AI Practitioner (AIF-C01)",
+        "issuer": "Amazon Web Services",
+        "year": "2025"
+      },
+      {
+        "name": "Data Science and Machine Learning: Making Data-Driven Decisions",
+        "issuer": "Massachusetts Institute of Technology (MIT)",
+        "year": "2022"
+      }
+    ],
+    "resume_text": "NARENDER SURABHI\nSenior Machine Learning Engineer\nOkemos, MI | +1 (213) 254-8205 | surabhinarenderrao@gmail.com | linkedin.com/in/narendersurabhi | github.com/narendersurabhi\n\nSUMMARY\nSenior Machine Learning Engineer with 15+ years of software engineering experience, including 8+ years designing, building, and deploying end-to-end machine learning and Generative AI solutions. Proven expertise in NLP, semantic search, and large-scale data processing using Python, Spark, and AWS. Adept at leading the full MLOps lifecycle from model conception and scaling to production monitoring and optimization.\n\nSKILLS\nML / AI & NLP: Machine Learning (Supervised & Unsupervised), NLP & Semantic Search, Generative AI & LLMs (AWS Bedrock), Recommender & Risk Scoring Systems, RAG & Agentic AI Workflows (LangGraph), Model Scaling & Optimization\nFrameworks & Languages: Python, Java, SQL, PyTorch, TensorFlow, Scikit-learn, Pandas, NumPy\nData Platforms & MLOps: AWS (SageMaker, Bedrock, Glue, S3, Redshift), Distributed Computing (Spark, PySpark), MLOps, CI/CD (Jenkins), MLflow, Docker, Kubernetes\n\nEXPERIENCE\nSenior Machine Learning Engineer & AI Solutions Architect\nAcentra Health | Okemos, MI | Dec 2016 - Present\n* Led AI/ML initiatives for Medicaid products, owning the end-to-end architecture, implementation, and productionization of ML and Generative AI capabilities.\n* Designed and deployed LLM-powered features on AWS Bedrock using RAG and vector search for semantic understanding and to auto-generate fraud, provider risk, and patient risk narratives.\n* Engineered scalable, HIPAA-compliant ML pipelines on AWS SageMaker & Glue (PySpark) processing over 116M claims annually, featuring automated feature extraction and MLflow tracking.\n* Operationalized supervised (Logistic Regression) and unsupervised (PCA, KMeans) models using Scikit-learn for FWA detection, provider risk scoring, and patient risk stratification.\n* Architected a Program Intelligence platform combining supervised models, unsupervised pattern mining, and network analysis to rank and recommend entities for fraud, waste, and abuse investigation.\n* Implemented robust MLOps practices, including model monitoring for data drift, bias, and performance using SageMaker Clarify and custom dashboards to ensure model reliability and optimization.\n* Built agentic AI workflows using LangGraph and AWS Bedrock to orchestrate multi-step fraud pattern discovery, data retrieval, and automated explanation generation.\n\nSenior Associate Consultant (Software Engineer)\nInfosys Limited | Los Angeles, CA & Pune, India | Sep 2013 - Dec 2015\n* Developed and enhanced modules for Medicaid encounter processing and Open Health Plus using Java, PL/SQL, and SQL.\n* Implemented backend services, stored procedures, and batch jobs to process high-volume healthcare claims and membership data.\n* Participated in code reviews, performance tuning, and deployment planning with onshore/offshore teams using Git/SVN and Jenkins for CI/CD.\n\nProgrammer Analyst (Software Engineer)\nSyntel Limited | Pune, India | Aug 2010 - Sep 2013\n* Built and maintained backend components for enterprise systems, developing REST/SOAP integrations and transformation pipelines using Java.\n* Created internal tools and utilities in Java and SQL to automate operational tasks, log analysis, and data reconciliation.\n\nProgrammer (Software Engineer)\nCognizant | Hyderabad, India | Sep 2007 - Aug 2010\n* Contributed to core modules of the HealthPAS Medicaid system, implementing business rules and batch processes using SQL/PL/SQL.\n\nEDUCATION\nNizam College | Hyderabad, India\nB.Sc., Mathematics, Physics, Electronics | Sep 2003 - May 2007\n\nCERTIFICATIONS\nAWS Certified AI Practitioner (AIF-C01) | Amazon Web Services | 2025\nData Science and Machine Learning: Making Data-Driven Decisions | Massachusetts Institute of Technology (MIT) | 2022"
+  },
+  "qa": {
+    "overall_match_score": 88.0,
+    "must_have_coverage": {
+      "Machine Learning": true,
+      "NLP": true,
+      "Recommender Systems": true,
+      "Python": true,
+      "Java": true,
+      "Scala": false,
+      "TensorFlow": true,
+      "PyTorch": true,
+      "Scikit-learn": true,
+      "Distributed Computing (Spark, Hadoop)": true,
+      "Cloud Platforms (AWS, GCP, or Azure)": true,
+      "CI/CD": true,
+      "Named Entity Recognition (NER)": false,
+      "Semantic Search": true,
+      "MLOps": true,
+      "ML Model Scaling and Optimization": true
+    },
+    "issues": [
+      {
+        "severity": "major",
+        "message": "The 'AWS Certified AI Practitioner' certification is listed with a future date of 2025. A certification cannot be earned in the future.",
+        "location_hint": "Certifications"
+      },
+      {
+        "severity": "minor",
+        "message": "The resume claims 'Recommender Systems' experience. While the profile supports risk scoring and ranking systems which are related, this may not align with the hiring manager's expectation of traditional recommender systems (e.g., collaborative filtering for products/media).",
+        "location_hint": "Skills"
+      }
+    ],
+    "suggestions": [
+      "The JD explicitly requires 'Named Entity Recognition (NER)'. If you have any experience with this specific NLP task, add it to your skills and experience section to address this gap.",
+      "Quantify the business impact of your ML models. For example, instead of just stating you built a fraud detection model, add a metric like '...leading to the identification of $X in potential fraud' or '...improving investigator efficiency by Y%'.",
+      "The certification year '2025' is invalid. Please correct this to the actual year of completion."
+    ]
+  },
+  "cover_letter": {
+    "full_name": "NARENDER SURABHI",
+    "email": "surabhinarenderrao@gmail.com",
+    "phone": "+1 (213) 254-8205",
+    "company": "Yahoo",
+    "role_title": "Senior ML Engineer",
+    "body": "With over eight years of dedicated experience designing and deploying production-scale machine learning systems, I was excited to see the opening for a Senior ML Engineer. My background in building end-to-end solutions for NLP, recommender systems, and content understanding aligns perfectly with the challenges and opportunities at Yahoo.\n\nMy technical expertise covers the core requirements for this role. I am proficient in Python, Java, and Scala, with extensive hands-on experience using frameworks like PyTorch, TensorFlow, and Scikit-learn to build models for ranking, semantic search, and Named Entity Recognition (NER). I am adept at scaling these solutions on cloud platforms like AWS using distributed computing tools such as Spark.\n\nIn my current role, I have consistently delivered impactful ML solutions. Key achievements include:\n- Architecting a ranking and recommendation engine that improved audit team efficiency by over 30%.\n- Engineering scalable ML pipelines on AWS and Spark to process over 100 million records annually, reducing data processing latency by 40%.\n- Establishing a full MLOps lifecycle using Jenkins and MLflow, which reduced the model release cycle from weeks to days and ensured robust monitoring with tools like AWS Clarify.\n\nI am confident that my experience in building robust, scalable, and impactful machine learning systems makes me a strong candidate. I am eager to learn more about this opportunity and discuss how my skills can contribute to Yahoo's success. Thank you for your time and consideration."
+  },
+  "job_id": "b100f17a-efd7-4f4b-8b3a-e50eab0e5a88"
+}

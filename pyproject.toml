@@ -1,0 +1,107 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "jd-agent-project"
+version = "0.1.0"
+description = "Single-responsibility JD analysis agent (sync + async) with FastAPI API."
+requires-python = ">=3.11"
+authors = [
+  { name = "Narender" }
+]
+
+# You can still use requirements.txt for installs; pyproject is mainly for tools/config.
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+addopts = "-q --cov=agents --cov=core --cov=api --cov-report=term-missing"
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+asyncio_mode = "auto"
+
+[tool.mypy]
+python_version = "3.11"
+pretty = true
+show_error_codes = true
+warn_unused_configs = true
+warn_unused_ignores = true
+
+# Dial this up/down as you like
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+disallow_untyped_calls = false
+disallow_untyped_decorators = false
+
+no_implicit_optional = true
+strict_optional = true
+
+warn_return_any = true
+warn_unreachable = true
+
+# Keep third-party stuff flexible
+ignore_missing_imports = true
+
+# Target your code
+files = [
+  "agents",
+  "core",
+  "api",
+]
+
+[[tool.mypy.overrides]]
+module = ["tests.*", "scripts.*"]
+disallow_untyped_defs = false
+disallow_incomplete_defs = false
+strict_optional = false
+warn_return_any = false
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+# Fast + opinionated defaults
+select = [
+  "E",    # pycodestyle errors
+  "F",    # pyflakes
+  "I",    # isort
+  "B",    # bugbear
+  "UP",   # pyupgrade
+  "TID",  # tidy imports
+  "ANN",  # type annotations (optional; comment out if too strict)
+]
+ignore = [
+  "ANN101",  # missing type for self
+  "ANN102",  # missing type for cls
+]
+
+src = ["."]
+exclude = [
+  ".git",
+  ".venv",
+  "__pycache__",
+  ".mypy_cache",
+  ".ruff_cache",
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["agents", "core", "api"]
+combine-as-imports = true
+force-sort-within-sections = true
+
+[tool.ruff.lint.mccabe]
+max-complexity = 15
+
+[tool.black]
+line-length = 100
+target-version = ["py311"]
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.git
+  | \.venv
+  | \.mypy_cache
+  | \.ruff_cache
+  | __pycache__
+)/
+'''

@@ -1,0 +1,642 @@
+{
+  "stage": "COMPLETED",
+  "run_qa": true,
+  "run_improver": true,
+  "jd": {
+    "role_title": "Staff AI Engineer - AI Product",
+    "company": "ClickUp",
+    "seniority_level": "Staff",
+    "must_have_skills": [
+      "Building and shipping AI-powered user-facing features in production",
+      "Large Language Models (LLMs)",
+      "AI model integration and orchestration",
+      "AI evaluation frameworks and metrics",
+      "Python",
+      "JavaScript/TypeScript",
+      "Backend or full-stack engineering",
+      "Relational databases (Postgres, MySQL)",
+      "Elasticsearch",
+      "Production-grade observability and logging",
+      "Privacy, security, and compliance for AI",
+      "Scalability, reliability, and performance engineering",
+      "Cross-functional collaboration (product, design, engineering)",
+      "Communication and mentorship"
+    ],
+    "nice_to_have_skills": [
+      "LLM orchestration frameworks (e.g., LangChain, LlamaIndex)",
+      "Retrieval-Augmented Generation (RAG)",
+      "Prompt engineering and prompt optimization",
+      "A/B testing and experimentation",
+      "Enterprise search domain experience",
+      "User impact and product analytics metrics",
+      "Cost and latency optimization for LLM workloads",
+      "Human-in-the-loop evaluation workflows"
+    ],
+    "notes_for_resume": "- Highlight shipped AI/LLM-powered product features and quantify user/business impact (adoption, retention, support deflection, NPS).\n- Describe multi-LLM orchestration you built (routing, fallbacks, tools/functions, context injection) and integrations into user workflows.\n- Detail evaluation frameworks: offline/online evals, regression suites, human review loops, quality metrics tied to business outcomes.\n- Showcase Python and JavaScript/TypeScript expertise and end-to-end ownership of production services and UI integrations.\n- Include experience with Postgres/MySQL (schema design, migrations, performance tuning) and Elasticsearch (indexing, relevance, scale).\n- Note production observability/logging you implemented (tracing, dashboards, alerts) and reliability outcomes (SLOs/SLAs).\n- Emphasize privacy/security/compliance in AI features (PII handling, data minimization, RBAC, auditability).\n- Provide examples of improving latency, scalability, and cost for AI features in production.\n- Mention close collaboration with product/design and translating requirements into shipped features; include experimentation/A-B tests.\n- Add mentorship/leadership: guiding engineers, code reviews, establishing best practices, influencing product direction.\n- Call out staying current with AI research and rapid prototyping that informed roadmap decisions.\n- If applicable, note experience with RAG and LLM orchestration frameworks (e.g., LangChain/LlamaIndex) powering context-aware experiences."
+  },
+  "profile": {
+    "full_name": "NARENDER SURABHI",
+    "headline": "SENIOR MACHINE LEARNING ENGINEER | GENERATIVE AI & MLOPS ARCHITECT",
+    "location": "Okemos, MI, USA 48864",
+    "phone": "+1 (213) 254-8205",
+    "email": "surabhinarenderrao@gmail.com",
+    "linkedin_url": "linkedin.com/in/narendersurabhi",
+    "github_url": "github.com/narendersurabhi",
+    "years_of_experience": 17.3,
+    "core_skills": [
+      "Generative AI",
+      "Large Language Models (LLMs)",
+      "Retrieval-augmented generation (RAG)",
+      "Agentic AI workflows",
+      "Prompt engineering",
+      "Fraud/waste/abuse detection",
+      "Provider risk scoring",
+      "Patient risk stratification",
+      "Anomaly detection",
+      "Supervised and unsupervised learning",
+      "Feature engineering",
+      "Model evaluation and monitoring",
+      "MLOps",
+      "CI/CD for ML",
+      "Cost and performance optimization",
+      "Observability and SLO/SLA operations",
+      "HIPAA-compliant architectures"
+    ],
+    "domain_expertise": [
+      "Medicaid",
+      "Medicare",
+      "Healthcare claims processing",
+      "FWA analytics",
+      "Provider network integrity",
+      "Patient risk and care management",
+      "MMIS",
+      "Encounter processing",
+      "CMS and state reporting",
+      "HIPAA/EDI 837/835/270/271",
+      "ICD-10",
+      "CPT",
+      "HCPCS",
+      "Membership and benefits",
+      "SURS audits",
+      "SIU workflows",
+      "State program integrity initiatives"
+    ],
+    "tools_and_tech": [
+      "AWS SageMaker",
+      "AWS Bedrock",
+      "MLflow",
+      "AWS Glue",
+      "PySpark",
+      "Amazon Redshift",
+      "Amazon S3",
+      "AWS Lambda",
+      "AWS Step Functions",
+      "Docker",
+      "Kubernetes",
+      "Amazon EKS",
+      "Apache Spark",
+      "Apache Kafka",
+      "Python",
+      "Pandas",
+      "NumPy",
+      "SciPy",
+      "SQL",
+      "Java",
+      "scikit-learn",
+      "XGBoost",
+      "LightGBM",
+      "PyTorch",
+      "TensorFlow",
+      "Keras",
+      "SageMaker Clarify",
+      "Amazon EC2",
+      "AWS CloudFormation",
+      "IAM",
+      "VPC",
+      "AWS Secrets Manager",
+      "LangGraph",
+      "GPT",
+      "Claude",
+      "LLaMA",
+      "Vector search"
+    ],
+    "experience": [
+      {
+        "title": "Senior Machine Learning Engineer & AI Solutions Architect",
+        "company": "Acentra Health",
+        "start_date": "Dec 2016",
+        "end_date": "Present",
+        "location": "Okemos, MI",
+        "bullets": [
+          "AI/ML lead for Medicaid integrity and care-management products, owning architecture, implementation, and productionization of ML and GenAI capabilities.",
+          "Designed and deployed LLM-powered RAG features on AWS Bedrock to generate fraud, provider risk, and patient risk narratives.",
+          "Built agentic AI workflows with LangGraph and Bedrock for multi-step fraud pattern discovery, data retrieval, and explanation generation.",
+          "Engineered HIPAA-compliant pipelines on SageMaker and Glue (PySpark) processing 100M+ Medicaid claims annually with MLflow experiment tracking.",
+          "Operationalized supervised and unsupervised models for pre-pay claim scoring, post-pay audit selection, provider-level risk scoring, and patient-level risk stratification.",
+          "Implemented monitoring for data drift, performance, and bias using SageMaker/MLflow metrics and custom dashboards within SLOs.",
+          "Integrated scores and narratives into SIU, audit, and care-management workflows to improve detection effectiveness and analyst efficiency.",
+          "Collaborated with product, engineering, clinical, and SIU stakeholders to define risk tiers, thresholds, and explainable outputs.",
+          "Mentored engineers and analysts on GenAI, MLOps, Python best practices, and experiment design; contributed to LLM/RAG reference architectures.",
+          "ClaimsSure: developed real-time pre-pay fraud scoring via SageMaker/Lambda with explainability artifacts and tuned p95 latency targets.",
+          "AuditStudio (North Dakota): built unsupervised PCA and KMeans pipelines with Glue PySpark and Redshift/S3 integrations for post-pay audit selection.",
+          "Program Intelligence: combined supervised models, anomaly detection, network analysis, and LLM narratives to detect FWA at scale.",
+          "Provider Risk Scoring: aggregated anomalies, billing behaviors, and peer comparisons into unified provider risk scores.",
+          "Patient Risk Scoring: engineered features and deployed models for high-risk member stratification and targeted outreach."
+        ],
+        "skills": [
+          "AWS SageMaker",
+          "AWS Bedrock",
+          "AWS Glue",
+          "PySpark",
+          "MLflow",
+          "LangGraph",
+          "Amazon Redshift",
+          "Amazon S3",
+          "AWS Lambda",
+          "AWS Step Functions",
+          "Docker",
+          "Kubernetes/EKS",
+          "Apache Spark",
+          "Apache Kafka",
+          "Python",
+          "scikit-learn",
+          "XGBoost",
+          "LightGBM",
+          "PyTorch",
+          "TensorFlow",
+          "Vector search"
+        ]
+      },
+      {
+        "title": "Senior Associate Consultant",
+        "company": "Infosys Limited",
+        "start_date": "Sep 2013",
+        "end_date": "Dec 2015",
+        "location": "Los Angeles, CA & Pune, India",
+        "bullets": [
+          "Enhanced Medicaid encounter and Open Health Plus systems for CMS and state reporting compliance.",
+          "Developed and tuned PL/SQL procedures, triggers, and views to improve performance and data quality.",
+          "Supported data issue analysis, defect triage, and production releases for major healthcare clients."
+        ],
+        "skills": [
+          "PL/SQL",
+          "SQL"
+        ]
+      },
+      {
+        "title": "Test Engineer",
+        "company": "Syntel Limited",
+        "start_date": "Aug 2010",
+        "end_date": "Sep 2013",
+        "location": "Pune, India",
+        "bullets": [
+          "Led test automation and integration testing for FedEx eDD solutions, reducing manual regression effort.",
+          "Built regression suites and test data strategies to validate high-throughput, multi-system workflows."
+        ],
+        "skills": [
+          "Test automation",
+          "Integration testing"
+        ]
+      },
+      {
+        "title": "Programmer",
+        "company": "Cognizant",
+        "start_date": "Sep 2007",
+        "end_date": "Aug 2010",
+        "location": "Hyderabad, India",
+        "bullets": [
+          "Supported HealthPAS system and integration testing for a state Medicaid program.",
+          "Developed utilities and scripts to streamline credentialing and test management, improving stability and data quality."
+        ],
+        "skills": [
+          "Scripting",
+          "Integration testing"
+        ]
+      }
+    ],
+    "education": [
+      "Nizam College — B.Sc., Mathematics, Physics, Electronics (Sep 2003 - May 2007), Hyderabad, India"
+    ]
+  },
+  "plan": {
+    "target_title": "Staff AI Engineer - AI Product",
+    "target_company": "ClickUp",
+    "sections_order": [
+      "Summary",
+      "Skills",
+      "Experience",
+      "Education"
+    ],
+    "length_hint": "two_pages_ok",
+    "experiences_plan": [
+      {
+        "profile_experience_index": 0,
+        "include": true,
+        "relevance_score": 0.95,
+        "target_bullet_count": 10,
+        "focus_skills": [
+          "Building and shipping AI-powered features",
+          "Large Language Models (LLMs)",
+          "Retrieval-augmented generation (RAG)",
+          "Agentic workflows",
+          "LangGraph",
+          "AWS Bedrock",
+          "Python",
+          "MLOps",
+          "MLflow (experiment tracking, metrics)",
+          "Evaluation metrics and monitoring",
+          "Production observability and SLOs",
+          "AWS SageMaker",
+          "AWS Lambda",
+          "AWS Step Functions",
+          "Vector search",
+          "Docker",
+          "Kubernetes/EKS",
+          "Scalability, reliability, performance",
+          "Latency optimization (p95 targets)",
+          "Privacy, security, HIPAA compliance",
+          "Cross-functional collaboration",
+          "Mentorship and leadership",
+          "Apache Spark",
+          "PySpark",
+          "AWS Glue",
+          "Amazon Redshift",
+          "Amazon S3",
+          "Apache Kafka",
+          "Explainability and model governance",
+          "Integration into user workflows"
+        ]
+      },
+      {
+        "profile_experience_index": 1,
+        "include": true,
+        "relevance_score": 0.35,
+        "target_bullet_count": 2,
+        "focus_skills": [
+          "SQL",
+          "PL/SQL",
+          "Relational data modeling",
+          "Performance tuning",
+          "Compliance/reporting workflows",
+          "Production releases"
+        ]
+      },
+      {
+        "profile_experience_index": 2,
+        "include": true,
+        "relevance_score": 0.2,
+        "target_bullet_count": 1,
+        "focus_skills": [
+          "Test automation",
+          "Regression suites",
+          "Reliability and quality engineering"
+        ]
+      },
+      {
+        "profile_experience_index": 3,
+        "include": true,
+        "relevance_score": 0.2,
+        "target_bullet_count": 1,
+        "focus_skills": [
+          "Scripting",
+          "Integration testing",
+          "Medicaid domain context"
+        ]
+      }
+    ],
+    "skills_plan": {
+      "must_have_covered": [
+        "Building and shipping AI-powered user-facing features in production",
+        "Large Language Models (LLMs)",
+        "AI model integration and orchestration",
+        "AI evaluation frameworks and metrics",
+        "Python",
+        "Backend or full-stack engineering",
+        "Production-grade observability and logging",
+        "Privacy, security, and compliance for AI",
+        "Scalability, reliability, and performance engineering",
+        "Cross-functional collaboration (product, design, engineering)",
+        "Communication and mentorship"
+      ],
+      "must_have_missing": [
+        "JavaScript/TypeScript",
+        "Relational databases (Postgres, MySQL)",
+        "Elasticsearch"
+      ],
+      "nice_to_have_covered": [
+        "LLM orchestration frameworks (e.g., LangChain, LlamaIndex)",
+        "Retrieval-Augmented Generation (RAG)",
+        "Prompt engineering and prompt optimization",
+        "Cost and latency optimization for LLM workloads",
+        "Human-in-the-loop evaluation workflows",
+        "User impact and product analytics metrics"
+      ],
+      "extra_profile_skills": [
+        "AWS SageMaker",
+        "AWS Bedrock",
+        "AWS Glue",
+        "PySpark",
+        "Amazon Redshift",
+        "Amazon S3",
+        "AWS Lambda",
+        "AWS Step Functions",
+        "Docker",
+        "Kubernetes/EKS",
+        "Apache Spark",
+        "Apache Kafka",
+        "MLflow",
+        "LangGraph",
+        "Vector search",
+        "CI/CD for ML",
+        "SageMaker Clarify",
+        "IAM",
+        "VPC",
+        "AWS Secrets Manager",
+        "scikit-learn",
+        "XGBoost",
+        "LightGBM",
+        "PyTorch",
+        "TensorFlow",
+        "Java",
+        "PL/SQL",
+        "SQL",
+        "HIPAA-compliant architectures",
+        "Fraud/waste/abuse detection",
+        "Provider risk scoring",
+        "Patient risk stratification",
+        "Anomaly detection"
+      ]
+    }
+  },
+  "tailored": {
+    "full_name": "NARENDER SURABHI",
+    "headline": "SENIOR MACHINE LEARNING ENGINEER | GENERATIVE AI & MLOPS ARCHITECT",
+    "location": "Okemos, MI, USA 48864",
+    "phone": "+1 (213) 254-8205",
+    "email": "surabhinarenderrao@gmail.com",
+    "linkedin_url": "linkedin.com/in/narendersurabhi",
+    "github_url": "github.com/narendersurabhi",
+    "summary": "Staff-level AI/ML engineer and GenAI/MLOps architect with 17+ years delivering production AI features end to end. Led LLM-powered RAG and agentic workflows on AWS Bedrock and LangGraph integrated into analyst-facing Medicaid integrity and care-management products processing 100M+ claims annually. Deep expertise in Python, SageMaker, Glue/PySpark, MLflow, and production observability/SLOs, with HIPAA-compliant architectures, latency optimization, and cross-functional leadership and mentorship.",
+    "skills": [
+      {
+        "name": "LLMs & GenAI",
+        "items": [
+          "AWS Bedrock",
+          "LangGraph",
+          "LLMs: GPT, Claude, LLaMA",
+          "RAG",
+          "Agentic workflows",
+          "Prompt engineering",
+          "Vector search"
+        ]
+      },
+      {
+        "name": "ML Engineering",
+        "items": [
+          "Supervised & unsupervised ML",
+          "Anomaly detection",
+          "Feature engineering",
+          "Explainability",
+          "Model evaluation & monitoring"
+        ]
+      },
+      {
+        "name": "MLOps & Platforms",
+        "items": [
+          "AWS SageMaker",
+          "MLflow (experiments/metrics)",
+          "CI/CD for ML",
+          "Drift & bias monitoring",
+          "Observability & SLO/SLA operations"
+        ]
+      },
+      {
+        "name": "Data Engineering & Storage",
+        "items": [
+          "AWS Glue",
+          "PySpark / Apache Spark",
+          "Amazon Redshift",
+          "Amazon S3",
+          "Apache Kafka",
+          "SQL"
+        ]
+      },
+      {
+        "name": "Services & Infra",
+        "items": [
+          "AWS Lambda",
+          "AWS Step Functions",
+          "Docker",
+          "Kubernetes/EKS",
+          "IAM",
+          "VPC",
+          "AWS Secrets Manager"
+        ]
+      },
+      {
+        "name": "Domain & Compliance",
+        "items": [
+          "Medicaid/Medicare",
+          "FWA analytics",
+          "Provider & patient risk scoring",
+          "HIPAA-compliant architectures"
+        ]
+      }
+    ],
+    "experience": [
+      {
+        "title": "Senior Machine Learning Engineer & AI Solutions Architect",
+        "company": "Acentra Health",
+        "start_date": "Dec 2016",
+        "end_date": "Present",
+        "location": "Okemos, MI",
+        "bullets": [
+          {
+            "text": "AI/ML lead for Medicaid integrity and care-management products, owning architecture, implementation, and productionization of ML and GenAI capabilities.",
+            "source_experience_index": 0
+          },
+          {
+            "text": "Shipped LLM-powered RAG features on AWS Bedrock (with vector search) that generate fraud, provider-risk, and patient-risk narratives embedded into SIU, audit, and care-management workflows.",
+            "source_experience_index": 0
+          },
+          {
+            "text": "Built agentic AI workflows with LangGraph and Bedrock for multi-step fraud pattern discovery, governed data retrieval, and explanation generation aligned to analyst tasks.",
+            "source_experience_index": 0
+          },
+          {
+            "text": "Engineered HIPAA-compliant pipelines on SageMaker and Glue (PySpark) processing 100M+ Medicaid claims annually with MLflow-based experiment tracking.",
+            "source_experience_index": 0
+          },
+          {
+            "text": "Operationalized supervised and unsupervised models for pre-pay claim scoring, post-pay audit selection, provider-level risk scoring, and patient-level risk stratification with explainability artifacts.",
+            "source_experience_index": 0
+          },
+          {
+            "text": "Implemented monitoring for data drift, performance, and bias using SageMaker/MLflow metrics and custom dashboards, operating within defined SLOs.",
+            "source_experience_index": 0
+          },
+          {
+            "text": "Delivered ClaimsSure: real-time pre-pay fraud scoring via SageMaker and Lambda with explainability artifacts and tuned p95 latency targets to meet operational SLAs.",
+            "source_experience_index": 0
+          },
+          {
+            "text": "Built AuditStudio (North Dakota): unsupervised PCA and KMeans pipelines with Glue PySpark and Redshift/S3 integrations for post-pay audit selection.",
+            "source_experience_index": 0
+          },
+          {
+            "text": "Launched Program Intelligence combining supervised models, anomaly detection, network analysis, and LLM narratives to detect FWA at scale.",
+            "source_experience_index": 0
+          },
+          {
+            "text": "Mentored engineers and analysts on GenAI, MLOps, and Python; collaborated with product, engineering, clinical, and SIU stakeholders to define risk tiers, thresholds, and explainable outputs; contributed to LLM/RAG reference architectures.",
+            "source_experience_index": 0
+          }
+        ]
+      },
+      {
+        "title": "Senior Associate Consultant",
+        "company": "Infosys Limited",
+        "start_date": "Sep 2013",
+        "end_date": "Dec 2015",
+        "location": "Los Angeles, CA & Pune, India",
+        "bullets": [
+          {
+            "text": "Enhanced Medicaid encounter and Open Health Plus systems for CMS and state reporting compliance.",
+            "source_experience_index": 1
+          },
+          {
+            "text": "Developed and tuned PL/SQL procedures, triggers, and views to improve performance and data quality; supported data issue analysis, defect triage, and production releases.",
+            "source_experience_index": 1
+          }
+        ]
+      },
+      {
+        "title": "Test Engineer",
+        "company": "Syntel Limited",
+        "start_date": "Aug 2010",
+        "end_date": "Sep 2013",
+        "location": "Pune, India",
+        "bullets": [
+          {
+            "text": "Led test automation and integration testing for FedEx eDD solutions, reducing manual regression effort and validating high-throughput, multi-system workflows.",
+            "source_experience_index": 2
+          }
+        ]
+      },
+      {
+        "title": "Programmer",
+        "company": "Cognizant",
+        "start_date": "Sep 2007",
+        "end_date": "Aug 2010",
+        "location": "Hyderabad, India",
+        "bullets": [
+          {
+            "text": "Supported HealthPAS system and integration testing for a state Medicaid program; developed utilities and scripts to streamline credentialing and test management, improving stability and data quality.",
+            "source_experience_index": 3
+          }
+        ]
+      }
+    ],
+    "education": [
+      {
+        "institution": "Nizam College",
+        "degree": "B.Sc., Mathematics, Physics, Electronics",
+        "start_date": "Sep 2003",
+        "end_date": "May 2007",
+        "location": "Hyderabad, India"
+      }
+    ],
+    "certifications": [],
+    "resume_text": "NARENDER SURABHI\nSENIOR MACHINE LEARNING ENGINEER | GENERATIVE AI & MLOPS ARCHITECT\nOkemos, MI, USA 48864 | +1 (213) 254-8205 | surabhinarenderrao@gmail.com\nLinkedIn: linkedin.com/in/narendersurabhi | GitHub: github.com/narendersurabhi\n\nSummary\nStaff-level AI/ML engineer and GenAI/MLOps architect with 17+ years delivering production AI features end to end. Led LLM-powered RAG and agentic workflows on AWS Bedrock and LangGraph integrated into analyst-facing Medicaid integrity and care-management products processing 100M+ claims annually. Deep expertise in Python, SageMaker, Glue/PySpark, MLflow, and production observability/SLOs, with HIPAA-compliant architectures, latency optimization, and cross-functional leadership and mentorship.\n\nSkills\n- LLMs & GenAI: AWS Bedrock; LangGraph; LLMs: GPT, Claude, LLaMA; RAG; Agentic workflows; Prompt engineering; Vector search\n- ML Engineering: Supervised & unsupervised ML; Anomaly detection; Feature engineering; Explainability; Model evaluation & monitoring\n- MLOps & Platforms: AWS SageMaker; MLflow (experiments/metrics); CI/CD for ML; Drift & bias monitoring; Observability & SLO/SLA operations\n- Data Engineering & Storage: AWS Glue; PySpark / Apache Spark; Amazon Redshift; Amazon S3; Apache Kafka; SQL\n- Services & Infra: AWS Lambda; AWS Step Functions; Docker; Kubernetes/EKS; IAM; VPC; AWS Secrets Manager\n- Domain & Compliance: Medicaid/Medicare; FWA analytics; Provider & patient risk scoring; HIPAA-compliant architectures\n\nExperience\nAcentra Health — Senior Machine Learning Engineer & AI Solutions Architect\nDec 2016 – Present | Okemos, MI\n- AI/ML lead for Medicaid integrity and care-management products, owning architecture, implementation, and productionization of ML and GenAI capabilities.\n- Shipped LLM-powered RAG features on AWS Bedrock (with vector search) that generate fraud, provider-risk, and patient-risk narratives embedded into SIU, audit, and care-management workflows.\n- Built agentic AI workflows with LangGraph and Bedrock for multi-step fraud pattern discovery, governed data retrieval, and explanation generation aligned to analyst tasks.\n- Engineered HIPAA-compliant pipelines on SageMaker and Glue (PySpark) processing 100M+ Medicaid claims annually with MLflow-based experiment tracking.\n- Operationalized supervised and unsupervised models for pre-pay claim scoring, post-pay audit selection, provider-level risk scoring, and patient-level risk stratification with explainability artifacts.\n- Implemented monitoring for data drift, performance, and bias using SageMaker/MLflow metrics and custom dashboards, operating within defined SLOs.\n- Delivered ClaimsSure: real-time pre-pay fraud scoring via SageMaker and Lambda with explainability artifacts and tuned p95 latency targets to meet operational SLAs.\n- Built AuditStudio (North Dakota): unsupervised PCA and KMeans pipelines with Glue PySpark and Redshift/S3 integrations for post-pay audit selection.\n- Launched Program Intelligence combining supervised models, anomaly detection, network analysis, and LLM narratives to detect FWA at scale.\n- Mentored engineers and analysts on GenAI, MLOps, and Python; collaborated with product, engineering, clinical, and SIU stakeholders to define risk tiers, thresholds, and explainable outputs; contributed to LLM/RAG reference architectures.\n\nInfosys Limited — Senior Associate Consultant\nSep 2013 – Dec 2015 | Los Angeles, CA & Pune, India\n- Enhanced Medicaid encounter and Open Health Plus systems for CMS and state reporting compliance.\n- Developed and tuned PL/SQL procedures, triggers, and views to improve performance and data quality; supported data issue analysis, defect triage, and production releases.\n\nSyntel Limited — Test Engineer\nAug 2010 – Sep 2013 | Pune, India\n- Led test automation and integration testing for FedEx eDD solutions, reducing manual regression effort and validating high-throughput, multi-system workflows.\n\nCognizant — Programmer\nSep 2007 – Aug 2010 | Hyderabad, India\n- Supported HealthPAS system and integration testing for a state Medicaid program; developed utilities and scripts to streamline credentialing and test management, improving stability and data quality.\n\nEducation\nNizam College — B.Sc., Mathematics, Physics, Electronics (Sep 2003 – May 2007), Hyderabad, India"
+  },
+  "qa": {
+    "overall_match_score": 66.0,
+    "must_have_coverage": {
+      "Building and shipping AI-powered user-facing features in production": true,
+      "Large Language Models (LLMs)": true,
+      "AI model integration and orchestration": true,
+      "AI evaluation frameworks and metrics": true,
+      "Python": true,
+      "JavaScript/TypeScript": false,
+      "Backend or full-stack engineering": true,
+      "Relational databases (Postgres, MySQL)": false,
+      "Elasticsearch": false,
+      "Production-grade observability and logging": true,
+      "Privacy, security, and compliance for AI": true,
+      "Scalability, reliability, and performance engineering": true,
+      "Cross-functional collaboration (product, design, engineering)": true,
+      "Communication and mentorship": true
+    },
+    "issues": [
+      {
+        "severity": "blocker",
+        "message": "JavaScript/TypeScript experience is not mentioned; JD requires JS/TS for shipping user-facing AI features.",
+        "location_hint": "Skills and Experience sections"
+      },
+      {
+        "severity": "major",
+        "message": "Relational database experience with Postgres/MySQL is missing (only Redshift/SQL/PL-SQL referenced).",
+        "location_hint": "Skills (Data Engineering & Storage) and Infosys bullets"
+      },
+      {
+        "severity": "major",
+        "message": "Elasticsearch experience is not listed; JD calls it out explicitly.",
+        "location_hint": "Skills section"
+      },
+      {
+        "severity": "major",
+        "message": "AI/LLM evaluation frameworks and metrics are not detailed (e.g., offline/online evals, regression suites, human review loops, business-tied quality metrics).",
+        "location_hint": "Acentra Health bullets and Summary"
+      },
+      {
+        "severity": "minor",
+        "message": "Lacks quantified user/business impact for shipped AI features (adoption, retention, support deflection, NPS).",
+        "location_hint": "Acentra Health bullets"
+      },
+      {
+        "severity": "minor",
+        "message": "Observability details are high-level; no explicit tracing/logging/alerting tools or incident outcomes.",
+        "location_hint": "Skills (MLOps & Platforms) and monitoring bullet"
+      },
+      {
+        "severity": "minor",
+        "message": "Privacy/security details for AI features (PII minimization, RBAC, auditability) are not concretely described.",
+        "location_hint": "Summary and Domain & Compliance skills"
+      },
+      {
+        "severity": "minor",
+        "message": "Multi-LLM orchestration specifics (routing, fallbacks, tools/functions, context injection) are not described.",
+        "location_hint": "Acentra Health LLM/RAG bullets"
+      },
+      {
+        "severity": "minor",
+        "message": "Backend product service ownership not clearly articulated (APIs, auth, rate limits, CI/CD, testing strategy).",
+        "location_hint": "Services & Infra skills; Acentra Health bullets"
+      },
+      {
+        "severity": "minor",
+        "message": "A/B testing and experimentation platform/practices are not mentioned.",
+        "location_hint": "Experience section"
+      },
+      {
+        "severity": "minor",
+        "message": "Cost and latency optimization for LLM workloads lacks concrete strategies and results.",
+        "location_hint": "Summary and ClaimsSure bullet"
+      }
+    ],
+    "suggestions": [
+      "Add concrete JS/TS experience and examples of integrating AI features into web UIs (e.g., TypeScript + React component, Node/Express/Next.js API for LLM features).",
+      "Include Postgres/MySQL work: schema design, migrations, indexing, query tuning, and any migration/ETL tasks tied to AI features.",
+      "Add Elasticsearch/OpenSearch experience: indexing strategy, analyzers, relevance tuning (BM25/RRF), scaling/sharding, and how it powers RAG/search.",
+      "Document AI/LLM evaluation: offline regression suites, automatic metrics (faithfulness, groundedness, toxicity), human-in-the-loop review workflows, guardrails, and online A/B tests with success metrics tied to business outcomes.",
+      "Quantify impact of shipped AI features (e.g., +X% analyst efficiency, Y% fraud detection lift, Z% reduction in false positives, p95 latency improvements, cost per request).",
+      "Detail multi-LLM orchestration: provider routing, fallbacks, tool/function calling, context window management, caching, and retrieval strategies; cite LangGraph/LangChain patterns if applicable.",
+      "Expand observability: structured logging, distributed tracing (OpenTelemetry), dashboards/alerts (Datadog/Grafana/CloudWatch), SLOs/SLIs, incident response and postmortems.",
+      "Clarify privacy/security controls: PII minimization, RBAC, data residency, audit logs, encryption, redaction, and dataset lineage for HIPAA compliance.",
+      "Show backend ownership: APIs (FastAPI/Flask), authentication/authorization, rate limiting, load testing, CI/CD pipelines, and automated tests for AI services.",
+      "Call out experimentation platform and methods: feature flags, ramp-ups, power analyses, guardrail metrics, and example A/B results.",
+      "Describe cost/latency optimizations for LLMs: prompt compression, response truncation, model routing (small-to-large), batch/streaming, caching, and concurrency tuning."
+    ]
+  },
+  "job_id": "f769dc05-253a-4ff6-a1c6-29b668dda779"
+}

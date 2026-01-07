@@ -1,0 +1,776 @@
+{
+  "stage": "COMPLETED",
+  "run_qa": true,
+  "run_improver": true,
+  "jd": {
+    "role_title": "Machine Learning Engineer/AI Engineer",
+    "company": "Acentra Health",
+    "seniority_level": "Senior",
+    "must_have_skills": [
+      "Python",
+      "TensorFlow",
+      "PyTorch",
+      "Hugging Face",
+      "scikit-learn",
+      "Large Language Models (LLMs)",
+      "Natural Language Processing (NLP)",
+      "Generative AI (GenAI)",
+      "Embeddings",
+      "Retrieval-Augmented Generation (RAG)",
+      "Vector databases (Pinecone, Weaviate, FAISS)",
+      "API development",
+      "System integration",
+      "MLOps/LLMOps",
+      "CI/CD",
+      "Data preparation and training workflows",
+      "Deploying ML/LLM solutions to production",
+      "Monitoring, versioning, retraining, governance",
+      "Cloud (AWS)",
+      "Cloud (Azure)",
+      "Experience in healthcare or other regulated environments",
+      "Compliance: HIPAA, GDPR, FDA",
+      "Mentoring and coaching engineers",
+      "Strong communication and collaboration"
+    ],
+    "nice_to_have_skills": [
+      "LangChain",
+      "LlamaIndex",
+      "Agentic AI frameworks (AutoGen, CrewAI, Semantic Kernel)",
+      "Multi-agent system design",
+      "Healthcare data standards: HL7",
+      "Healthcare data standards: FHIR"
+    ],
+    "notes_for_resume": "- Lead with production ML/LLM deployments, especially NLP/GenAI use cases (summarization, intelligent assistants, document processing) and the business impact achieved.\n- Detail RAG implementations: embeddings strategy, chunking, retrieval quality, and vector DBs used (Pinecone/Weaviate/FAISS), including latency, accuracy, and cost metrics.\n- Highlight Python expertise and ML stack (TensorFlow, PyTorch, Hugging Face, scikit-learn) with concrete project outcomes.\n- Showcase API development and system integration work; note contributions across the full stack and secure, scalable deployments.\n- Describe MLOps/LLMOps practices you implemented: CI/CD, model/version management, monitoring, retraining triggers, and governance controls.\n- Specify cloud experience across AWS and Azure for training, inference, and orchestration; mention relevant services and infrastructure choices.\n- Emphasize healthcare/regulated environment experience and compliance (HIPAA/GDPR/FDA), including privacy, security, and audit practices.\n- Include examples of mentoring/coaching engineers and partnering with product/business teams to translate requirements into AI solutions.\n- Quantify model performance and impact (e.g., accuracy, F1/ROUGE, latency, throughput, cost savings, user adoption).\n- If applicable, list experience with LangChain, LlamaIndex, and agentic/multi-agent frameworks."
+  },
+  "profile": {
+    "full_name": "Narender Surabhi",
+    "headline": "Machine Learning Engineer / AI Engineer",
+    "location": null,
+    "phone": "+1(213) 254-8205",
+    "email": "narender.surabhi@acentra.com",
+    "linkedin_url": null,
+    "github_url": null,
+    "years_of_experience": 18.0,
+    "core_skills": [
+      "Machine Learning",
+      "Regression",
+      "Classification",
+      "Clustering",
+      "PCA",
+      "KMeans",
+      "Random Forests",
+      "XGBoost",
+      "LLM summarization",
+      "RAG workflows",
+      "Vector search",
+      "Data engineering",
+      "ETL",
+      "AWS",
+      "Python",
+      "SQL",
+      "Java",
+      "PL/SQL",
+      "Spark",
+      "Healthcare analytics"
+    ],
+    "domain_expertise": [
+      "Medicaid systems",
+      "Fraud, Waste & Abuse (FWA)",
+      "SURS scenarios",
+      "Healthcare claims",
+      "Encounters",
+      "TPL",
+      "CHAMPS",
+      "ClaimsSure",
+      "HIPAA EDI"
+    ],
+    "tools_and_tech": [
+      "AWS Glue",
+      "Amazon Redshift",
+      "Amazon S3",
+      "Amazon SageMaker",
+      "AWS Bedrock",
+      "Apache Spark",
+      "Airflow",
+      "Jenkins",
+      "Selenium",
+      "Java Spring",
+      "Python",
+      "SQL",
+      "PL/SQL",
+      "FAISS",
+      "LangChain",
+      "Containers"
+    ],
+    "experience": [
+      {
+        "title": "Systems Analyst, FWA POC",
+        "company": "Acentra Health",
+        "start_date": "Apr 2025",
+        "end_date": "Aug 2025",
+        "location": "Okemos, Michigan",
+        "bullets": [
+          "Built an enterprise-ready FWA analytics POC for Michigan Medicaid FFS across Redshift, SageMaker, Glue, and Bedrock.",
+          "Developed an SQL library spanning claim headers, lines, diagnoses, procedures, and provider metadata for feature extraction.",
+          "Engineered Redshift + Glue pipelines to compute provider/member/claim risk indicators and utilization outliers.",
+          "Integrated SDOH datasets (CDC SVI, BRFSS, USDA, RWJF, NCHS) with member geography for contextual risk signals.",
+          "Prototyped anomaly detection workflows in SageMaker (statistical outliers, density-based clustering, temporal deviation).",
+          "Designed LLM-powered investigation agents on AWS Bedrock for NL querying, summarization, and FWA insight generation.",
+          "Implemented Redshift-optimized validation and transformations to improve data quality and performance.",
+          "Collaborated with SMEs to translate Medicaid rules into AI-ready features and inference logic.",
+          "Delivered reusable query/feature templates and architectural documentation for the fraud analytics platform."
+        ],
+        "skills": [
+          "Amazon Redshift",
+          "AWS Glue",
+          "Amazon SageMaker",
+          "AWS Bedrock",
+          "Amazon S3",
+          "SQL",
+          "PCA",
+          "KMeans",
+          "Clustering",
+          "SDOH datasets (CDC SVI, BRFSS, USDA, RWJF, NCHS)"
+        ]
+      },
+      {
+        "title": "Systems Analyst, Audit Studio ND, ClaimsSure, MI Operations",
+        "company": "Acentra Health",
+        "start_date": "Jan 2023",
+        "end_date": "Present",
+        "location": "Okemos, Michigan",
+        "bullets": [
+          "Converted business requirements into technical solutions and integrated data sources into staging for AuditStudio.",
+          "Executed SURS scenarios; analyzed results and tuned weights; evaluated measures using PCA and KMeans.",
+          "Orchestrated parallel Spark jobs per scenario and exported scenario data to S3 for downstream consumption.",
+          "Resolved data quality issues with stakeholders and ensured timely release deployments and scenario extracts.",
+          "Managed release processes for Java code, PL/SQL, and database objects to source control.",
+          "Designed system architecture and developed web applications/services using Java Spring.",
+          "Implemented PL/SQL packages and db2db jobs to enable efficient inter-database transfers.",
+          "Managed inbound/outbound interfaces, conducted testing, and deployed to production.",
+          "Communicated with Michigan state users to gather requirements and align with business needs."
+        ],
+        "skills": [
+          "Apache Spark",
+          "Amazon S3",
+          "SQL",
+          "PCA",
+          "KMeans",
+          "Java",
+          "Java Spring",
+          "PL/SQL",
+          "db2db",
+          "Source control"
+        ]
+      },
+      {
+        "title": "Senior QA Engineer, CHAMPS Claims & ClaimsSure",
+        "company": "CNSI",
+        "start_date": "Dec 2016",
+        "end_date": "Jan 2023",
+        "location": "Lansing, Michigan",
+        "bullets": [
+          "Validated ClaimsSure scenarios, measures, thresholds, and coefficients for improper billing detection.",
+          "Verified Logistic Regression-based flagging against derived coefficients and configured thresholds.",
+          "Developed Selenium automation and complex SQL queries for claims data testing.",
+          "Tested HIPAA EDI transactions including Claims, Encounters, PA, and Eligibility.",
+          "Coordinated with developers on defect fixes and enhancements; improved QA processes."
+        ],
+        "skills": [
+          "Selenium",
+          "SQL",
+          "HIPAA EDI",
+          "Logistic Regression"
+        ]
+      },
+      {
+        "title": "Senior Associate Consultant",
+        "company": "Infosys Limited",
+        "start_date": "Dec 2015",
+        "end_date": "Dec 2016",
+        "location": "Los Angeles, CA",
+        "bullets": [
+          "Enhanced the Encounter system to meet organizational, state, and CMS guidelines.",
+          "Developed BRDs and traceability matrices; supported UAT and QA.",
+          "Improved encounter processing and reconciliation of CMS/state response files."
+        ],
+        "skills": []
+      },
+      {
+        "title": "Senior Associate Consultant",
+        "company": "Infosys Limited",
+        "start_date": "Sep 2013",
+        "end_date": "Dec 2015",
+        "location": "Pune, MH, India",
+        "bullets": [
+          "Configured and enhanced the Open Health Plus (OH+) application based on business needs.",
+          "Developed/enhanced PL/SQL stored procedures, triggers, and views.",
+          "Coordinated with release management for successful releases."
+        ],
+        "skills": [
+          "PL/SQL"
+        ]
+      },
+      {
+        "title": "Testing Engineer",
+        "company": "Syntel Limited",
+        "start_date": "Aug 2010",
+        "end_date": "Sep 2013",
+        "location": "Pune, India",
+        "bullets": [
+          "Automated FedEx eDD solution and integrated with other FedEx systems.",
+          "Managed test team and conducted knowledge transition sessions.",
+          "Created high-level test scenarios and led document walkthroughs."
+        ],
+        "skills": []
+      },
+      {
+        "title": "Programmer",
+        "company": "Cognizant",
+        "start_date": "Sep 2007",
+        "end_date": "Aug 2010",
+        "location": "Hyderabad, India",
+        "bullets": [
+          "Supported HealthPAS System and Integration Testing for the state of Idaho.",
+          "Developed tools to automate provider credentialing and test management processes."
+        ],
+        "skills": []
+      }
+    ],
+    "education": [
+      "Bachelor of Sciences, Mathematics-Physics-Electronics; Nizam College, Hyderabad, Telangana; 2007."
+    ],
+    "education_items": [
+      {
+        "institution": "Nizam College",
+        "degree": "Bachelor of Sciences, Mathematics-Physics-Electronics",
+        "start_date": null,
+        "end_date": "2007",
+        "location": "Hyderabad, Telangana"
+      }
+    ],
+    "certifications": [
+      {
+        "name": "AWS Certified AI Practitioner (AIF-C01)",
+        "issuer": "Amazon Web Services",
+        "year": "2025"
+      }
+    ]
+  },
+  "plan": {
+    "target_title": "Senior Machine Learning Engineer / AI Engineer",
+    "target_company": "Acentra Health",
+    "sections_order": [
+      "Summary",
+      "Skills",
+      "Experience",
+      "Certifications",
+      "Education"
+    ],
+    "length_hint": "two_pages_ok",
+    "experiences_plan": [
+      {
+        "profile_experience_index": 0,
+        "include": true,
+        "relevance_score": 0.95,
+        "target_bullet_count": 7,
+        "focus_skills": [
+          "Python",
+          "LLM summarization",
+          "NLP",
+          "Generative AI",
+          "AWS Bedrock",
+          "Amazon SageMaker",
+          "Amazon Redshift",
+          "AWS Glue",
+          "Amazon S3",
+          "SQL",
+          "Anomaly detection",
+          "Feature engineering",
+          "Healthcare analytics",
+          "FWA"
+        ]
+      },
+      {
+        "profile_experience_index": 1,
+        "include": true,
+        "relevance_score": 0.85,
+        "target_bullet_count": 6,
+        "focus_skills": [
+          "Apache Spark",
+          "Amazon S3",
+          "SQL",
+          "PCA",
+          "KMeans",
+          "Java",
+          "Java Spring",
+          "PL/SQL",
+          "CI/CD",
+          "Source control",
+          "API development",
+          "System integration"
+        ]
+      },
+      {
+        "profile_experience_index": 2,
+        "include": true,
+        "relevance_score": 0.6,
+        "target_bullet_count": 3,
+        "focus_skills": [
+          "HIPAA EDI",
+          "Logistic Regression",
+          "SQL",
+          "Selenium",
+          "Compliance",
+          "Collaboration"
+        ]
+      },
+      {
+        "profile_experience_index": 3,
+        "include": true,
+        "relevance_score": 0.45,
+        "target_bullet_count": 2,
+        "focus_skills": [
+          "Medicaid systems",
+          "CMS guidelines",
+          "Requirements gathering",
+          "UAT",
+          "Regulated environment"
+        ]
+      },
+      {
+        "profile_experience_index": 4,
+        "include": true,
+        "relevance_score": 0.35,
+        "target_bullet_count": 2,
+        "focus_skills": [
+          "PL/SQL",
+          "Releases",
+          "System integration",
+          "Oracle"
+        ]
+      },
+      {
+        "profile_experience_index": 5,
+        "include": true,
+        "relevance_score": 0.5,
+        "target_bullet_count": 2,
+        "focus_skills": [
+          "Test automation",
+          "Team leadership",
+          "Mentoring",
+          "Communication",
+          "System integration"
+        ]
+      },
+      {
+        "profile_experience_index": 6,
+        "include": true,
+        "relevance_score": 0.3,
+        "target_bullet_count": 1,
+        "focus_skills": [
+          "Medicaid systems",
+          "System integration testing",
+          "Process automation",
+          "Process improvement"
+        ]
+      }
+    ],
+    "skills_plan": {
+      "must_have_covered": [
+        "Python",
+        "Large Language Models (LLMs)",
+        "Natural Language Processing (NLP)",
+        "Generative AI (GenAI)",
+        "Retrieval-Augmented Generation (RAG)",
+        "Vector databases (Pinecone, Weaviate, FAISS)",
+        "API development",
+        "System integration",
+        "MLOps/LLMOps",
+        "CI/CD",
+        "Data preparation and training workflows",
+        "Deploying ML/LLM solutions to production",
+        "Cloud (AWS)",
+        "Experience in healthcare or other regulated environments",
+        "Compliance: HIPAA, GDPR, FDA",
+        "Mentoring and coaching engineers",
+        "Strong communication and collaboration"
+      ],
+      "must_have_missing": [
+        "TensorFlow",
+        "PyTorch",
+        "Hugging Face",
+        "scikit-learn",
+        "Embeddings",
+        "Monitoring, versioning, retraining, governance",
+        "Cloud (Azure)"
+      ],
+      "nice_to_have_covered": [
+        "LangChain"
+      ],
+      "extra_profile_skills": [
+        "Amazon SageMaker",
+        "AWS Bedrock",
+        "Amazon Redshift",
+        "AWS Glue",
+        "Amazon S3",
+        "Apache Spark",
+        "Airflow",
+        "Jenkins",
+        "Java",
+        "Java Spring",
+        "PL/SQL",
+        "Selenium",
+        "SDOH datasets (CDC SVI, BRFSS, USDA, RWJF, NCHS)",
+        "PCA",
+        "KMeans",
+        "Logistic Regression",
+        "CHAMPS",
+        "ClaimsSure",
+        "db2db"
+      ]
+    }
+  },
+  "tailored": {
+    "full_name": "Narender Surabhi",
+    "headline": "Senior Machine Learning Engineer / AI Engineer",
+    "location": null,
+    "phone": "+1(213) 254-8205",
+    "email": "narender.surabhi@acentra.com",
+    "linkedin_url": null,
+    "github_url": null,
+    "summary": "Senior ML/AI Engineer with 18 years in healthcare analytics and Medicaid systems, delivering NLP/LLM and ML solutions on AWS (SageMaker, Bedrock, Redshift, Glue, S3). Built FWA analytics and LLM-powered investigation agents, and productionized data pipelines with Spark, SQL, and Java Spring APIs. Strong in RAG workflows, vector search (FAISS), CI/CD and releases, and HIPAA-compliant system integration; experienced mentoring teams and aligning with business and regulatory requirements.",
+    "skills": [
+      {
+        "name": "LLMs & NLP",
+        "items": [
+          "LLM summarization",
+          "RAG workflows",
+          "Vector search (FAISS)",
+          "LangChain"
+        ]
+      },
+      {
+        "name": "Machine Learning & Analytics",
+        "items": [
+          "Regression, Classification, Clustering",
+          "PCA, KMeans, Logistic Regression",
+          "Anomaly detection",
+          "Healthcare analytics & FWA/SURS"
+        ]
+      },
+      {
+        "name": "AWS & Data Platforms",
+        "items": [
+          "Amazon SageMaker, AWS Bedrock",
+          "AWS Glue, Amazon Redshift, Amazon S3",
+          "Apache Spark",
+          "SQL"
+        ]
+      },
+      {
+        "name": "Engineering & MLOps",
+        "items": [
+          "Python, Java, PL/SQL",
+          "Java Spring (APIs & services)",
+          "CI/CD & source control (Jenkins)",
+          "Data validation & quality"
+        ]
+      },
+      {
+        "name": "Healthcare & Compliance",
+        "items": [
+          "Medicaid systems (CHAMPS, ClaimsSure)",
+          "HIPAA EDI",
+          "SDOH data integration"
+        ]
+      }
+    ],
+    "experience": [
+      {
+        "title": "Systems Analyst, FWA POC",
+        "company": "Acentra Health",
+        "start_date": "Apr 2025",
+        "end_date": "Aug 2025",
+        "location": "Okemos, Michigan",
+        "bullets": [
+          {
+            "text": "Built an enterprise-ready FWA analytics POC across Amazon Redshift, SageMaker, Glue, and Bedrock for Michigan Medicaid FFS.",
+            "source_experience_index": 0
+          },
+          {
+            "text": "Engineered Redshift + Glue pipelines to compute provider/member/claim risk indicators and utilization outliers.",
+            "source_experience_index": 0
+          },
+          {
+            "text": "Developed an SQL feature library spanning claims headers/lines, diagnoses, procedures, and provider metadata.",
+            "source_experience_index": 0
+          },
+          {
+            "text": "Integrated SDOH datasets (CDC SVI, BRFSS, USDA, RWJF, NCHS) with member geography to enrich contextual risk signals.",
+            "source_experience_index": 0
+          },
+          {
+            "text": "Prototyped anomaly detection workflows in SageMaker, including statistical outliers, density-based clustering, and temporal deviation.",
+            "source_experience_index": 0
+          },
+          {
+            "text": "Designed LLM-powered investigation agents on AWS Bedrock for natural language querying and summarization to accelerate FWA insights.",
+            "source_experience_index": 0
+          },
+          {
+            "text": "Implemented Redshift-optimized validations and transformations to improve data quality and query performance.",
+            "source_experience_index": 0
+          }
+        ]
+      },
+      {
+        "title": "Systems Analyst, Audit Studio ND, ClaimsSure, MI Operations",
+        "company": "Acentra Health",
+        "start_date": "Jan 2023",
+        "end_date": "Present",
+        "location": "Okemos, Michigan",
+        "bullets": [
+          {
+            "text": "Translated Michigan state user requirements into technical designs and staged integrated data sources for AuditStudio.",
+            "source_experience_index": 1
+          },
+          {
+            "text": "Executed and tuned SURS scenarios; evaluated measures using PCA and KMeans to refine detection accuracy.",
+            "source_experience_index": 1
+          },
+          {
+            "text": "Orchestrated parallel Spark jobs per scenario and exported scenario outputs to Amazon S3 for downstream consumption.",
+            "source_experience_index": 1
+          },
+          {
+            "text": "Designed and developed Java Spring web applications/services for internal APIs and system components.",
+            "source_experience_index": 1
+          },
+          {
+            "text": "Managed release processes and source control for Java, PL/SQL, and database objects; coordinated timely deployments and extracts.",
+            "source_experience_index": 1
+          },
+          {
+            "text": "Built PL/SQL packages and db2db jobs for inter-database transfers; resolved data quality issues across interfaces.",
+            "source_experience_index": 1
+          }
+        ]
+      },
+      {
+        "title": "Senior QA Engineer, CHAMPS Claims & ClaimsSure",
+        "company": "CNSI",
+        "start_date": "Dec 2016",
+        "end_date": "Jan 2023",
+        "location": "Lansing, Michigan",
+        "bullets": [
+          {
+            "text": "Verified Logistic Regression-based improper billing detection by validating ClaimsSure scenarios, measures, thresholds, and coefficients.",
+            "source_experience_index": 2
+          },
+          {
+            "text": "Built Selenium automation and complex SQL queries for claims data testing, improving coverage and speed.",
+            "source_experience_index": 2
+          },
+          {
+            "text": "Tested HIPAA EDI transactions (Claims, Encounters, PA, Eligibility) and collaborated with developers to resolve defects.",
+            "source_experience_index": 2
+          }
+        ]
+      },
+      {
+        "title": "Senior Associate Consultant",
+        "company": "Infosys Limited",
+        "start_date": "Dec 2015",
+        "end_date": "Dec 2016",
+        "location": "Los Angeles, CA",
+        "bullets": [
+          {
+            "text": "Enhanced the Encounter system to meet organizational, state, and CMS guidelines in a regulated Medicaid environment.",
+            "source_experience_index": 3
+          },
+          {
+            "text": "Developed BRDs and traceability matrices; supported UAT and QA with business and technical stakeholders.",
+            "source_experience_index": 3
+          }
+        ]
+      },
+      {
+        "title": "Senior Associate Consultant",
+        "company": "Infosys Limited",
+        "start_date": "Sep 2013",
+        "end_date": "Dec 2015",
+        "location": "Pune, MH, India",
+        "bullets": [
+          {
+            "text": "Configured and enhanced the Open Health Plus (OH+) application to meet evolving business needs.",
+            "source_experience_index": 4
+          },
+          {
+            "text": "Developed PL/SQL stored procedures, triggers, and views; coordinated with release management for successful deployments.",
+            "source_experience_index": 4
+          }
+        ]
+      },
+      {
+        "title": "Testing Engineer",
+        "company": "Syntel Limited",
+        "start_date": "Aug 2010",
+        "end_date": "Sep 2013",
+        "location": "Pune, India",
+        "bullets": [
+          {
+            "text": "Automated the FedEx eDD solution and integrated it with related FedEx systems to streamline testing workflows.",
+            "source_experience_index": 5
+          },
+          {
+            "text": "Led a test team, created high-level test scenarios, and conducted knowledge transition sessions.",
+            "source_experience_index": 5
+          }
+        ]
+      },
+      {
+        "title": "Programmer",
+        "company": "Cognizant",
+        "start_date": "Sep 2007",
+        "end_date": "Aug 2010",
+        "location": "Hyderabad, India",
+        "bullets": [
+          {
+            "text": "Supported Idaho HealthPAS system and integration testing; built tools to automate provider credentialing and test management processes.",
+            "source_experience_index": 6
+          }
+        ]
+      }
+    ],
+    "education": [
+      {
+        "institution": "Nizam College",
+        "degree": "Bachelor of Sciences, Mathematics-Physics-Electronics",
+        "start_date": null,
+        "end_date": "2007",
+        "location": "Hyderabad, Telangana"
+      }
+    ],
+    "certifications": [
+      {
+        "name": "AWS Certified AI Practitioner (AIF-C01)",
+        "issuer": "Amazon Web Services",
+        "year": "2025"
+      }
+    ],
+    "resume_text": "Narender Surabhi\nSenior Machine Learning Engineer / AI Engineer\nPhone: +1(213) 254-8205 | Email: narender.surabhi@acentra.com\n\nSummary\nSenior ML/AI Engineer with 18 years in healthcare analytics and Medicaid systems, delivering NLP/LLM and ML solutions on AWS (SageMaker, Bedrock, Redshift, Glue, S3). Built FWA analytics and LLM-powered investigation agents, and productionized data pipelines with Spark, SQL, and Java Spring APIs. Strong in RAG workflows, vector search (FAISS), CI/CD and releases, and HIPAA-compliant system integration; experienced mentoring teams and aligning with business and regulatory requirements.\n\nSkills\n- LLMs & NLP: LLM summarization; RAG workflows; Vector search (FAISS); LangChain\n- Machine Learning & Analytics: Regression, Classification, Clustering; PCA, KMeans, Logistic Regression; Anomaly detection; Healthcare analytics & FWA/SURS\n- AWS & Data Platforms: Amazon SageMaker, AWS Bedrock; AWS Glue, Amazon Redshift, Amazon S3; Apache Spark; SQL\n- Engineering & MLOps: Python, Java, PL/SQL; Java Spring (APIs & services); CI/CD & source control (Jenkins); Data validation & quality\n- Healthcare & Compliance: Medicaid systems (CHAMPS, ClaimsSure); HIPAA EDI; SDOH data integration\n\nExperience\nAcentra Health — Systems Analyst, FWA POC (Okemos, Michigan)  Apr 2025 – Aug 2025\n- Built an enterprise-ready FWA analytics POC across Amazon Redshift, SageMaker, Glue, and Bedrock for Michigan Medicaid FFS.\n- Engineered Redshift + Glue pipelines to compute provider/member/claim risk indicators and utilization outliers.\n- Developed an SQL feature library spanning claims headers/lines, diagnoses, procedures, and provider metadata.\n- Integrated SDOH datasets (CDC SVI, BRFSS, USDA, RWJF, NCHS) with member geography to enrich contextual risk signals.\n- Prototyped anomaly detection workflows in SageMaker, including statistical outliers, density-based clustering, and temporal deviation.\n- Designed LLM-powered investigation agents on AWS Bedrock for natural language querying and summarization to accelerate FWA insights.\n- Implemented Redshift-optimized validations and transformations to improve data quality and query performance.\n\nAcentra Health — Systems Analyst, Audit Studio ND, ClaimsSure, MI Operations (Okemos, Michigan)  Jan 2023 – Present\n- Translated Michigan state user requirements into technical designs and staged integrated data sources for AuditStudio.\n- Executed and tuned SURS scenarios; evaluated measures using PCA and KMeans to refine detection accuracy.\n- Orchestrated parallel Spark jobs per scenario and exported scenario outputs to Amazon S3 for downstream consumption.\n- Designed and developed Java Spring web applications/services for internal APIs and system components.\n- Managed release processes and source control for Java, PL/SQL, and database objects; coordinated timely deployments and extracts.\n- Built PL/SQL packages and db2db jobs for inter-database transfers; resolved data quality issues across interfaces.\n\nCNSI — Senior QA Engineer, CHAMPS Claims & ClaimsSure (Lansing, Michigan)  Dec 2016 – Jan 2023\n- Verified Logistic Regression-based improper billing detection by validating ClaimsSure scenarios, measures, thresholds, and coefficients.\n- Built Selenium automation and complex SQL queries for claims data testing, improving coverage and speed.\n- Tested HIPAA EDI transactions (Claims, Encounters, PA, Eligibility) and collaborated with developers to resolve defects.\n\nInfosys Limited — Senior Associate Consultant (Los Angeles, CA)  Dec 2015 – Dec 2016\n- Enhanced the Encounter system to meet organizational, state, and CMS guidelines in a regulated Medicaid environment.\n- Developed BRDs and traceability matrices; supported UAT and QA with business and technical stakeholders.\n\nInfosys Limited — Senior Associate Consultant (Pune, MH, India)  Sep 2013 – Dec 2015\n- Configured and enhanced the Open Health Plus (OH+) application to meet evolving business needs.\n- Developed PL/SQL stored procedures, triggers, and views; coordinated with release management for successful deployments.\n\nSyntel Limited — Testing Engineer (Pune, India)  Aug 2010 – Sep 2013\n- Automated the FedEx eDD solution and integrated it with related FedEx systems to streamline testing workflows.\n- Led a test team, created high-level test scenarios, and conducted knowledge transition sessions.\n\nCognizant — Programmer (Hyderabad, India)  Sep 2007 – Aug 2010\n- Supported Idaho HealthPAS system and integration testing; built tools to automate provider credentialing and test management processes.\n\nCertifications\n- AWS Certified AI Practitioner (AIF-C01), Amazon Web Services, 2025\n\nEducation\n- Nizam College — Bachelor of Sciences, Mathematics-Physics-Electronics, 2007 (Hyderabad, Telangana)"
+  },
+  "qa": {
+    "overall_match_score": 58.0,
+    "must_have_coverage": {
+      "Python": true,
+      "TensorFlow": false,
+      "PyTorch": false,
+      "Hugging Face": false,
+      "scikit-learn": false,
+      "Large Language Models (LLMs)": true,
+      "Natural Language Processing (NLP)": true,
+      "Generative AI (GenAI)": true,
+      "Embeddings": false,
+      "Retrieval-Augmented Generation (RAG)": true,
+      "Vector databases (Pinecone, Weaviate, FAISS)": true,
+      "API development": true,
+      "System integration": true,
+      "MLOps/LLMOps": false,
+      "CI/CD": true,
+      "Data preparation and training workflows": true,
+      "Deploying ML/LLM solutions to production": false,
+      "Monitoring, versioning, retraining, governance": false,
+      "Cloud (AWS)": true,
+      "Cloud (Azure)": false,
+      "Experience in healthcare or other regulated environments": true,
+      "Compliance: HIPAA, GDPR, FDA": false,
+      "Mentoring and coaching engineers": true,
+      "Strong communication and collaboration": true
+    },
+    "issues": [
+      {
+        "severity": "blocker",
+        "message": "No evidence of TensorFlow experience, a core framework requirement.",
+        "location_hint": "Skills section"
+      },
+      {
+        "severity": "blocker",
+        "message": "No evidence of PyTorch experience, a core framework requirement.",
+        "location_hint": "Skills section"
+      },
+      {
+        "severity": "blocker",
+        "message": "No evidence of Hugging Face ecosystem usage (Transformers/Datasets/PEFT).",
+        "location_hint": "Skills section"
+      },
+      {
+        "severity": "blocker",
+        "message": "scikit-learn not mentioned despite classical ML techniques being referenced.",
+        "location_hint": "Skills section"
+      },
+      {
+        "severity": "blocker",
+        "message": "No clear demonstration of deploying ML/LLM solutions to production; LLM work is described as a POC.",
+        "location_hint": "Experience: Acentra Health — Systems Analyst, FWA POC"
+      },
+      {
+        "severity": "blocker",
+        "message": "MLOps/LLMOps practices (monitoring, model/version management, retraining, governance) are not described.",
+        "location_hint": "Across experience/MLOps skills"
+      },
+      {
+        "severity": "major",
+        "message": "Azure cloud experience is missing.",
+        "location_hint": "Skills section"
+      },
+      {
+        "severity": "major",
+        "message": "Embeddings capability is not explicitly stated (models, dimensions, normalization), only vector search/FAISS implied.",
+        "location_hint": "Skills and FWA POC bullets"
+      },
+      {
+        "severity": "major",
+        "message": "RAG implementation details (chunking, retrieval quality, re-ranking, vector DB metrics) are not provided.",
+        "location_hint": "Experience: Acentra Health — Systems Analyst, FWA POC"
+      },
+      {
+        "severity": "major",
+        "message": "Compliance coverage limited to HIPAA; no GDPR/FDA evidence.",
+        "location_hint": "Experience: CNSI (HIPAA EDI)"
+      },
+      {
+        "severity": "minor",
+        "message": "API development is shown in Java Spring; lack of Python ML serving APIs may be a mismatch for typical ML stacks.",
+        "location_hint": "Experience: Acentra Health — Audit Studio; Skills: Engineering & MLOps"
+      },
+      {
+        "severity": "minor",
+        "message": "Model performance and business impact metrics (e.g., ROUGE/F1, recall@k, latency/throughput, cost) are not quantified.",
+        "location_hint": "Experience: FWA POC and Audit Studio"
+      },
+      {
+        "severity": "minor",
+        "message": "Mentoring/coaching claims are light on specifics (scope, number of mentees, outcomes).",
+        "location_hint": "Experience: Syntel — Testing Engineer; Summary"
+      }
+    ],
+    "suggestions": [
+      "Add concrete experience with TensorFlow and/or PyTorch (training/inference, fine-tuning, deployment) and summarize model types and outcomes.",
+      "Highlight Hugging Face usage (Transformers, Datasets, PEFT/LoRA) with specific models, tasks, and throughput/latency metrics.",
+      "Explicitly list scikit-learn for PCA/KMeans/Logistic Regression and describe pipelines, cross-validation, and results.",
+      "Detail embeddings: model(s) used (e.g., Bedrock Titan, OpenAI), vector dimension, normalization, similarity metric, and ANN index parameters.",
+      "Expand RAG implementation: chunk size/overlap, retriever top-k, re-ranking, caching, evaluation (precision/recall@k), and FAISS index type; add Pinecone/Weaviate experience if available.",
+      "Provide examples of production ML/LLM deployments (SageMaker endpoints, Bedrock agents/guardrails) with deployment strategy (blue/green/canary), autoscaling, and rollback.",
+      "Document MLOps/LLMOps: CI/CD for models (model registry, MLflow/DVC), monitoring (data drift, hallucination rate), retraining triggers, lineage/governance, and access controls.",
+      "Add Azure experience or projects (Azure ML, AKS, ACR, Azure OpenAI, Cosmos DB) to meet multi-cloud requirements.",
+      "Strengthen compliance coverage beyond HIPAA (GDPR/FDA) or clarify scope; include PHI handling, encryption, audit logging, DLP, and privacy-by-design practices.",
+      "Quantify impact: accuracy/F1/ROUGE, recall@k, P50/P95 latency, throughput, and cost per 1k tokens; tie to business outcomes (savings, hours saved).",
+      "Include Python API serving experience (FastAPI/Flask) for ML inference, with auth (OAuth2/JWT), rate limiting, and observability (OpenTelemetry/Prometheus).",
+      "Mention vector database trade-offs and experience beyond FAISS (Pinecone/Weaviate), including latency/cost benchmarks and scaling patterns.",
+      "Provide concrete mentoring/coaching examples (number of mentees, code reviews, knowledge shares) and engineering standards you established."
+    ]
+  },
+  "job_id": "4f8e3b56-d082-468d-b9f9-b11411a62276"
+}

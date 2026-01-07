@@ -1,0 +1,12 @@
+{
+  "stage": "STARTED",
+  "run_qa": true,
+  "run_improver": true,
+  "jd": null,
+  "profile": null,
+  "plan": null,
+  "tailored": null,
+  "qa": null,
+  "cover_letter": null,
+  "job_id": "861235ff-fb9d-4339-b26e-46d74177416a"
+}
