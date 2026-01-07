@@ -26,8 +26,12 @@ other directly — the orchestrator reacts to events and publishes the next even
 ### 1) Clone + install
 
 ```bash
-git clone <YOUR_REPO_URL>.git
+# Replace <REPO_URL> with your Git remote URL (GitHub/GitLab/etc).
+git clone https://github.com/narendersurabhi/agents.git
 cd agents
+
+# (Optional) Verify your remote is set:
+git remote -v
 
 python -m venv .venv
 source .venv/bin/activate
