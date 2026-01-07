@@ -27,7 +27,7 @@ other directly — the orchestrator reacts to events and publishes the next even
 
 ```bash
 # Replace <REPO_URL> with your Git remote URL (GitHub/GitLab/etc).
-git clone https://github.com/narendersurabhi/agents.git
+git clone https://github.com/narendersurabhi/agents-event-driven.git
 cd agents
 
 # (Optional) Verify your remote is set:
