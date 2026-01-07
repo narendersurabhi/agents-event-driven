@@ -1,4 +1,4 @@
-# Resume Tailoring Pipeline (Event-Driven Agents)
+#  Event-Driven Agentic Pipeline
 
 This repo is an event-driven resume tailoring pipeline:
 
