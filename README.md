@@ -1,6 +1,6 @@
 #  Event-Driven Agentic Pipeline
 
-This repo is an event-driven resume tailoring pipeline:
+This repo is an event-driven agentic pipeline:
 
 **Input:** raw resume text + job description text  
 **Output:** tailored resume JSON + cover letter JSON + downloadable DOCX files
