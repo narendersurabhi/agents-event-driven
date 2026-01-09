@@ -93,4 +93,3 @@ coverage.xml
 jd.txt
 mypy.log
 pylint.log
-profile_cache/

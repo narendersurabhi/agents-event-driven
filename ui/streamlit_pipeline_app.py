@@ -9,10 +9,16 @@ the /pipeline/run endpoint is reachable.
 
 from __future__ import annotations
 
+import sys
 from dataclasses import dataclass
 from pathlib import Path
 
 import streamlit as st
+
+# Ensure repo root is on sys.path when running via Streamlit.
+_REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(_REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(_REPO_ROOT))
 
 from core.config import get_config_value
 from ui.api_client import ApiClient, ApiError
