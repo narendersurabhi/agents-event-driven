@@ -94,3 +94,6 @@ jd.txt
 mypy.log
 pylint.log
 profile_cache/
+/debug_docx
+/pipeline_jobs
+resume.md
