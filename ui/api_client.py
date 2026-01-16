@@ -31,17 +31,23 @@ class ApiClient:
         except Exception as exc:  # noqa: BLE001
             raise ApiError(f"Request failed: {exc}") from exc
         if resp.status_code != 200:
-            raise ApiError(f"API returned {resp.status_code}: {resp.text}", status_code=resp.status_code)
+            raise ApiError(
+                f"API returned {resp.status_code}: {resp.text}", status_code=resp.status_code
+            )
         return resp.json()
 
-    def post_json(self, path: str, *, payload: dict[str, Any] | None = None, timeout: float | None = None) -> Any:
+    def post_json(
+        self, path: str, *, payload: dict[str, Any] | None = None, timeout: float | None = None
+    ) -> Any:
         url = self._url(path)
         try:
             resp = requests.post(url, json=payload, timeout=timeout or self.timeout_long)
         except Exception as exc:  # noqa: BLE001
             raise ApiError(f"Request failed: {exc}") from exc
         if resp.status_code != 200:
-            raise ApiError(f"API returned {resp.status_code}: {resp.text}", status_code=resp.status_code)
+            raise ApiError(
+                f"API returned {resp.status_code}: {resp.text}", status_code=resp.status_code
+            )
         return resp.json()
 
     def get_bytes(self, path: str, *, timeout: float | None = None) -> bytes:
@@ -51,6 +57,7 @@ class ApiClient:
         except Exception as exc:  # noqa: BLE001
             raise ApiError(f"Request failed: {exc}") from exc
         if resp.status_code != 200:
-            raise ApiError(f"API returned {resp.status_code}: {resp.text}", status_code=resp.status_code)
+            raise ApiError(
+                f"API returned {resp.status_code}: {resp.text}", status_code=resp.status_code
+            )
         return resp.content
-

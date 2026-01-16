@@ -66,6 +66,8 @@ class QAImproveWorker:
         for event in self.bus.subscribe(QA_IMPROVE_LLM_COMPLETED):
             cid = event.correlation_id
             result = event.payload.get("result")
+            if not isinstance(result, dict):
+                raise ValueError("QA improver worker expected a dict result payload")
             improved = self.agent.parse_result(result)
             self.bus.publish(
                 Event(

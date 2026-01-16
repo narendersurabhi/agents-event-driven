@@ -2,7 +2,8 @@
 
 from __future__ import annotations
 
-from typing import Dict, Literal, List
+from typing import Literal
+
 from pydantic import BaseModel, Field
 
 
@@ -18,9 +19,9 @@ class ResumeQAResult(BaseModel):
     """Structured QA output."""
 
     overall_match_score: float = Field(..., ge=0, le=100)
-    must_have_coverage: Dict[str, bool]
-    issues: List[ResumeIssue] = Field(default_factory=list)
-    suggestions: List[str] = Field(default_factory=list)
+    must_have_coverage: dict[str, bool]
+    issues: list[ResumeIssue] = Field(default_factory=list)
+    suggestions: list[str] = Field(default_factory=list)
 
 
 QA_SCHEMA_TEXT = """

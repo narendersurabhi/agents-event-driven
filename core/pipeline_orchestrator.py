@@ -17,9 +17,9 @@ publishes new ones based on per-job state.
 
 from __future__ import annotations
 
-import logging
 from dataclasses import dataclass, field
-from typing import Any, Dict, Optional
+import logging
+from typing import Any
 
 from core.events import Event, EventBus
 from core.pipeline_events import (
@@ -44,7 +44,6 @@ from core.pipeline_events import (
 )
 from core.pipeline_store import PipelineStore
 
-
 logger = logging.getLogger(__name__)
 
 
@@ -52,12 +51,12 @@ logger = logging.getLogger(__name__)
 class PipelineState:
     """In-memory per-job state tracked by the orchestrator."""
 
-    jd: Optional[Dict[str, Any]] = None
-    profile: Optional[Dict[str, Any]] = None
-    plan: Optional[Dict[str, Any]] = None
-    tailored: Optional[Dict[str, Any]] = None
-    qa: Optional[Dict[str, Any]] = None
-    cover_letter: Optional[Dict[str, Any]] = None
+    jd: dict[str, Any] | None = None
+    profile: dict[str, Any] | None = None
+    plan: dict[str, Any] | None = None
+    tailored: dict[str, Any] | None = None
+    qa: dict[str, Any] | None = None
+    cover_letter: dict[str, Any] | None = None
     run_qa: bool = True
     run_improver: bool = True
     stage: str = "PENDING"
@@ -70,7 +69,7 @@ class PipelineOrchestrator:
     bus: EventBus
     store: PipelineStore
     logger: logging.Logger = field(default_factory=lambda: logger)
-    _states: Dict[str, PipelineState] = field(default_factory=dict)
+    _states: dict[str, PipelineState] = field(default_factory=dict)
 
     def _state_for(self, cid: str) -> PipelineState:
         if cid not in self._states:
@@ -82,7 +81,7 @@ class PipelineOrchestrator:
                 self._states[cid] = PipelineState()
         return self._states[cid]
 
-    def get_state_snapshot(self, cid: str) -> Optional[Dict[str, Any]]:
+    def get_state_snapshot(self, cid: str) -> dict[str, Any] | None:
         """Return a shallow snapshot of the current state for a job."""
         state = self._states.get(cid)
         if state is None:
@@ -100,7 +99,7 @@ class PipelineOrchestrator:
         }
 
     @staticmethod
-    def _state_from_snapshot(snapshot: Dict[str, Any]) -> PipelineState:
+    def _state_from_snapshot(snapshot: dict[str, Any]) -> PipelineState:
         """Rebuild a PipelineState from a stored snapshot dict."""
         return PipelineState(
             jd=snapshot.get("jd"),
@@ -201,7 +200,11 @@ class PipelineOrchestrator:
                 self.bus.publish(
                     Event(
                         type=QA_REQUESTED,
-                        payload={"jd": state.jd, "profile": state.profile, "resume": state.tailored},
+                        payload={
+                            "jd": state.jd,
+                            "profile": state.profile,
+                            "resume": state.tailored,
+                        },
                         correlation_id=cid,
                     )
                 )
@@ -338,7 +341,11 @@ class PipelineOrchestrator:
                 self.bus.publish(
                     Event(
                         type=QA_REQUESTED,
-                        payload={"jd": state.jd, "profile": state.profile, "resume": state.tailored},
+                        payload={
+                            "jd": state.jd,
+                            "profile": state.profile,
+                            "resume": state.tailored,
+                        },
                         correlation_id=cid,
                     )
                 )
@@ -422,12 +429,12 @@ class PipelineOrchestrator:
         self,
         cid: str,
         state: PipelineState,
-        improved: Optional[Dict[str, Any]],
+        improved: dict[str, Any] | None,
     ) -> None:
         """Publish pipeline.completed with all available artifacts."""
         state.stage = "COMPLETED"
         self._persist(cid)
-        payload: Dict[str, Any] = {
+        payload: dict[str, Any] = {
             "jd": state.jd,
             "profile": state.profile,
             "plan": state.plan,

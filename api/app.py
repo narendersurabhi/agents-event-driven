@@ -1,53 +1,48 @@
 # api/app.py
 from __future__ import annotations
 
-import os
-import uuid
+from collections.abc import AsyncIterator, Awaitable, Callable
 from contextlib import asynccontextmanager
-from typing import Optional
+import uuid
 
 from fastapi import FastAPI, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 
-from core.obs import JsonRepoLogger  # <- from the logging/obs module we created
-from core.llm_factory import get_async_llm_client
-
-# Existing router that exposes /tailor-resume
-from api.tailor import router as tailor_router
 # New router that exposes the event-driven pipeline
 from api.pipeline import router as pipeline_router
 
+# Existing router that exposes /tailor-resume
+from api.tailor import router as tailor_router
+from core.llm_factory import get_async_llm_client
+from core.obs import (
+    JsonRepoLogger,  # <- from the logging/obs module we created
+    bind_log_context,
+)
+from core.settings import get_app_settings
 
-APP_ENV: str = os.getenv("APP_ENV", "dev")
-SERVICE_NAME: str = os.getenv("SERVICE_NAME", "tailor-api")
-
-# CORS origins (comma-separated), e.g. "http://localhost:3000,https://your.app"
-CORS_ORIGINS: list[str] = [
-    o.strip() for o in os.getenv("CORS_ORIGINS", "http://localhost:3000").split(",")
-    if o.strip()
-]
+SETTINGS = get_app_settings()
 
 
 @asynccontextmanager
-async def lifespan(app: FastAPI):
+async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     # ----- startup -----
-    logger = JsonRepoLogger(service=SERVICE_NAME, env=APP_ENV)
+    logger = JsonRepoLogger(service=SETTINGS.service_name, env=SETTINGS.app_env)
     app.state.logger = logger
 
     # Single shared async OpenAI client with DI-friendly logger
     app.state.llm = get_async_llm_client(logger=logger)
 
-    logger.info("service.start", env=APP_ENV, service=SERVICE_NAME)
+    logger.info("service.start", env=SETTINGS.app_env, service=SETTINGS.service_name)
     try:
         yield
     finally:
         # ----- shutdown -----
-        logger.info("service.stop", env=APP_ENV, service=SERVICE_NAME)
+        logger.info("service.stop", env=SETTINGS.app_env, service=SETTINGS.service_name)
 
 
 app = FastAPI(
     title="Resume Tailoring API",
-    version=os.getenv("APP_VERSION", "0.1.0"),
+    version=SETTINGS.app_version,
     description="JD → Plan → Compose (tailored resume) pipeline",
     lifespan=lifespan,
 )
@@ -55,8 +50,11 @@ app = FastAPI(
 
 # ----- Middleware -----
 
+
 @app.middleware("http")
-async def add_request_id(request: Request, call_next):
+async def add_request_id(
+    request: Request, call_next: Callable[[Request], Awaitable[Response]]
+) -> Response:
     """
     Attach a request ID to every request/response and log basic access info.
     """
@@ -64,29 +62,28 @@ async def add_request_id(request: Request, call_next):
     request.state.req_id = req_id
 
     # Basic access log (you can expand with timing, user info, etc.)
-    app.state.logger.info(
-        "http.request",
-        req_id=req_id,
-        method=request.method,
-        path=request.url.path,
-        client=str(request.client.host if request.client else None),
-    )
+    with bind_log_context(req_id=req_id):
+        app.state.logger.info(
+            "http.request",
+            method=request.method,
+            path=request.url.path,
+            client=str(request.client.host if request.client else None),
+        )
 
-    response: Response = await call_next(request)
-    response.headers["x-request-id"] = req_id
+        response: Response = await call_next(request)
+        response.headers["x-request-id"] = req_id
 
-    app.state.logger.info(
-        "http.response",
-        req_id=req_id,
-        status_code=response.status_code,
-        path=request.url.path,
-    )
+        app.state.logger.info(
+            "http.response",
+            status_code=response.status_code,
+            path=request.url.path,
+        )
     return response
 
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=CORS_ORIGINS or ["*"] if APP_ENV == "dev" else CORS_ORIGINS,
+    allow_origins=SETTINGS.cors_allowlist(),
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -95,18 +92,19 @@ app.add_middleware(
 
 # ----- Simple health & root -----
 
+
 @app.get("/", tags=["meta"])
-async def root(request: Request):
+async def root(request: Request) -> dict[str, str | None]:
     return {
-        "service": SERVICE_NAME,
-        "env": APP_ENV,
+        "service": SETTINGS.service_name,
+        "env": SETTINGS.app_env,
         "version": app.version,
         "request_id": getattr(request.state, "req_id", None),
     }
 
 
 @app.get("/healthz", tags=["meta"])
-async def healthz():
+async def healthz() -> dict[str, str]:
     # Optionally: check downstreams, env, OpenAI key present, etc.
     return {"status": "ok"}
 

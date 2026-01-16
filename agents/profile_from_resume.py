@@ -1,10 +1,9 @@
-
 """Extract ProfessionalProfile from raw resume text."""
 
 from __future__ import annotations
 
-import logging
 from dataclasses import dataclass, field
+import logging
 from typing import Any, cast
 
 from pydantic import ValidationError
@@ -94,12 +93,14 @@ Rules:
 
 _USER = "RESUME TEXT:\n---\n{resume_text}\n---\nReturn only ProfessionalProfile JSON."
 
+
 class ProfileExtractError(RuntimeError):
     """Base error for profile extraction."""
 
 
 class ProfileExtractInvalid(ProfileExtractError):
     """Raised when extractor output cannot be parsed or validated."""
+
 
 @dataclass(slots=True)
 class ProfileFromResumeAgent:

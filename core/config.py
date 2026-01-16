@@ -2,22 +2,22 @@
 
 from __future__ import annotations
 
-import os
 from functools import lru_cache
+import os
 from pathlib import Path
-from typing import Optional
 
 from core.config_adapter import (
     ConfigAdapter,
+    ConfigSource,
     DotEnvConfigSource,
     EnvConfigSource,
     SecretsManagerConfigSource,
 )
 
 
-@lru_cache()
+@lru_cache
 def _config_adapter() -> ConfigAdapter:
-    sources = [EnvConfigSource()]
+    sources: list[ConfigSource] = [EnvConfigSource()]
     dotenv_path = Path(os.getenv("DOTENV_PATH", ".env"))
     sources.append(DotEnvConfigSource(path=dotenv_path))
     secret_id = os.getenv("AWS_SECRETSMANAGER_CONFIG_ID")
@@ -32,7 +32,7 @@ def _config_adapter() -> ConfigAdapter:
     return ConfigAdapter(tuple(sources))
 
 
-def get_config_value(key: str, default: Optional[str] = None) -> Optional[str]:
+def get_config_value(key: str, default: str | None = None) -> str | None:
     return _config_adapter().get(key, default)
 
 
@@ -54,9 +54,7 @@ def get_timeout_seconds() -> float:
     """
     raw = get_config_value("LLM_TIMEOUT_SECONDS")
     if not raw:
-        raise RuntimeError(
-            "LLM_TIMEOUT_SECONDS is not configured; set it in your config/.env"
-        )
+        raise RuntimeError("LLM_TIMEOUT_SECONDS is not configured; set it in your config/.env")
     try:
         return float(raw)
     except ValueError:

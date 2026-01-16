@@ -8,9 +8,10 @@ by implementing the EventBus protocol.
 
 from __future__ import annotations
 
+from collections.abc import Iterator
 from dataclasses import dataclass
 from queue import Queue
-from typing import Any, Dict, Iterator, Optional, Protocol
+from typing import Any, Protocol
 
 
 @dataclass(slots=True)
@@ -18,9 +19,9 @@ class Event:
     """A single event on the bus."""
 
     type: str
-    payload: Dict[str, Any]
-    correlation_id: Optional[str] = None
-    reply_to: Optional[str] = None
+    payload: dict[str, Any]
+    correlation_id: str | None = None
+    reply_to: str | None = None
 
 
 class EventBus(Protocol):
@@ -42,7 +43,7 @@ class InMemoryEventBus:
     """
 
     def __init__(self) -> None:
-        self._queues: Dict[str, Queue[Event]] = {}
+        self._queues: dict[str, Queue[Event]] = {}
 
     def _queue_for(self, event_type: str) -> Queue[Event]:
         if event_type not in self._queues:
@@ -57,4 +58,3 @@ class InMemoryEventBus:
         q = self._queue_for(event_type)
         while True:
             yield q.get()
-

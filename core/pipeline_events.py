@@ -63,4 +63,3 @@ QA_IMPROVE_COMPLETED = "qa_improve.completed"
 COVER_LETTER_REQUESTED = "cover_letter.requested"
 COVER_LETTER_LLM_COMPLETED = "cover_letter.llm.completed"
 COVER_LETTER_COMPLETED = "cover_letter.completed"
-

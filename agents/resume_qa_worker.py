@@ -14,7 +14,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from agents.qa_shared import QA_SCHEMA_TEXT, ResumeQAResult
+from agents.qa_shared import QA_SCHEMA_TEXT
 from agents.resume_qa import ResumeQAAgent
 from core.events import Event, EventBus
 from core.models import JDAnalysisResult, ProfessionalProfile, TailoredResume
@@ -59,6 +59,8 @@ class ResumeQAWorker:
         for event in self.bus.subscribe(QA_LLM_COMPLETED):
             cid = event.correlation_id
             result = event.payload.get("result")
+            if not isinstance(result, dict):
+                raise ValueError("Resume QA worker expected a dict result payload")
             qa_result = self.agent.parse_result(result)
             self.bus.publish(
                 Event(

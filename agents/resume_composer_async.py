@@ -1,17 +1,20 @@
 """Async resume composer."""
 
 from __future__ import annotations
-import logging
+
 from dataclasses import dataclass, field
+import logging
 
 from pydantic import ValidationError
 
+from core.config import get_default_model
 from core.llm_client import AsyncLLMClient
 from core.models import JDAnalysisResult, ProfessionalProfile, ResumePlan, TailoredResume
-from core.config import get_default_model
+
 from .resume_composer import ComposeInvalidResponse, _ComposerShared
 
 logger = logging.getLogger(__name__)
+
 
 @dataclass(slots=True)
 class AsyncResumeComposerAgent(_ComposerShared):

@@ -1,17 +1,19 @@
 from __future__ import annotations
 
+from collections.abc import Callable, Iterable, Iterator, Mapping
+import contextlib
+import contextvars
+from dataclasses import dataclass
 import datetime
 import functools
 import inspect
 import json
 import os
+from pathlib import Path
 import sys
 import threading
 import time
-import uuid
-from dataclasses import dataclass
-from pathlib import Path
-from typing import Any, Callable, Mapping, Optional, Protocol
+from typing import Any, Protocol, cast
 
 from core.config import get_config_value
 
@@ -31,37 +33,57 @@ def _file_lock(path: Path) -> threading.Lock:
         return lock
 
 
+_LOG_CONTEXT: contextvars.ContextVar[dict[str, Any] | None] = contextvars.ContextVar(
+    "log_context", default=None
+)
+
+
 class Logger(Protocol):
     def info(self, event: str, **fields: Any) -> None: ...
     def warn(self, event: str, **fields: Any) -> None: ...
     def error(self, event: str, **fields: Any) -> None: ...
 
+
 class NullLogger:
-    def info(self, event: str, **fields): pass
-    def warn(self, event: str, **fields): pass
-    def error(self, event: str, **fields): pass
+    def info(self, event: str, **fields: Any) -> None:
+        return None
+
+    def warn(self, event: str, **fields: Any) -> None:
+        return None
+
+    def error(self, event: str, **fields: Any) -> None:
+        return None
+
 
 class JsonStdoutLogger:
-    def __init__(self, service: str = "agents", env: str = "dev", log_path: str | Path | None = None):
+    def __init__(
+        self, service: str = "agents", env: str = "dev", log_path: str | Path | None = None
+    ) -> None:
         self.service = service
         self.env = env
         self._log_path = Path(log_path).expanduser() if log_path else None
         self._log_dir_prepared = False
-    def _emit(self, level: str, event: str, **fields):
+
+    def _emit(self, level: str, event: str, **fields: Any) -> None:
+        tz_utc = getattr(datetime, "UTC", None)
+        if tz_utc is None:
+            tz_utc = datetime.timezone.utc  # noqa: UP017
         ts = (
-            datetime.datetime.now(datetime.timezone.utc)
+            datetime.datetime.now(tz_utc)
             .isoformat(timespec="milliseconds")
             .replace("+00:00", "Z")
         )
+        context_fields = _LOG_CONTEXT.get() or {}
         rec = {
             "ts": ts,
             "level": level,
             "event": event,
             "service": self.service,
             "env": self.env,
+            **context_fields,
             **fields,
         }
-        line = json.dumps(rec, default=str)
+        line = json.dumps(_redact_fields(rec), default=str)
         print(line, file=sys.stdout if level != "error" else sys.stderr)
         if self._log_path:
             lock = _file_lock(self._log_path)
@@ -71,9 +93,16 @@ class JsonStdoutLogger:
                     self._log_dir_prepared = True
                 with self._log_path.open("a", encoding="utf-8") as fh:
                     fh.write(line + "\n")
-    def info(self, event, **fields): self._emit("info", event, **fields)
-    def warn(self, event, **fields): self._emit("warn", event, **fields)
-    def error(self, event, **fields): self._emit("error", event, **fields)
+
+    def info(self, event: str, **fields: Any) -> None:
+        self._emit("info", event, **fields)
+
+    def warn(self, event: str, **fields: Any) -> None:
+        self._emit("warn", event, **fields)
+
+    def error(self, event: str, **fields: Any) -> None:
+        self._emit("error", event, **fields)
+
 
 class JsonRepoLogger(JsonStdoutLogger):
     def __init__(
@@ -94,10 +123,47 @@ class JsonRepoLogger(JsonStdoutLogger):
             target_file = filename or f"{service}.log"
             super().__init__(service=service, env=env, log_path=target_dir / target_file)
 
-def redact(value: Optional[str]) -> Optional[str]:
-    if not isinstance(value, str): return value
-    # super simple—tune for your needs
-    return value.replace(os.getenv("OPENAI_API_KEY",""), "***") if value else value
+
+def _redact_fields(record: Mapping[str, Any]) -> dict[str, Any]:
+    redacted: dict[str, Any] = {}
+    secrets = _load_redaction_tokens()
+    for key, value in record.items():
+        if isinstance(value, str):
+            redacted[key] = _redact_value(value, secrets)
+        else:
+            redacted[key] = value
+    return redacted
+
+
+def _load_redaction_tokens() -> tuple[str, ...]:
+    candidates = [
+        os.getenv("OPENAI_API_KEY", ""),
+        os.getenv("AWS_SECRET_ACCESS_KEY", ""),
+    ]
+    extra = os.getenv("OBS_REDACT_TOKENS", "")
+    if extra:
+        candidates.extend([token.strip() for token in extra.split(",") if token.strip()])
+    return tuple(token for token in candidates if token)
+
+
+def _redact_value(value: str, secrets: Iterable[str]) -> str:
+    redacted = value
+    for secret in secrets:
+        if secret:
+            redacted = redacted.replace(secret, "***")
+    return redacted
+
+
+@contextlib.contextmanager
+def bind_log_context(**fields: Any) -> Iterator[None]:
+    """Temporarily bind contextual fields to all logs in this context."""
+    current = _LOG_CONTEXT.get() or {}
+    merged = {**current, **fields}
+    token = _LOG_CONTEXT.set(merged)
+    try:
+        yield
+    finally:
+        _LOG_CONTEXT.reset(token)
 
 
 def with_span(
@@ -118,7 +184,7 @@ def with_span(
         if args:
             candidate = getattr(args[0], logger_attr, None)
             if candidate is not None:
-                return candidate
+                return cast(Logger, candidate)
         return NullLogger()
 
     def _span_fields(*args: Any, **kwargs: Any) -> dict[str, Any]:
@@ -159,11 +225,15 @@ class Span:
     event: str
     fields: Mapping[str, Any]
     start_ns: int = 0
-    def __enter__(self):
+
+    def __enter__(self) -> Span:
         self.start_ns = time.time_ns()
         self.logger.info(self.event + ".start", **self.fields)
         return self
-    def __exit__(self, exc_type, exc, tb):
+
+    def __exit__(
+        self, exc_type: type[BaseException] | None, exc: BaseException | None, tb: Any
+    ) -> None:
         dur_ms = (time.time_ns() - self.start_ns) / 1e6
         if exc:
             self.logger.error(

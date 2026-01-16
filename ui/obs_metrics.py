@@ -1,8 +1,8 @@
 from __future__ import annotations
 
-import json
 from dataclasses import dataclass, field
-from typing import Any
+import json
+from typing import Any, cast
 
 
 def read_recent_jsonl(text: str, *, max_lines: int = 5000) -> list[dict[str, Any]]:
@@ -120,6 +120,5 @@ def build_step_rows(stats: dict[str, StepAgg]) -> list[dict[str, object]]:
             }
         )
 
-    rows.sort(key=lambda r: (order.get(str(r["task"]), 999), -int(r["calls"])))
+    rows.sort(key=lambda r: (order.get(str(r["task"]), 999), -int(cast(int, r["calls"]))))
     return rows
-

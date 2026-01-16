@@ -8,22 +8,21 @@ persist and reload PipelineState by job_id.
 from __future__ import annotations
 
 from dataclasses import dataclass
-from pathlib import Path
-from typing import Any, Dict, List, Optional, Protocol
-
 import json
+from pathlib import Path
+from typing import Any, Protocol
 
 
 class PipelineStore(Protocol):
     """Abstract storage for pipeline job snapshots."""
 
-    def load(self, job_id: str) -> Optional[Dict[str, Any]]:
+    def load(self, job_id: str) -> dict[str, Any] | None:
         """Return the stored snapshot for job_id, or None if not found."""
 
-    def save(self, job_id: str, state: Dict[str, Any]) -> None:
+    def save(self, job_id: str, state: dict[str, Any]) -> None:
         """Persist the given snapshot for job_id."""
 
-    def list_jobs(self, limit: int = 50) -> List[Dict[str, Any]]:
+    def list_jobs(self, limit: int = 50) -> list[dict[str, Any]]:
         """Return up to `limit` job snapshots (backend-defined ordering)."""
 
 
@@ -35,20 +34,20 @@ class InMemoryPipelineStore:
     interface as a real database-backed implementation.
     """
 
-    _db: Dict[str, Dict[str, Any]]
+    _db: dict[str, dict[str, Any]]
 
     def __init__(self) -> None:
         self._db = {}
 
-    def load(self, job_id: str) -> Optional[Dict[str, Any]]:
+    def load(self, job_id: str) -> dict[str, Any] | None:
         return self._db.get(job_id)
 
-    def save(self, job_id: str, state: Dict[str, Any]) -> None:
+    def save(self, job_id: str, state: dict[str, Any]) -> None:
         snapshot = dict(state)
         snapshot.setdefault("job_id", job_id)
         self._db[job_id] = snapshot
 
-    def list_jobs(self, limit: int = 50) -> List[Dict[str, Any]]:
+    def list_jobs(self, limit: int = 50) -> list[dict[str, Any]]:
         return list(self._db.values())[:limit]
 
 
@@ -69,14 +68,15 @@ class JsonFilePipelineStore:
     def _path_for(self, job_id: str) -> Path:
         return self.root / f"{job_id}.json"
 
-    def load(self, job_id: str) -> Optional[Dict[str, Any]]:
+    def load(self, job_id: str) -> dict[str, Any] | None:
         path = self._path_for(job_id)
         if not path.exists():
             return None
         with path.open("r", encoding="utf-8") as f:
-            return json.load(f)
+            data = json.load(f)
+            return data if isinstance(data, dict) else None
 
-    def save(self, job_id: str, state: Dict[str, Any]) -> None:
+    def save(self, job_id: str, state: dict[str, Any]) -> None:
         path = self._path_for(job_id)
         tmp = path.with_suffix(".json.tmp")
         snapshot = dict(state)
@@ -85,8 +85,8 @@ class JsonFilePipelineStore:
             json.dump(snapshot, f, ensure_ascii=False, indent=2)
         tmp.replace(path)
 
-    def list_jobs(self, limit: int = 50) -> List[Dict[str, Any]]:
-        snapshots: List[Dict[str, Any]] = []
+    def list_jobs(self, limit: int = 50) -> list[dict[str, Any]]:
+        snapshots: list[dict[str, Any]] = []
         paths = sorted(
             self.root.glob("*.json"),
             key=lambda p: p.stat().st_mtime,
@@ -95,7 +95,9 @@ class JsonFilePipelineStore:
         for p in paths[:limit]:
             try:
                 with p.open("r", encoding="utf-8") as f:
-                    snapshots.append(json.load(f))
+                    data = json.load(f)
+                    if isinstance(data, dict):
+                        snapshots.append(data)
             except json.JSONDecodeError:
                 continue
         return snapshots

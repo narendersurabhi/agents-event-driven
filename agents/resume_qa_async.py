@@ -1,29 +1,31 @@
-
 """Asynchronous agent to review tailored resumes against job descriptions and professional profiles.
 Outputs structured JSON feedback on match quality and issues."""
 
 from __future__ import annotations
 
-import json
 from dataclasses import dataclass, field
+import json
 
 from pydantic import ValidationError
 
+from agents.qa_shared import QA_SYSTEM_PROMPT, QA_USER_TEMPLATE, ResumeQAResult
+from core.config import get_default_model
 from core.llm_client import AsyncLLMClient
 from core.models import JDAnalysisResult, ProfessionalProfile, TailoredResume
 from core.obs import Logger, NullLogger
-from core.config import get_default_model
-from agents.qa_shared import ResumeQAResult, QA_SYSTEM_PROMPT, QA_USER_TEMPLATE
+
 
 class ResumeQAError(RuntimeError):
     """Base exception for Resume QA errors."""
 
+
 class ResumeQAInvalid(ResumeQAError):
     """Indicates invalid or unparseable response from the QA model."""
 
+
 @dataclass(slots=True)
 class AsyncResumeQAAgent:
-    """Asynchronous agent to review tailored resumes 
+    """Asynchronous agent to review tailored resumes
     against job descriptions and professional profiles.
     Outputs structured JSON feedback on match quality and issues.
     """

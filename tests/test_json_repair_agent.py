@@ -1,4 +1,5 @@
 import importlib
+from typing import Any
 
 from agents.json_repair import JsonRepairAgent
 from core.json_repair import JsonRepairAgent as CoreJsonRepairAgent
@@ -7,7 +8,7 @@ from core.json_repair import JsonRepairAgent as CoreJsonRepairAgent
 class FakeLLM:
     def __init__(self, response: str = "{}"):
         self.response = response
-        self.calls = []
+        self.calls: list[dict[str, Any]] = []
 
     def chat(self, messages, model, temperature=0.0, **kwargs) -> str:  # noqa: ANN001
         self.calls.append(
@@ -65,4 +66,3 @@ def test_json_repair_omits_error_and_req_id_when_not_provided() -> None:
     call = llm.calls[0]
     assert call["kwargs"] == {}
     assert "Parser/validation error:" not in call["messages"][1]["content"]
-

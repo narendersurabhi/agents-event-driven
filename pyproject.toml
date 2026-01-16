@@ -56,10 +56,27 @@ disallow_incomplete_defs = false
 strict_optional = false
 warn_return_any = false
 
+[[tool.mypy.overrides]]
+module = ["ui.*", "requests"]
+disallow_untyped_defs = false
+disallow_incomplete_defs = false
+strict_optional = false
+warn_return_any = false
+ignore_missing_imports = true
+
 [tool.ruff]
 line-length = 100
 target-version = "py311"
+src = ["."]
+exclude = [
+  ".git",
+  ".venv",
+  "__pycache__",
+  ".mypy_cache",
+  ".ruff_cache",
+]
 
+[tool.ruff.lint]
 # Fast + opinionated defaults
 select = [
   "E",    # pycodestyle errors
@@ -68,20 +85,9 @@ select = [
   "B",    # bugbear
   "UP",   # pyupgrade
   "TID",  # tidy imports
-  "ANN",  # type annotations (optional; comment out if too strict)
 ]
 ignore = [
-  "ANN101",  # missing type for self
-  "ANN102",  # missing type for cls
-]
-
-src = ["."]
-exclude = [
-  ".git",
-  ".venv",
-  "__pycache__",
-  ".mypy_cache",
-  ".ruff_cache",
+  "E501",  # handled by black (and docstrings can be long)
 ]
 
 [tool.ruff.lint.isort]

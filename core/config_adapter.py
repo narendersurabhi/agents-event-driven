@@ -1,34 +1,33 @@
-
 """ Configuration adapter implementations for various sources. """
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
-from pathlib import Path
-from typing import Dict, Optional, Protocol
 import base64
+from dataclasses import dataclass, field
 import json
 import os
+from pathlib import Path
+from typing import Any, Protocol
 
 try:
     import boto3
 except ImportError:  # pragma: no cover - optional dependency for local usage
-    boto3 = None  # type: ignore[assignment]
+    boto3 = None
 
 
 class ConfigSource(Protocol):
     """Strategy interface for pulling configuration values from a backing store."""
 
-    def get(self, key: str) -> Optional[str]: ...
+    def get(self, key: str) -> str | None: ...
 
 
 @dataclass(slots=True)
 class EnvConfigSource:
     """Reads values directly from environment variables."""
 
-    prefix: Optional[str] = None
+    prefix: str | None = None
 
-    def get(self, key: str) -> Optional[str]:
+    def get(self, key: str) -> str | None:
         env_key = f"{self.prefix}{key}" if self.prefix else key
         return os.getenv(env_key)
 
@@ -39,7 +38,7 @@ class DotEnvConfigSource:
 
     path: Path = Path(".env")
     encoding: str = "utf-8"
-    _cache: Dict[str, str] = field(default_factory=dict, init=False)
+    _cache: dict[str, str] = field(default_factory=dict, init=False)
     _loaded: bool = field(default=False, init=False)
 
     def _load(self) -> None:
@@ -63,7 +62,7 @@ class DotEnvConfigSource:
             return value[1:-1]
         return value
 
-    def get(self, key: str) -> Optional[str]:
+    def get(self, key: str) -> str | None:
         self._load()
         return self._cache.get(key)
 
@@ -73,12 +72,12 @@ class SecretsManagerConfigSource:
     """Reads configuration entries from AWS Secrets Manager JSON payloads."""
 
     secret_id: str
-    region_name: Optional[str] = None
-    profile_name: Optional[str] = None
-    _cache: Dict[str, str] = field(default_factory=dict, init=False)
+    region_name: str | None = None
+    profile_name: str | None = None
+    _cache: dict[str, str] = field(default_factory=dict, init=False)
     _loaded: bool = field(default=False, init=False)
 
-    def _client(self):
+    def _client(self) -> Any:
         if boto3 is None:
             raise RuntimeError("boto3 is required for SecretsManagerConfigSource")
         session = (
@@ -112,7 +111,7 @@ class SecretsManagerConfigSource:
         finally:
             self._loaded = True
 
-    def get(self, key: str) -> Optional[str]:
+    def get(self, key: str) -> str | None:
         self._load()
         return self._cache.get(key)
 
@@ -123,7 +122,7 @@ class ConfigAdapter:
 
     sources: tuple[ConfigSource, ...]
 
-    def get(self, key: str, default: Optional[str] = None) -> Optional[str]:
+    def get(self, key: str, default: str | None = None) -> str | None:
         for source in self.sources:
             value = source.get(key)
             if value is not None:

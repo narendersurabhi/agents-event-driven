@@ -2,19 +2,22 @@
 
 from __future__ import annotations
 
+import asyncio
+from collections.abc import Callable
 import logging
-import os, time, random, asyncio
-import httpx
+import random
+import time
+from typing import Any, Protocol, cast
+import uuid
 
-from typing import Any, Callable, Optional, Protocol
-import openai
-from openai import OpenAI, AsyncOpenAI
-import anthropic
 from anthropic import Anthropic, AsyncAnthropic
 import google.generativeai as genai
+import httpx
+import openai
+from openai import AsyncOpenAI, OpenAI
+
 from core.config import get_config_value
 from core.obs import Logger, NullLogger, with_span
-import uuid
 
 logger = logging.getLogger(__name__)
 
@@ -56,7 +59,9 @@ def _get_float_setting(key: str, default: float) -> float:
         return default
 
 
-def _normalize_temperature(model: str, temperature: float | None, logger: Logger, req_id: str) -> float | None:
+def _normalize_temperature(
+    model: str, temperature: float | None, logger: Logger, req_id: str
+) -> float | None:
     """For models that disallow custom temps (e.g., gpt-5*), drop it unless exactly 1."""
     if model.lower().startswith("gpt-5"):
         if temperature is not None and temperature != 1:
@@ -117,7 +122,9 @@ def _safe_text_preview(text: str, limit: int = 1000) -> str:
     return (text or "")[:limit]
 
 
-def _safe_openai_messages(messages: list[dict[str, str]], *, log_content: bool) -> list[dict[str, Any]]:
+def _safe_openai_messages(
+    messages: list[dict[str, str]], *, log_content: bool
+) -> list[dict[str, Any]]:
     out: list[dict[str, Any]] = []
     for m in messages:
         role = m.get("role")
@@ -131,7 +138,9 @@ def _safe_openai_messages(messages: list[dict[str, str]], *, log_content: bool) 
     return out
 
 
-def _safe_anthropic_messages(messages: list[dict[str, str]], *, log_content: bool) -> list[dict[str, Any]]:
+def _safe_anthropic_messages(
+    messages: list[dict[str, str]], *, log_content: bool
+) -> list[dict[str, Any]]:
     out: list[dict[str, Any]] = []
     for m in messages:
         role = m.get("role")
@@ -145,7 +154,9 @@ def _safe_anthropic_messages(messages: list[dict[str, str]], *, log_content: boo
     return out
 
 
-def _safe_gemini_messages(messages: list[dict[str, Any]], *, log_content: bool) -> list[dict[str, Any]]:
+def _safe_gemini_messages(
+    messages: list[dict[str, Any]], *, log_content: bool
+) -> list[dict[str, Any]]:
     out: list[dict[str, Any]] = []
     for m in messages:
         role = m.get("role")
@@ -170,6 +181,7 @@ class LLMClient(Protocol):
         messages: list[dict[str, str]],
         model: str,
         temperature: float = 0.0,
+        **kwargs: Any,
     ) -> str:
         """
         Send chat messages to an LLM and return the assistant's content.
@@ -182,19 +194,31 @@ class OpenAILLMClient(LLMClient):
         self,
         timeout: float | None = None,
         max_retries: int = 3,
-        logger: Optional[Logger] = None,
+        logger: Logger | None = None,
         api_key: str | None = None,
     ):
-        self._timeout = float(timeout) if timeout is not None else _get_float_setting("LLM_TIMEOUT_SECONDS", 120.0)
+        self._timeout = (
+            float(timeout)
+            if timeout is not None
+            else _get_float_setting("LLM_TIMEOUT_SECONDS", 120.0)
+        )
         self._max_retries = max_retries
         api_key = api_key or get_config_value("OPENAI_API_KEY")
         self._client = OpenAI(api_key=api_key)
         self._logger: Logger = logger or NullLogger()
-        tokens = _get_int_setting("OPENAI_MAX_COMPLETION_TOKENS", "OPENAI_MAX_OUTPUT_TOKENS", default=0)
+        tokens = _get_int_setting(
+            "OPENAI_MAX_COMPLETION_TOKENS", "OPENAI_MAX_OUTPUT_TOKENS", default=0
+        )
         self._default_max_completion_tokens = tokens or None
 
     @_llm_span("openai")
-    def chat(self, messages, model, temperature=0.0, **kwargs) -> str:
+    def chat(
+        self,
+        messages: list[dict[str, str]],
+        model: str,
+        temperature: float = 0.0,
+        **kwargs: Any,
+    ) -> str:
         req_id = kwargs.pop("req_id", str(uuid.uuid4()))
         log_content = _log_content_enabled()
         safe_messages = _safe_openai_messages(messages, log_content=log_content)
@@ -213,12 +237,12 @@ class OpenAILLMClient(LLMClient):
             try:
                 resp = self._client.chat.completions.create(
                     model=model,
-                    messages=messages,
+                    messages=cast(Any, messages),
                     timeout=self._timeout,
                     temperature=temp_for_request,
                     **kwargs,
                 )
-                content = resp.choices[0].message.content
+                content = str(resp.choices[0].message.content or "")
                 usage = getattr(resp, "usage", None)
                 resp_fields: dict[str, Any] = {
                     "req_id": req_id,
@@ -243,7 +267,8 @@ class OpenAILLMClient(LLMClient):
                 )
                 if attempt == self._max_retries - 1:
                     raise
-                time.sleep(2 ** attempt + random.random())
+                time.sleep(2**attempt + random.random())
+        raise RuntimeError("OpenAI chat failed after retries")
 
 
 # ---------- Async port ----------
@@ -257,6 +282,7 @@ class AsyncLLMClient(Protocol):
         messages: list[dict[str, str]],
         model: str,
         temperature: float = 0.0,
+        **kwargs: Any,
     ) -> str:
         """
         Send chat messages to an LLM and return the assistant's content.
@@ -269,17 +295,27 @@ class AsyncOpenAILLMClient(AsyncLLMClient):
         self,
         timeout: float | None = None,
         max_retries: int = 3,
-        logger: Optional[Logger] = None,
+        logger: Logger | None = None,
         api_key: str | None = None,
     ):
-        self._timeout = float(timeout) if timeout is not None else _get_float_setting("LLM_TIMEOUT_SECONDS", 120.0)
+        self._timeout = (
+            float(timeout)
+            if timeout is not None
+            else _get_float_setting("LLM_TIMEOUT_SECONDS", 120.0)
+        )
         self._max_retries = max_retries
         api_key = api_key or get_config_value("OPENAI_API_KEY")
         self._client = AsyncOpenAI(api_key=api_key)
         self._logger: Logger = logger or NullLogger()
 
     @_llm_span("openai")
-    async def chat(self, messages, model, temperature=0.0, **kwargs) -> str:
+    async def chat(
+        self,
+        messages: list[dict[str, str]],
+        model: str,
+        temperature: float = 0.0,
+        **kwargs: Any,
+    ) -> str:
         req_id = kwargs.pop("req_id", str(uuid.uuid4()))
         log_content = _log_content_enabled()
         safe_messages = _safe_openai_messages(messages, log_content=log_content)
@@ -288,12 +324,12 @@ class AsyncOpenAILLMClient(AsyncLLMClient):
         async def _attempt(attempt_num: int) -> str:
             resp = await self._client.chat.completions.create(
                 model=model,
-                messages=messages,
+                messages=cast(Any, messages),
                 timeout=self._timeout,
                 temperature=temp_for_request,
                 **kwargs,
             )
-            content = resp.choices[0].message.content
+            content = str(resp.choices[0].message.content or "")
             usage = getattr(resp, "usage", None)
             resp_fields: dict[str, Any] = {
                 "req_id": req_id,
@@ -332,7 +368,8 @@ class AsyncOpenAILLMClient(AsyncLLMClient):
                 )
                 if attempt == self._max_retries - 1:
                     raise
-                await asyncio.sleep(2 ** attempt + random.random())
+                await asyncio.sleep(2**attempt + random.random())
+        raise RuntimeError("OpenAI chat failed after retries")
 
 
 # ---------- GPT-5 specific clients (omit unsupported params like temperature) ----------
@@ -345,26 +382,38 @@ class OpenAIGPT5LLMClient(LLMClient):
         self,
         timeout: float | None = None,
         max_retries: int = 3,
-        logger: Optional[Logger] = None,
+        logger: Logger | None = None,
         api_key: str | None = None,
     ):
-        self._timeout = float(timeout) if timeout is not None else _get_float_setting("LLM_TIMEOUT_SECONDS", 120.0)
+        self._timeout = (
+            float(timeout)
+            if timeout is not None
+            else _get_float_setting("LLM_TIMEOUT_SECONDS", 120.0)
+        )
         self._max_retries = max_retries
         api_key = api_key or get_config_value("OPENAI_API_KEY")
         self._client = OpenAI(api_key=api_key)
         self._logger: Logger = logger or NullLogger()
-        tokens = _get_int_setting("OPENAI_MAX_COMPLETION_TOKENS", "OPENAI_MAX_OUTPUT_TOKENS", default=0)
+        tokens = _get_int_setting(
+            "OPENAI_MAX_COMPLETION_TOKENS", "OPENAI_MAX_OUTPUT_TOKENS", default=0
+        )
         self._default_max_completion_tokens = tokens or None
 
     @_llm_span("openai")
-    def chat(self, messages, model, temperature: float | None = None, **kwargs) -> str:
+    def chat(
+        self,
+        messages: list[dict[str, str]],
+        model: str,
+        temperature: float | None = None,
+        **kwargs: Any,
+    ) -> str:
         req_id = kwargs.pop("req_id", str(uuid.uuid4()))
         log_content = _log_content_enabled()
         safe_messages = _safe_openai_messages(messages, log_content=log_content)
 
         temp_for_request = _normalize_temperature(model, temperature, self._logger, req_id)
 
-        def _payload():
+        def _payload() -> dict[str, Any]:
             payload = dict(model=model, messages=messages, timeout=self._timeout, **kwargs)
             max_tokens = (
                 payload.pop("max_completion_tokens", None)
@@ -388,11 +437,10 @@ class OpenAIGPT5LLMClient(LLMClient):
             message_count=len(messages),
             messages=safe_messages,
         )
-        last_err = None
         for attempt in range(self._max_retries):
             try:
                 resp = self._client.chat.completions.create(**_payload())
-                content = resp.choices[0].message.content
+                content = str(resp.choices[0].message.content or "")
                 usage = getattr(resp, "usage", None)
                 resp_fields: dict[str, Any] = {
                     "req_id": req_id,
@@ -407,7 +455,6 @@ class OpenAIGPT5LLMClient(LLMClient):
                 self._logger.info("llm.response", **resp_fields)
                 return content
             except (openai.APITimeoutError, httpx.ReadTimeout) as e:
-                last_err = e
                 self._logger.warn(
                     "llm.timeout",
                     req_id=req_id,
@@ -416,8 +463,10 @@ class OpenAIGPT5LLMClient(LLMClient):
                     attempt=attempt + 1,
                     error=str(e),
                 )
-                if attempt == self._max_retries - 1: raise
-                time.sleep(2 ** attempt + random.random())
+                if attempt == self._max_retries - 1:
+                    raise
+                time.sleep(2**attempt + random.random())
+        raise RuntimeError("OpenAI GPT-5 chat failed after retries")
 
 
 class AsyncOpenAIGPT5LLMClient(AsyncLLMClient):
@@ -427,26 +476,38 @@ class AsyncOpenAIGPT5LLMClient(AsyncLLMClient):
         self,
         timeout: float | None = None,
         max_retries: int = 3,
-        logger: Optional[Logger] = None,
+        logger: Logger | None = None,
         api_key: str | None = None,
     ):
-        self._timeout = float(timeout) if timeout is not None else _get_float_setting("LLM_TIMEOUT_SECONDS", 120.0)
+        self._timeout = (
+            float(timeout)
+            if timeout is not None
+            else _get_float_setting("LLM_TIMEOUT_SECONDS", 120.0)
+        )
         self._max_retries = max_retries
         api_key = api_key or get_config_value("OPENAI_API_KEY")
         self._client = AsyncOpenAI(api_key=api_key)
         self._logger: Logger = logger or NullLogger()
-        tokens = _get_int_setting("OPENAI_MAX_COMPLETION_TOKENS", "OPENAI_MAX_OUTPUT_TOKENS", default=0)
+        tokens = _get_int_setting(
+            "OPENAI_MAX_COMPLETION_TOKENS", "OPENAI_MAX_OUTPUT_TOKENS", default=0
+        )
         self._default_max_completion_tokens = tokens or None
 
     @_llm_span("openai")
-    async def chat(self, messages, model, temperature: float | None = None, **kwargs) -> str:
+    async def chat(
+        self,
+        messages: list[dict[str, str]],
+        model: str,
+        temperature: float | None = None,
+        **kwargs: Any,
+    ) -> str:
         req_id = kwargs.pop("req_id", str(uuid.uuid4()))
         log_content = _log_content_enabled()
         safe_messages = _safe_openai_messages(messages, log_content=log_content)
 
         temp_for_request = _normalize_temperature(model, temperature, self._logger, req_id)
 
-        def _payload():
+        def _payload() -> dict[str, Any]:
             payload = dict(model=model, messages=messages, timeout=self._timeout, **kwargs)
             max_tokens = (
                 payload.pop("max_completion_tokens", None)
@@ -462,7 +523,7 @@ class AsyncOpenAIGPT5LLMClient(AsyncLLMClient):
 
         async def _attempt(attempt_num: int) -> str:
             resp = await self._client.chat.completions.create(**_payload())
-            content = resp.choices[0].message.content
+            content = str(resp.choices[0].message.content or "")
             usage = getattr(resp, "usage", None)
             resp_fields: dict[str, Any] = {
                 "req_id": req_id,
@@ -487,12 +548,10 @@ class AsyncOpenAIGPT5LLMClient(AsyncLLMClient):
             message_count=len(messages),
             messages=safe_messages,
         )
-        last_err = None
         for attempt in range(self._max_retries):
             try:
                 return await _attempt(attempt + 1)
             except (openai.APITimeoutError, httpx.ReadTimeout) as e:
-                last_err = e
                 self._logger.warn(
                     "llm.timeout",
                     req_id=req_id,
@@ -501,14 +560,18 @@ class AsyncOpenAIGPT5LLMClient(AsyncLLMClient):
                     attempt=attempt + 1,
                     error=str(e),
                 )
-                if attempt == self._max_retries - 1: raise
-                await asyncio.sleep(2 ** attempt + random.random())
+                if attempt == self._max_retries - 1:
+                    raise
+                await asyncio.sleep(2**attempt + random.random())
+        raise RuntimeError("OpenAI GPT-5 chat failed after retries")
 
 
 # ---------- Anthropic Claude clients ----------
 
 
-def _split_anthropic_messages(messages: list[dict[str, str]]):
+def _split_anthropic_messages(
+    messages: list[dict[str, str]],
+) -> tuple[str | None, list[dict[str, str]]]:
     system = None
     converted: list[dict[str, str]] = []
     for m in messages:
@@ -530,18 +593,28 @@ class ClaudeLLMClient(LLMClient):
     def __init__(
         self,
         timeout: float | None = None,
-        logger: Optional[Logger] = None,
+        logger: Logger | None = None,
         max_tokens: int | None = None,
         api_key: str | None = None,
     ):
-        timeout_value = float(timeout) if timeout is not None else _get_float_setting("LLM_TIMEOUT_SECONDS", 120.0)
+        timeout_value = (
+            float(timeout)
+            if timeout is not None
+            else _get_float_setting("LLM_TIMEOUT_SECONDS", 120.0)
+        )
         api_key = api_key or get_config_value("ANTHROPIC_API_KEY")
         self._client = Anthropic(api_key=api_key, timeout=timeout_value)
         self._logger: Logger = logger or NullLogger()
         self._max_tokens = max_tokens or _get_int_setting("CLAUDE_MAX_TOKENS", default=1024) or 1024
 
     @_llm_span("anthropic")
-    def chat(self, messages, model, temperature=1.0, **kwargs) -> str:
+    def chat(
+        self,
+        messages: list[dict[str, str]],
+        model: str,
+        temperature: float = 1.0,
+        **kwargs: Any,
+    ) -> str:
         req_id = kwargs.pop("req_id", str(uuid.uuid4()))
         system, converted = _split_anthropic_messages(messages)
         log_content = _log_content_enabled()
@@ -568,7 +641,7 @@ class ClaudeLLMClient(LLMClient):
             system_len=system_len,
         )
         resp = self._client.messages.create(**payload)
-        content = resp.content[0].text if resp.content else ""
+        content = str(resp.content[0].text) if resp.content else ""
         usage = getattr(resp, "usage", None)
         resp_fields: dict[str, Any] = {
             "req_id": req_id,
@@ -587,9 +660,11 @@ class ClaudeLLMClient(LLMClient):
 # ---------- Google Gemini clients ----------
 
 
-def _split_gemini_messages(messages: list[dict[str, str]]):
+def _split_gemini_messages(
+    messages: list[dict[str, str]],
+) -> tuple[str | None, list[dict[str, Any]]]:
     system = None
-    converted = []
+    converted: list[dict[str, Any]] = []
     for m in messages:
         role = m.get("role")
         content = m.get("content", "")
@@ -613,7 +688,7 @@ def _finish_reason_to_str(reason: object) -> str:
         return "<unknown>"
 
 
-def _extract_gemini_text(resp: object) -> str:
+def _extract_gemini_text(resp: Any) -> str:
     """Best-effort extraction of text from Gemini responses.
 
     `google.generativeai` exposes a `response.text` accessor, but it raises if the
@@ -621,9 +696,9 @@ def _extract_gemini_text(resp: object) -> str:
     """
     try:
         # `GenerateContentResponse.text` may raise; keep it in a narrow try block.
-        text = getattr(resp, "text")
+        text = resp.text
         return (text or "").strip()
-    except Exception:
+    except Exception as exc:
         candidates = getattr(resp, "candidates", None) or []
         if candidates:
             cand0 = candidates[0]
@@ -641,35 +716,54 @@ def _extract_gemini_text(resp: object) -> str:
                 "Gemini returned no text parts (candidate finish_reason="
                 f"{_finish_reason_to_str(finish_reason)}). "
                 "If this is MAX_TOKENS, increase LLM_MAX_OUTPUT_TOKENS/GEMINI_MAX_TOKENS."
-            )
-        raise RuntimeError("Gemini returned no candidates / no text parts")
+            ) from exc
+        raise RuntimeError("Gemini returned no candidates / no text parts") from exc
 
 
 class GeminiLLMClient(LLMClient):
     def __init__(
         self,
         api_key: str | None = None,
-        logger: Optional[Logger] = None,
+        logger: Logger | None = None,
         max_output_tokens: int | None = None,
         timeout: float | None = None,
     ):
         self._logger: Logger = logger or NullLogger()
         api_key = api_key or get_config_value("GOOGLE_API_KEY")
         genai.configure(api_key=api_key)
-        self._max_tokens = max_output_tokens or _get_int_setting("GEMINI_MAX_TOKENS", "LLM_MAX_OUTPUT_TOKENS", default=8192) or 8192
-        self._timeout = float(timeout) if timeout is not None else _get_float_setting("LLM_TIMEOUT_SECONDS", 120.0)
+        self._max_tokens = (
+            max_output_tokens
+            or _get_int_setting("GEMINI_MAX_TOKENS", "LLM_MAX_OUTPUT_TOKENS", default=8192)
+            or 8192
+        )
+        self._timeout = (
+            float(timeout)
+            if timeout is not None
+            else _get_float_setting("LLM_TIMEOUT_SECONDS", 120.0)
+        )
 
     @_llm_span("gemini")
-    def chat(self, messages, model, temperature=1.0, **kwargs) -> str:
+    def chat(
+        self,
+        messages: list[dict[str, str]],
+        model: str,
+        temperature: float = 1.0,
+        **kwargs: Any,
+    ) -> str:
         req_id = kwargs.pop("req_id", str(uuid.uuid4()))
         system, converted = _split_gemini_messages(messages)
         log_content = _log_content_enabled()
         safe_converted = _safe_gemini_messages(converted, log_content=log_content)
         safe_system = _safe_text_preview(system) if (log_content and system) else None
         system_len = len(system) if system else 0
-        gen_config = {"temperature": temperature, "max_output_tokens": kwargs.pop("max_output_tokens", self._max_tokens)}
+        gen_config: dict[str, Any] = {
+            "temperature": temperature,
+            "max_output_tokens": kwargs.pop("max_output_tokens", self._max_tokens),
+        }
         gm = genai.GenerativeModel(model_name=model, system_instruction=system)
-        request_options = genai.types.RequestOptions(timeout=self._timeout) if self._timeout else None
+        request_options = (
+            genai.types.RequestOptions(timeout=self._timeout) if self._timeout else None
+        )
         self._logger.info(
             "llm.request",
             req_id=req_id,
@@ -681,7 +775,11 @@ class GeminiLLMClient(LLMClient):
             system=safe_system,
             system_len=system_len,
         )
-        resp = gm.generate_content(converted, generation_config=gen_config, request_options=request_options)
+        resp = gm.generate_content(
+            converted,
+            generation_config=cast(Any, gen_config),
+            request_options=request_options,
+        )
         content = _extract_gemini_text(resp)
         usage = getattr(resp, "usage_metadata", None)
         resp_fields: dict[str, Any] = {
@@ -702,27 +800,46 @@ class AsyncGeminiLLMClient(AsyncLLMClient):
     def __init__(
         self,
         api_key: str | None = None,
-        logger: Optional[Logger] = None,
+        logger: Logger | None = None,
         max_output_tokens: int | None = None,
         timeout: float | None = None,
     ):
         self._logger: Logger = logger or NullLogger()
         api_key = api_key or get_config_value("GOOGLE_API_KEY")
         genai.configure(api_key=api_key)
-        self._max_tokens = max_output_tokens or _get_int_setting("GEMINI_MAX_TOKENS", "LLM_MAX_OUTPUT_TOKENS", default=8192) or 8192
-        self._timeout = float(timeout) if timeout is not None else _get_float_setting("LLM_TIMEOUT_SECONDS", 120.0)
+        self._max_tokens = (
+            max_output_tokens
+            or _get_int_setting("GEMINI_MAX_TOKENS", "LLM_MAX_OUTPUT_TOKENS", default=8192)
+            or 8192
+        )
+        self._timeout = (
+            float(timeout)
+            if timeout is not None
+            else _get_float_setting("LLM_TIMEOUT_SECONDS", 120.0)
+        )
 
     @_llm_span("gemini")
-    async def chat(self, messages, model, temperature=1.0, **kwargs) -> str:
+    async def chat(
+        self,
+        messages: list[dict[str, str]],
+        model: str,
+        temperature: float = 1.0,
+        **kwargs: Any,
+    ) -> str:
         req_id = kwargs.pop("req_id", str(uuid.uuid4()))
         system, converted = _split_gemini_messages(messages)
         log_content = _log_content_enabled()
         safe_converted = _safe_gemini_messages(converted, log_content=log_content)
         safe_system = _safe_text_preview(system) if (log_content and system) else None
         system_len = len(system) if system else 0
-        gen_config = {"temperature": temperature, "max_output_tokens": kwargs.pop("max_output_tokens", self._max_tokens)}
+        gen_config: dict[str, Any] = {
+            "temperature": temperature,
+            "max_output_tokens": kwargs.pop("max_output_tokens", self._max_tokens),
+        }
         gm = genai.GenerativeModel(model_name=model, system_instruction=system)
-        request_options = genai.types.RequestOptions(timeout=self._timeout) if self._timeout else None
+        request_options = (
+            genai.types.RequestOptions(timeout=self._timeout) if self._timeout else None
+        )
         self._logger.info(
             "llm.request",
             req_id=req_id,
@@ -734,7 +851,11 @@ class AsyncGeminiLLMClient(AsyncLLMClient):
             system=safe_system,
             system_len=system_len,
         )
-        resp = await gm.generate_content_async(converted, generation_config=gen_config, request_options=request_options)
+        resp = await gm.generate_content_async(
+            converted,
+            generation_config=cast(Any, gen_config),
+            request_options=request_options,
+        )
         content = _extract_gemini_text(resp)
         usage = getattr(resp, "usage_metadata", None)
         resp_fields: dict[str, Any] = {
@@ -757,18 +878,28 @@ class AsyncClaudeLLMClient(AsyncLLMClient):
     def __init__(
         self,
         timeout: float | None = None,
-        logger: Optional[Logger] = None,
+        logger: Logger | None = None,
         max_tokens: int | None = None,
         api_key: str | None = None,
     ):
-        timeout_value = float(timeout) if timeout is not None else _get_float_setting("LLM_TIMEOUT_SECONDS", 120.0)
+        timeout_value = (
+            float(timeout)
+            if timeout is not None
+            else _get_float_setting("LLM_TIMEOUT_SECONDS", 120.0)
+        )
         api_key = api_key or get_config_value("ANTHROPIC_API_KEY")
         self._client = AsyncAnthropic(api_key=api_key, timeout=timeout_value)
         self._logger: Logger = logger or NullLogger()
         self._max_tokens = max_tokens or _get_int_setting("CLAUDE_MAX_TOKENS", default=1024) or 1024
 
     @_llm_span("anthropic")
-    async def chat(self, messages, model, temperature=1.0, **kwargs) -> str:
+    async def chat(
+        self,
+        messages: list[dict[str, str]],
+        model: str,
+        temperature: float = 1.0,
+        **kwargs: Any,
+    ) -> str:
         req_id = kwargs.pop("req_id", str(uuid.uuid4()))
         system, converted = _split_anthropic_messages(messages)
         log_content = _log_content_enabled()
@@ -796,7 +927,7 @@ class AsyncClaudeLLMClient(AsyncLLMClient):
             system_len=system_len,
         )
         resp = await self._client.messages.create(**payload)
-        content = resp.content[0].text if resp.content else ""
+        content = str(resp.content[0].text) if resp.content else ""
         usage = getattr(resp, "usage", None)
         resp_fields: dict[str, Any] = {
             "req_id": req_id,

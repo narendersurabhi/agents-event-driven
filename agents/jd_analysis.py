@@ -1,21 +1,18 @@
-
-
 """ Job Description Analysis Agent """
 
 from __future__ import annotations
 
-import logging
 from dataclasses import dataclass, field
+import logging
 from typing import Any, cast
 
 from pydantic import ValidationError
 
+from agents.common_prompts import build_jd_analysis_messages
 from core.config import get_default_model
 from core.json_utils import parse_json_object
 from core.llm_client import LLMClient
 from core.models import JDAnalysisResult
-from agents.common_prompts import build_jd_analysis_messages
-
 
 logger = logging.getLogger(__name__)
 

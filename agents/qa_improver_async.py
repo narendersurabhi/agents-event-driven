@@ -2,16 +2,16 @@
 
 from __future__ import annotations
 
-import json
 from dataclasses import dataclass, field
+import json
+
 from pydantic import ValidationError
 
+from agents.resume_qa_async import ResumeQAResult
+from core.config import get_default_model
 from core.llm_client import AsyncLLMClient
 from core.models import JDAnalysisResult, ProfessionalProfile, TailoredResume
-from core.config import get_default_model
 from core.obs import Logger, NullLogger
-from agents.resume_qa_async import ResumeQAResult
-
 
 _SYSTEM = """
 You improve a TailoredResume by applying QA suggestions and maximizing alignment with the target job.
@@ -105,6 +105,7 @@ Structural requirements:
 
 Return ONLY the updated TailoredResume JSON.
 """
+
 
 class QAImproveError(RuntimeError):
     """Base error for QA improvement failures."""

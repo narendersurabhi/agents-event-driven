@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-import logging
 from dataclasses import dataclass, field
+import logging
 from typing import Any
 
 from pydantic import ValidationError
@@ -67,12 +67,14 @@ CANDIDATE PROFILE:
 Return ONLY JSON for ResumePlan. No commentary.
 """
 
+
 class MatchPlanError(RuntimeError):
     """Base error for match planning."""
 
 
 class MatchPlanInvalidResponse(MatchPlanError):
     """Raised when the LLM output cannot be parsed or validated."""
+
 
 @dataclass(slots=True)
 class _MatchPlannerShared:  # pylint: disable=too-few-public-methods
@@ -96,7 +98,9 @@ class MatchPlannerAgent(_MatchPlannerShared):
     llm: LLMClient
     model: str = field(default_factory=get_default_model)
 
-    def build_messages(self, jd: JDAnalysisResult, profile: ProfessionalProfile) -> list[dict[str, str]]:
+    def build_messages(
+        self, jd: JDAnalysisResult, profile: ProfessionalProfile
+    ) -> list[dict[str, str]]:
         """Build chat messages for match planning."""
         return self._messages(jd, profile)
 

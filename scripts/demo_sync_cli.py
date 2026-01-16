@@ -1,10 +1,9 @@
+from argparse import ArgumentParser, FileType
 import logging
 
-from argparse import ArgumentParser, FileType
-
 from agents.jd_analysis import JDAnalysisAgent
-from core.llm_client import OpenAILLMClient
 from core.config import get_default_model
+from core.llm_client import OpenAILLMClient
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
