@@ -63,6 +63,8 @@ class ResumeComposerWorker:
         for event in self.bus.subscribe(COMPOSE_LLM_COMPLETED):
             cid = event.correlation_id
             result = event.payload.get("result")
+            if not isinstance(result, dict):
+                raise ValueError("Resume composer worker expected a dict result payload")
             tailored = self.agent.parse_result(result)
             self.bus.publish(
                 Event(

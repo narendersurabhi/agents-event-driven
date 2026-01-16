@@ -1,24 +1,25 @@
 import pytest
-from typing import List, Dict
 
 from agents.resume_qa_async import AsyncResumeQAAgent
 from core.models import (
+    EducationItem,
+    ExperienceItem,
     JDAnalysisResult,
     ProfessionalProfile,
-    ExperienceItem,
-    TailoredResume,
-    TailoredExperienceItem,
     TailoredBullet,
-    EducationItem,
+    TailoredExperienceItem,
+    TailoredResume,
 )
 
 # --------- Fakes ---------
 
+
 class FakeAsyncLLM_QA_Good:
     """Returns a valid QA JSON payload."""
+
     async def chat(
         self,
-        messages: List[Dict[str, str]],
+        messages: list[dict[str, str]],
         model: str,
         temperature: float = 0.0,
     ) -> str:
@@ -47,9 +48,10 @@ class FakeAsyncLLM_QA_Good:
 
 class FakeAsyncLLM_QA_BadJSON:
     """Returns non-JSON to test error handling."""
+
     async def chat(
         self,
-        messages: List[Dict[str, str]],
+        messages: list[dict[str, str]],
         model: str,
         temperature: float = 0.0,
     ) -> str:
@@ -57,6 +59,7 @@ class FakeAsyncLLM_QA_BadJSON:
 
 
 # --------- Fixtures ---------
+
 
 @pytest.fixture
 def sample_jd() -> JDAnalysisResult:
@@ -66,7 +69,7 @@ def sample_jd() -> JDAnalysisResult:
         seniority_level="Senior",
         must_have_skills=["Python", "MLOps", "LLMs"],
         nice_to_have_skills=["Kafka", "Databricks"],
-        notes_for_resume="Emphasize platform, production ML services, and security."
+        notes_for_resume="Emphasize platform, production ML services, and security.",
     )
 
 
@@ -91,10 +94,10 @@ def sample_profile() -> ProfessionalProfile:
                     "Built distributed ML pipelines with Spark and SageMaker processing 100M+ annual claims.",
                     "Implemented monitoring with Clarify; drift/bias dashboards.",
                 ],
-                skills=["Python", "Spark", "AWS", "SageMaker", "MLflow", "MLOps"]
+                skills=["Python", "Spark", "AWS", "SageMaker", "MLflow", "MLOps"],
             )
         ],
-        education=["B.Sc. (Math/Physics/Electronics) - Nizam College"]
+        education=["B.Sc. (Math/Physics/Electronics) - Nizam College"],
     )
 
 
@@ -120,13 +123,13 @@ def sample_tailored(sample_profile: ProfessionalProfile) -> TailoredResume:
                 bullets=[
                     TailoredBullet(
                         text="Built Spark + SageMaker pipelines for 100M+ annual claims in production.",
-                        source_experience_index=0
+                        source_experience_index=0,
                     ),
                     TailoredBullet(
                         text="Added drift/bias dashboards with Clarify; improved governance and reliability.",
-                        source_experience_index=0
+                        source_experience_index=0,
                     ),
-                ]
+                ],
             )
         ],
         education=[
@@ -146,9 +149,10 @@ def sample_tailored(sample_profile: ProfessionalProfile) -> TailoredResume:
 
 # --------- Tests ---------
 
+
 @pytest.mark.asyncio
 async def test_resume_qa_happy_path(sample_jd, sample_profile, sample_tailored):
-    agent = AsyncResumeQAAgent(llm=FakeAsyncLLM_QA_Good())
+    agent = AsyncResumeQAAgent(llm=FakeAsyncLLM_QA_Good(), model="test-model")
     result = await agent.review(sample_jd, sample_profile, sample_tailored)
 
     assert 0 <= result.overall_match_score <= 100
@@ -161,6 +165,7 @@ async def test_resume_qa_happy_path(sample_jd, sample_profile, sample_tailored):
 @pytest.mark.asyncio
 async def test_resume_qa_bad_json_raises(sample_jd, sample_profile, sample_tailored):
     from agents.resume_qa_async import ResumeQAInvalid
-    agent = AsyncResumeQAAgent(llm=FakeAsyncLLM_QA_BadJSON())
+
+    agent = AsyncResumeQAAgent(llm=FakeAsyncLLM_QA_BadJSON(), model="test-model")
     with pytest.raises(ResumeQAInvalid):
         await agent.review(sample_jd, sample_profile, sample_tailored)

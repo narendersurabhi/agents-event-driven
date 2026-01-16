@@ -14,11 +14,11 @@ step worker. It follows the same pattern as ProfileWorker:
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Any
 
-from agents.jd_analysis import JDAnalysisAgent, JD_SCHEMA_TEXT
+from agents.jd_analysis import JD_SCHEMA_TEXT, JDAnalysisAgent
 from core.events import Event, EventBus
 from core.pipeline_events import JD_COMPLETED, JD_LLM_COMPLETED, JD_REQUESTED, LLM_STEP_REQUESTED
+
 
 @dataclass(slots=True)
 class JDWorker:
@@ -51,6 +51,8 @@ class JDWorker:
         for event in self.bus.subscribe(JD_LLM_COMPLETED):
             cid = event.correlation_id
             result = event.payload.get("result")
+            if not isinstance(result, dict):
+                raise ValueError("JD worker expected a dict result payload")
             jd_result = self.agent.parse_result(result)
             self.bus.publish(
                 Event(

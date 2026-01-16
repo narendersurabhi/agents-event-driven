@@ -2,16 +2,16 @@
 
 from __future__ import annotations
 
+from dataclasses import dataclass, field
 import json
 import logging
-from dataclasses import dataclass, field
 from typing import Any
 
 from pydantic import ValidationError
 
+from core.config import get_default_model
 from core.llm_client import AsyncLLMClient
 from core.models import JDAnalysisResult
-from core.config import get_default_model
 
 from .jd_analysis import (  # reuse prompts and errors
     AGENT_SYSTEM_PROMPT,
@@ -19,7 +19,6 @@ from .jd_analysis import (  # reuse prompts and errors
     JDAnalysisError,
     JDAnalysisInvalidResponse,
 )
-
 
 logger = logging.getLogger(__name__)
 
@@ -45,7 +44,10 @@ class AsyncJDAnalysisAgent:
 
     def _parse_json(self, raw: str) -> dict[str, Any]:
         try:
-            return json.loads(raw)
+            data = json.loads(raw)
+            if isinstance(data, dict):
+                return data
+            raise JDAnalysisInvalidResponse("Expected JSON object in model output")
         except json.JSONDecodeError as e:
             start = raw.find("{")
             end = raw.rfind("}")
@@ -54,13 +56,16 @@ class AsyncJDAnalysisAgent:
                 raise JDAnalysisInvalidResponse("No JSON detected in model output") from e
 
             try:
-                return json.loads(raw[start : end + 1])
+                data = json.loads(raw[start : end + 1])
+                if isinstance(data, dict):
+                    return data
+                raise JDAnalysisInvalidResponse("Expected JSON object in model output")
             except json.JSONDecodeError as e1:
                 logger.exception("AsyncJDAnalysisAgent: failed to parse JSON substring")
                 raise JDAnalysisInvalidResponse("Malformed JSON in model output") from e1
 
     async def analyze(self, job_description: str) -> JDAnalysisResult:
-        """ Analyze a job description asynchronously."""
+        """Analyze a job description asynchronously."""
         jd = job_description.strip()
         if not jd:
             raise JDAnalysisError("job_description must be a non-empty string")

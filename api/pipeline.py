@@ -25,47 +25,45 @@ Response:
 
 from __future__ import annotations
 
-import uuid
-import logging
-import threading
 from dataclasses import dataclass
+import logging
 from pathlib import Path
+import threading
+import uuid
 
 import anyio
 from fastapi import APIRouter, HTTPException
 from fastapi.responses import Response
 from pydantic import BaseModel
 
-from core.config import get_default_model
-from core.events import Event, EventBus, InMemoryEventBus
-from core.llm_factory import get_sync_llm_client
-from core.llm_step_worker import LLMStepWorker
-from core.pipeline_store import InMemoryPipelineStore, JsonFilePipelineStore
-from core.pipeline_orchestrator import (
-    PIPELINE_COMPLETED,
-    PIPELINE_RESUME,
-    PIPELINE_RESTART_COMPOSE,
-    PIPELINE_START,
-    PipelineOrchestrator,
-)
-
+from agents.cover_letter_agent import CoverLetterAgent
+from agents.cover_letter_worker import CoverLetterWorker
+from agents.docx_render_agent import DocxRenderAgent
 from agents.jd_analysis import JDAnalysisAgent
 from agents.jd_worker import JDWorker
-from agents.profile_from_resume import ProfileFromResumeAgent
-from agents.profile_worker import ProfileWorker
 from agents.match_planner import MatchPlannerAgent
 from agents.match_worker import MatchWorker
+from agents.profile_from_resume import ProfileFromResumeAgent
+from agents.profile_worker import ProfileWorker
+from agents.qa_improver import QAImproveAgent
+from agents.qa_improver_worker import QAImproveWorker
 from agents.resume_composer import ResumeComposerAgent
 from agents.resume_composer_worker import ResumeComposerWorker
 from agents.resume_qa import ResumeQAAgent
 from agents.resume_qa_worker import ResumeQAWorker
-from agents.qa_improver import QAImproveAgent
-from agents.qa_improver_worker import QAImproveWorker
-from agents.cover_letter_agent import CoverLetterAgent
-from agents.cover_letter_worker import CoverLetterWorker
-from agents.docx_render_agent import DocxRenderAgent
-from core.models import TailoredResume, CoverLetter
-
+from core.config import get_default_model
+from core.events import Event, EventBus, InMemoryEventBus
+from core.llm_factory import get_sync_llm_client
+from core.llm_step_worker import LLMStepWorker
+from core.models import CoverLetter, TailoredResume
+from core.pipeline_orchestrator import (
+    PIPELINE_COMPLETED,
+    PIPELINE_RESTART_COMPOSE,
+    PIPELINE_RESUME,
+    PIPELINE_START,
+    PipelineOrchestrator,
+)
+from core.pipeline_store import JsonFilePipelineStore
 
 logger = logging.getLogger(__name__)
 
@@ -99,9 +97,9 @@ def _ensure_runtime() -> _PipelineRuntime:
             return _runtime
 
         bus = InMemoryEventBus()
+        model_name = get_default_model()
         # Choose LLM implementation based on configuration (LLM_PROVIDER, etc.).
         llm = get_sync_llm_client()
-        model_name = get_default_model()
         # For local development, persist job snapshots under ./pipeline_jobs
         store_root = Path("pipeline_jobs")
         store = JsonFilePipelineStore(root=store_root)
@@ -288,9 +286,7 @@ async def download_docx(job_id: str) -> Response:
     try:
         resume = TailoredResume.model_validate(resume_data)
     except Exception as exc:  # noqa: BLE001
-        logger.error(
-            "docx.render.invalid_resume cid=%s error=%s", job_id, str(exc)
-        )
+        logger.error("docx.render.invalid_resume cid=%s error=%s", job_id, str(exc))
         raise HTTPException(status_code=500, detail=f"Invalid TailoredResume data: {exc}") from exc
 
     # Load template bytes; you can change the path or make it configurable.
@@ -325,9 +321,7 @@ async def download_docx(job_id: str) -> Response:
     logger.info("docx.render.success cid=%s filename=%s", job_id, filename)
     return Response(
         content=docx_bytes,
-        media_type=(
-            "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-        ),
+        media_type=("application/vnd.openxmlformats-officedocument.wordprocessingml.document"),
         headers={"Content-Disposition": f'attachment; filename="{filename}"'},
     )
 
@@ -415,8 +409,6 @@ async def download_cover_letter_docx(job_id: str) -> Response:
     logger.info("cover_docx.render.success cid=%s filename=%s", job_id, filename)
     return Response(
         content=docx_bytes,
-        media_type=(
-            "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-        ),
+        media_type=("application/vnd.openxmlformats-officedocument.wordprocessingml.document"),
         headers={"Content-Disposition": f'attachment; filename="{filename}"'},
     )

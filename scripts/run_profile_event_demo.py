@@ -11,9 +11,9 @@ Usage:
 
 from __future__ import annotations
 
+from argparse import ArgumentParser, FileType
 import logging
 import threading
-from argparse import ArgumentParser, FileType
 
 from agents.profile_from_resume import ProfileFromResumeAgent
 from agents.profile_worker import ProfileWorker
@@ -22,7 +22,6 @@ from core.events import Event, InMemoryEventBus
 from core.llm_client import OpenAIGPT5LLMClient
 from core.llm_step_worker import LLMStepWorker
 from core.pipeline_events import PROFILE_COMPLETED, PROFILE_REQUESTED
-
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)

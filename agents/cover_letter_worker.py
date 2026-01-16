@@ -16,13 +16,13 @@ from dataclasses import dataclass, field
 from agents.cover_letter_agent import COVER_LETTER_SCHEMA_TEXT, CoverLetterAgent
 from core.events import Event, EventBus
 from core.models import CoverLetter, JDAnalysisResult, ProfessionalProfile, TailoredResume
+from core.obs import JsonRepoLogger, Logger, Span
 from core.pipeline_events import (
     COVER_LETTER_COMPLETED,
     COVER_LETTER_LLM_COMPLETED,
     COVER_LETTER_REQUESTED,
     LLM_STEP_REQUESTED,
 )
-from core.obs import JsonRepoLogger, Span, Logger
 
 
 @dataclass(slots=True)
@@ -66,6 +66,8 @@ class CoverLetterWorker:
             cid = event.correlation_id
             with Span(self.logger, "cover_letter.result", {"cid": cid}):
                 result = event.payload.get("result")
+                if not isinstance(result, dict):
+                    raise ValueError("Cover letter worker expected a dict result payload")
                 cover_letter: CoverLetter = self.agent.parse_result(result)
                 self.bus.publish(
                     Event(

@@ -16,18 +16,19 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from hashlib import sha256
-from pathlib import Path
-from typing import Dict
 import json
+from pathlib import Path
+from typing import Any
 
-from core.events import Event, EventBus
 from agents.profile_from_resume import PROFILE_SCHEMA_TEXT, ProfileFromResumeAgent
+from core.events import Event, EventBus
 from core.pipeline_events import (
     LLM_STEP_REQUESTED,
     PROFILE_COMPLETED,
     PROFILE_LLM_COMPLETED,
     PROFILE_REQUESTED,
 )
+
 
 @dataclass(slots=True)
 class ProfileWorker:
@@ -36,9 +37,9 @@ class ProfileWorker:
     bus: EventBus
     agent: ProfileFromResumeAgent
     # Simple in-memory cache keyed by a hash of resume_text.
-    _cache: Dict[str, dict] = field(default_factory=dict)
+    _cache: dict[str, dict[str, Any]] = field(default_factory=dict)
     # Map correlation_id -> cache key for in-flight requests.
-    _cache_keys: Dict[str, str] = field(default_factory=dict)
+    _cache_keys: dict[str, str] = field(default_factory=dict)
     # Optional on-disk cache directory for persistence across restarts.
     _cache_dir: Path = field(default_factory=lambda: Path("profile_cache"))
 
@@ -51,6 +52,8 @@ class ProfileWorker:
         """
         for event in self.bus.subscribe(PROFILE_REQUESTED):
             cid = event.correlation_id
+            if not cid:
+                continue
             resume_text = event.payload.get("resume_text", "") or ""
             force_refresh = bool(event.payload.get("force_refresh", False))
 
@@ -104,7 +107,11 @@ class ProfileWorker:
         """
         for event in self.bus.subscribe(PROFILE_LLM_COMPLETED):
             cid = event.correlation_id
+            if not cid:
+                continue
             result = event.payload.get("result")
+            if not isinstance(result, dict):
+                raise ValueError("Profile worker expected a dict result payload")
             profile = self.agent.parse_result(result)
             profile_data = profile.model_dump()
 

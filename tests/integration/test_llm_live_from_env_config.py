@@ -17,14 +17,17 @@ from core import config
 from core.llm_factory import get_sync_llm_client
 
 try:
-    from google.api_core import exceptions as google_exceptions  # type: ignore[import-not-found]
-except Exception:  # pragma: no cover - optional dependency for non-gemini envs
-    google_exceptions = None  # type: ignore[assignment]
+    from google.api_core import exceptions as google_exceptions
+except ImportError:  # pragma: no cover - optional dependency for non-gemini envs
+    google_exceptions = None
 
 
 def _is_live_enabled() -> bool:
     # Read via config so `.env` values work without `export`.
-    return bool(config.get_config_value("PYTEST_LLM_LIVE_CONFIG") or config.get_config_value("PYTEST_LLM_LIVE"))
+    return bool(
+        config.get_config_value("PYTEST_LLM_LIVE_CONFIG")
+        or config.get_config_value("PYTEST_LLM_LIVE")
+    )
 
 
 def _api_key_name(provider: str) -> str:
@@ -41,7 +44,7 @@ def _api_key_name(provider: str) -> str:
 def test_llm_live_from_env_config(monkeypatch: pytest.MonkeyPatch) -> None:
     # Force using repo .env values even if the shell exported overrides.
     monkeypatch.setenv("DOTENV_PATH", ".env")
-    config._config_adapter.cache_clear()  # type: ignore[attr-defined]
+    config._config_adapter.cache_clear()
 
     if not _is_live_enabled():
         pytest.skip(
@@ -57,7 +60,7 @@ def test_llm_live_from_env_config(monkeypatch: pytest.MonkeyPatch) -> None:
         "GOOGLE_API_KEY",
     ]:
         monkeypatch.delenv(key, raising=False)
-    config._config_adapter.cache_clear()  # type: ignore[attr-defined]
+    config._config_adapter.cache_clear()
 
     provider = (config.get_config_value("LLM_PROVIDER", "openai") or "openai").lower()
     model = config.get_default_model()

@@ -1,13 +1,13 @@
 import os
+
 from fastapi import APIRouter
 from pydantic import BaseModel
-from core.llm_factory import get_async_llm_client
-from core.models import JDAnalysisResult, ProfessionalProfile, TailoredResume
+
 from agents.match_planner_async import AsyncMatchPlannerAgent
 from agents.resume_composer_async import AsyncResumeComposerAgent
 from agents.resume_qa_async import AsyncResumeQAAgent, ResumeQAResult
-from typing import Optional
-
+from core.llm_factory import get_async_llm_client
+from core.models import JDAnalysisResult, ProfessionalProfile, TailoredResume
 from core.obs import JsonRepoLogger
 
 router = APIRouter()
@@ -25,17 +25,20 @@ _planner = AsyncMatchPlannerAgent(llm=_llm)
 _composer = AsyncResumeComposerAgent(llm=_llm)
 _qa = AsyncResumeQAAgent(llm=_llm, logger=logger)
 
+
 class TailorRequest(BaseModel):
     jd: JDAnalysisResult
     profile: ProfessionalProfile
     run_qa: bool = True  # wire QA later if you want
 
+
 class TailorResponse(BaseModel):
     tailored: TailoredResume
-    qa: Optional[ResumeQAResult] = None  # add when you convert QA to async
+    qa: ResumeQAResult | None = None  # add when you convert QA to async
+
 
 @router.post("/tailor-resume", response_model=TailorResponse)
-async def tailor_resume(payload: TailorRequest):
+async def tailor_resume(payload: TailorRequest) -> TailorResponse:
     plan = await _planner.plan(payload.jd, payload.profile)
     tailored = await _composer.compose(payload.jd, payload.profile, plan)
     qa = None

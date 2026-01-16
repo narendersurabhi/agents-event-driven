@@ -16,10 +16,10 @@ Usage:
 
 from __future__ import annotations
 
+from argparse import ArgumentParser, FileType
 import json
 import logging
 import threading
-from argparse import ArgumentParser, FileType
 
 from agents.jd_analysis import JDAnalysisAgent
 from agents.jd_worker import JDWorker
@@ -43,7 +43,6 @@ from core.pipeline_events import (
     PROFILE_COMPLETED,
     PROFILE_REQUESTED,
 )
-
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)

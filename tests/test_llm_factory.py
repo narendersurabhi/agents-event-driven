@@ -1,19 +1,18 @@
-import os
 import types
 
 import pytest
 
-from core.llm_factory import get_async_llm_client, get_sync_llm_client
 from core.llm_client import (
-    AsyncOpenAILLMClient,
-    OpenAILLMClient,
-    AsyncOpenAIGPT5LLMClient,
-    OpenAIGPT5LLMClient,
     AsyncClaudeLLMClient,
-    ClaudeLLMClient,
     AsyncGeminiLLMClient,
+    AsyncOpenAIGPT5LLMClient,
+    AsyncOpenAILLMClient,
+    ClaudeLLMClient,
     GeminiLLMClient,
+    OpenAIGPT5LLMClient,
+    OpenAILLMClient,
 )
+from core.llm_factory import get_async_llm_client, get_sync_llm_client
 
 
 @pytest.fixture(autouse=True)
@@ -24,12 +23,15 @@ def clear_env(monkeypatch):
     monkeypatch.setenv("DOTENV_PATH", "tests/.env.DO_NOT_USE")
     # Factory requires timeout to be configured (used by all providers).
     monkeypatch.setenv("LLM_TIMEOUT_SECONDS", "60")
-    cfg._config_adapter.cache_clear()  # type: ignore[attr-defined]
+    monkeypatch.setenv("OPENAI_API_KEY", "test")
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "test")
+    monkeypatch.setenv("GOOGLE_API_KEY", "test")
+    cfg._config_adapter.cache_clear()
 
     for key in ["LLM_PROVIDER"]:
         monkeypatch.delenv(key, raising=False)
     yield
-    cfg._config_adapter.cache_clear()  # type: ignore[attr-defined]
+    cfg._config_adapter.cache_clear()
 
 
 @pytest.mark.parametrize(
@@ -68,6 +70,7 @@ def test_gpt5_temperature_stripped(monkeypatch):
     class FakeChat:
         def __init__(self):
             self.completions = self
+
         def create(self, **kwargs):
             calls.update(kwargs)
             return FakeResp()
@@ -118,6 +121,7 @@ def test_gemini_client(monkeypatch):
     class FakeModel:
         def __init__(self, *args, **kwargs):
             self.kwargs = kwargs
+
         def generate_content(self, messages, generation_config=None, request_options=None):
             self.messages = messages
             self.config = generation_config
@@ -130,5 +134,7 @@ def test_gemini_client(monkeypatch):
     monkeypatch.setenv("GOOGLE_API_KEY", "fake")
 
     llm = get_sync_llm_client()
-    out = llm.chat(messages=[{"role": "user", "content": "hi"}], model="gemini-1.5-pro", temperature=0.2)
+    out = llm.chat(
+        messages=[{"role": "user", "content": "hi"}], model="gemini-1.5-pro", temperature=0.2
+    )
     assert out == "gemini"

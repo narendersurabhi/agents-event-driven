@@ -27,7 +27,11 @@ def _key_name_for_provider(provider: str) -> str | None:
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--ping", action="store_true", help="Make a live LLM call (requires network + valid API key).")
+    parser.add_argument(
+        "--ping",
+        action="store_true",
+        help="Make a live LLM call (requires network + valid API key).",
+    )
     args = parser.parse_args()
 
     provider = (get_config_value("LLM_PROVIDER", "openai") or "openai").lower()
@@ -58,7 +62,10 @@ def main() -> int:
 
     if args.ping:
         resp = llm.chat(
-            messages=[{"role": "system", "content": "Reply with a single word."}, {"role": "user", "content": "ping"}],
+            messages=[
+                {"role": "system", "content": "Reply with a single word."},
+                {"role": "user", "content": "ping"},
+            ],
             model=model,
             temperature=1.0,
         )

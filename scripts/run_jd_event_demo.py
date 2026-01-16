@@ -11,10 +11,10 @@ Usage:
 
 from __future__ import annotations
 
+from argparse import ArgumentParser, FileType
 import json
 import logging
 import threading
-from argparse import ArgumentParser, FileType
 
 from agents.jd_analysis import JDAnalysisAgent
 from agents.jd_worker import JDWorker
@@ -23,7 +23,6 @@ from core.events import Event, InMemoryEventBus
 from core.llm_client import OpenAIGPT5LLMClient
 from core.llm_step_worker import LLMStepWorker
 from core.pipeline_events import JD_COMPLETED, JD_REQUESTED
-
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)

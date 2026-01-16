@@ -4,10 +4,11 @@ from __future__ import annotations
 
 from argparse import ArgumentParser
 from pathlib import Path
+
 import anyio
 
-from agents.resume_qa_async import AsyncResumeQAAgent, ResumeQAResult
 from agents.qa_improver_async import QAImproveAgent
+from agents.resume_qa_async import ResumeQAResult
 from core.llm_factory import get_async_llm_client
 from core.models import JDAnalysisResult, ProfessionalProfile, TailoredResume
 from core.obs import JsonRepoLogger, JsonStdoutLogger
@@ -21,12 +22,24 @@ def _load(path: Path, model_cls):
 
 
 def main():
-    p = ArgumentParser(description="Run QA and apply improvements to a tailored resume using existing outputs in ./out.")
+    p = ArgumentParser(
+        description="Run QA and apply improvements to a tailored resume using existing outputs in ./out."
+    )
     p.add_argument("--jd-json", type=Path, default=Path("out/jd.json"))
     p.add_argument("--profile-json", type=Path, default=Path("out/profile.json"))
     p.add_argument("--tailored-json", type=Path, default=Path("out/tailored.json"))
-    p.add_argument("--qa-json", type=Path, default=Path("out/qa.json"), help="Existing QA JSON; if missing, QA will be run")
-    p.add_argument("--out-tailored", type=Path, default=Path("out/tailored_improved.json"), help="Where to write the improved TailoredResume JSON")
+    p.add_argument(
+        "--qa-json",
+        type=Path,
+        default=Path("out/qa.json"),
+        help="Existing QA JSON; if missing, QA will be run",
+    )
+    p.add_argument(
+        "--out-tailored",
+        type=Path,
+        default=Path("out/tailored_improved.json"),
+        help="Where to write the improved TailoredResume JSON",
+    )
     p.add_argument("--print", action="store_true", help="Print improved TailoredResume JSON")
     p.add_argument("--log-file", type=Path, help="Optional structured log file")
     args = p.parse_args()
@@ -41,7 +54,7 @@ def main():
     tailored = _load(args.tailored_json, TailoredResume)
     qa_result = _load(args.qa_json, ResumeQAResult)
     llm = get_async_llm_client(logger=logger)
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+
     async def _run():
         improver = QAImproveAgent(llm=llm, logger=logger)
         improved = await improver.improve(jd, profile, tailored, qa_result)

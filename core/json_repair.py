@@ -7,7 +7,6 @@ schema description, it asks an LLM to emit corrected JSON-only output.
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Optional
 
 from core.llm_client import LLMClient
 
@@ -28,8 +27,8 @@ class JsonRepairAgent:
         self,
         raw: str,
         schema_text: str,
-        error: Optional[str] = None,
-        req_id: Optional[str] = None,
+        error: str | None = None,
+        req_id: str | None = None,
     ) -> str:
         """Return a best-effort repaired JSON string.
 
@@ -70,4 +69,3 @@ Your job:
         # Temperature 0 to keep the repair as deterministic as possible.
         extra = {"req_id": req_id} if req_id else {}
         return self.llm.chat(messages=messages, model=self.model, temperature=0.0, **extra)
-

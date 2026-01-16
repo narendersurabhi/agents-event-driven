@@ -14,18 +14,16 @@ structured JSON payload from the `llm_step.completed` events.
 
 from __future__ import annotations
 
+from dataclasses import dataclass, field
 import logging
 import time
-from dataclasses import dataclass, field
-from typing import Any, Dict, List
 
 from core.events import Event, EventBus
-from core.json_utils import parse_json_object
 from core.json_repair import JsonRepairAgent
+from core.json_utils import parse_json_object
 from core.llm_client import LLMClient
 from core.obs import JsonRepoLogger, Logger, NullLogger
 from core.pipeline_events import LLM_STEP_COMPLETED, LLM_STEP_FAILED, LLM_STEP_REQUESTED
-
 
 logger = logging.getLogger(__name__)
 
@@ -92,7 +90,9 @@ class LLMStepWorker:
         try:
             repaired = False
             if cid:
-                raw = self.llm.chat(messages=messages, model=self.model, temperature=0.0, req_id=cid)
+                raw = self.llm.chat(
+                    messages=messages, model=self.model, temperature=0.0, req_id=cid
+                )
             else:
                 raw = self.llm.chat(messages=messages, model=self.model, temperature=0.0)
             try:

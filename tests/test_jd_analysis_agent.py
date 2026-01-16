@@ -1,13 +1,19 @@
 from agents.jd_analysis import (
     JDAnalysisAgent,
-    JDAnalysisInvalidResponse,
     JDAnalysisError,
+    JDAnalysisInvalidResponse,
 )
 from core.models import JDAnalysisResult
 
 
 class FakeLLMGood:
-    def chat(self, messages: list[dict[str, str]], model: str, temperature: float = 0.0) -> str:
+    def chat(
+        self,
+        messages: list[dict[str, str]],
+        model: str,
+        temperature: float = 0.0,
+        **kwargs: object,
+    ) -> str:
         return """
         {
           "role_title": "Senior Machine Learning Engineer",
@@ -21,12 +27,18 @@ class FakeLLMGood:
 
 
 class FakeLLMBadJSON:
-    def chat(self, messages: list[dict[str, str]], model: str, temperature: float = 0.0) -> str:
+    def chat(
+        self,
+        messages: list[dict[str, str]],
+        model: str,
+        temperature: float = 0.0,
+        **kwargs: object,
+    ) -> str:
         return "I am not JSON at all."
 
 
 def test_analyze_happy_path() -> None:
-    agent = JDAnalysisAgent(llm=FakeLLMGood())
+    agent = JDAnalysisAgent(llm=FakeLLMGood(), model="test-model")
     result = agent.analyze("some JD text")
     assert isinstance(result, JDAnalysisResult)
     assert result.role_title == "Senior Machine Learning Engineer"
@@ -35,18 +47,18 @@ def test_analyze_happy_path() -> None:
 
 
 def test_analyze_invalid_json_raises() -> None:
-    agent = JDAnalysisAgent(llm=FakeLLMBadJSON())
+    agent = JDAnalysisAgent(llm=FakeLLMBadJSON(), model="test-model")
     try:
         agent.analyze("some JD text")
     except JDAnalysisInvalidResponse:
         return
-    assert False, "Expected JDAnalysisInvalidResponse"
+    raise AssertionError("Expected JDAnalysisInvalidResponse")
 
 
 def test_analyze_empty_input_raises() -> None:
-    agent = JDAnalysisAgent(llm=FakeLLMGood())
+    agent = JDAnalysisAgent(llm=FakeLLMGood(), model="test-model")
     try:
         agent.analyze("   ")
     except JDAnalysisError:
         return
-    assert False, "Expected JDAnalysisError on empty input"
+    raise AssertionError("Expected JDAnalysisError on empty input")

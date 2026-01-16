@@ -9,9 +9,9 @@ the /pipeline/run endpoint is reachable.
 
 from __future__ import annotations
 
-import sys
 from dataclasses import dataclass
 from pathlib import Path
+import sys
 
 import streamlit as st
 
@@ -20,9 +20,9 @@ _REPO_ROOT = Path(__file__).resolve().parents[1]
 if str(_REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(_REPO_ROOT))
 
-from core.config import get_config_value
-from ui.api_client import ApiClient, ApiError
-from ui.obs_metrics import aggregate_step_metrics, build_step_rows, read_recent_jsonl
+from core.config import get_config_value  # noqa: E402
+from ui.api_client import ApiClient, ApiError  # noqa: E402
+from ui.obs_metrics import aggregate_step_metrics, build_step_rows, read_recent_jsonl  # noqa: E402
 
 # Configure API base URL from config/.env (env vars override .env).
 # Set `API_BASE_URL=http://localhost:8000` in `.env` to override.
@@ -71,7 +71,9 @@ def _render_sidebar_options() -> PipelineOptions:
     return PipelineOptions(
         run_qa=st.sidebar.checkbox("Run QA", value=True),
         run_improver=st.sidebar.checkbox("Run QA Improver", value=True),
-        force_profile_refresh=st.sidebar.checkbox("Force profile refresh (ignore cache)", value=False),
+        force_profile_refresh=st.sidebar.checkbox(
+            "Force profile refresh (ignore cache)", value=False
+        ),
     )
 
 
@@ -316,7 +318,7 @@ def _render_stage_bar(stage: str, data: dict) -> None:
     # Build Graphviz DOT with color coding based on current_rank.
     dot_lines: list[str] = [
         "digraph G {",
-        'rankdir=LR;',
+        "rankdir=LR;",
         'node [shape=box, style=filled, fontname="Helvetica", fontsize=10];',
     ]
 
@@ -327,9 +329,7 @@ def _render_stage_bar(stage: str, data: dict) -> None:
             color = "gold"
         else:
             color = "lightgray"
-        dot_lines.append(
-            f'"{node_id}" [label="{label}", fillcolor="{color}"];'
-        )
+        dot_lines.append(f'"{node_id}" [label="{label}", fillcolor="{color}"];')
 
     for src, dst in edges:
         dot_lines.append(f'"{src}" -> "{dst}";')

@@ -1,11 +1,11 @@
 """ Integration tests for live LLM clients."""
 
 import os
-import pytest
+
 from google.api_core import exceptions as google_exceptions
+import pytest
 
 from core.llm_factory import get_async_llm_client, get_sync_llm_client
-
 
 LIVE_FLAG = os.getenv("PYTEST_LLM_LIVE")
 
@@ -41,12 +41,17 @@ async def test_async_llm_live(provider):
     llm = get_async_llm_client(provider=provider)
     try:
         resp = await llm.chat(
-            messages=[{"role": "system", "content": "You are terse."}, {"role": "user", "content": "ping"}],
+            messages=[
+                {"role": "system", "content": "You are terse."},
+                {"role": "user", "content": "ping"},
+            ],
             model=_default_model(provider),
             temperature=1.0,
         )
     except google_exceptions.NotFound:
-        pytest.skip(f"Gemini model not found; set GEMINI_MODEL to a valid model for provider {provider}")
+        pytest.skip(
+            f"Gemini model not found; set GEMINI_MODEL to a valid model for provider {provider}"
+        )
     assert isinstance(resp, str) and resp.strip()
 
 
@@ -57,10 +62,15 @@ def test_sync_llm_live(provider):
     llm = get_sync_llm_client(provider=provider)
     try:
         resp = llm.chat(
-            messages=[{"role": "system", "content": "You are terse."}, {"role": "user", "content": "ping"}],
+            messages=[
+                {"role": "system", "content": "You are terse."},
+                {"role": "user", "content": "ping"},
+            ],
             model=_default_model(provider),
             temperature=1.0,
         )
     except google_exceptions.NotFound:
-        pytest.skip(f"Gemini model not found; set GEMINI_MODEL to a valid model for provider {provider}")
+        pytest.skip(
+            f"Gemini model not found; set GEMINI_MODEL to a valid model for provider {provider}"
+        )
     assert isinstance(resp, str) and resp.strip()

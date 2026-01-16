@@ -62,6 +62,8 @@ class MatchWorker:
         for event in self.bus.subscribe(MATCH_LLM_COMPLETED):
             cid = event.correlation_id
             result = event.payload.get("result")
+            if not isinstance(result, dict):
+                raise ValueError("Match worker expected a dict result payload")
             plan = self.agent.parse_result(result)
             self.bus.publish(
                 Event(

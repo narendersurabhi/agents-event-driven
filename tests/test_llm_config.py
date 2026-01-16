@@ -1,5 +1,3 @@
-import os
-
 import pytest
 
 from core import config
@@ -12,11 +10,11 @@ def clear_config_cache(monkeypatch):
 
     # Prevent tests from accidentally reading your real .env file.
     monkeypatch.setenv("DOTENV_PATH", "tests/.env.DO_NOT_USE")
-    cfg._config_adapter.cache_clear()  # type: ignore[attr-defined]
+    cfg._config_adapter.cache_clear()
     for key in ["LLM_MODEL", "LLM_TIMEOUT_SECONDS"]:
         monkeypatch.delenv(key, raising=False)
     yield
-    cfg._config_adapter.cache_clear()  # type: ignore[attr-defined]
+    cfg._config_adapter.cache_clear()
 
 
 def test_get_default_model_requires_llm_model(monkeypatch):

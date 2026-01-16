@@ -1,14 +1,16 @@
 """Async match planning agent."""
 
 from __future__ import annotations
-import logging
+
 from dataclasses import dataclass, field
+import logging
 
 from pydantic import ValidationError
 
+from core.config import get_default_model
 from core.llm_client import AsyncLLMClient
 from core.models import JDAnalysisResult, ProfessionalProfile, ResumePlan
-from core.config import get_default_model
+
 from .match_planner import (
     MatchPlanError,
     MatchPlanInvalidResponse,
@@ -16,6 +18,7 @@ from .match_planner import (
 )
 
 logger = logging.getLogger(__name__)
+
 
 @dataclass(slots=True)
 class AsyncMatchPlannerAgent(_MatchPlannerShared):
@@ -34,7 +37,7 @@ class AsyncMatchPlannerAgent(_MatchPlannerShared):
         raw = await self.llm.chat(messages=msgs, model=self.model, temperature=0.1)
         data = self._parse_json(raw)
         try:
-            plan: ResumePlan = ResumePlan.model_validate(data)  # type: ignore[assignment]
+            plan: ResumePlan = ResumePlan.model_validate(data)
         except ValidationError as e:
             raise MatchPlanInvalidResponse(f"Validation failed: {e}") from e
         return plan

@@ -17,13 +17,13 @@ from __future__ import annotations
 
 import argparse
 import ast
+from collections.abc import Iterable
+from dataclasses import dataclass
 import json
+from pathlib import Path
 import subprocess
 import sys
-from dataclasses import dataclass
-from pathlib import Path
-from typing import Any, Dict, Iterable, List, Optional, Set, Tuple
-
+from typing import Any
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 
@@ -33,7 +33,7 @@ DEFAULT_OUT_DIR = REPO_ROOT / "out"
 INTERNAL_TOPLEVEL = {"agents", "core", "api", "scripts", "ui", "tests"}
 
 
-def _iter_py_files(paths: Iterable[Path]) -> List[Path]:
+def _iter_py_files(paths: Iterable[Path]) -> list[Path]:
     files: list[Path] = []
     excluded = {
         ".git",
@@ -78,7 +78,7 @@ def _resolve_relative_import(current_module: str, level: int, module: str | None
     return ".".join([p for p in base if p])
 
 
-def _parse_imports(path: Path, module: str) -> Set[str]:
+def _parse_imports(path: Path, module: str) -> set[str]:
     try:
         text = path.read_text(encoding="utf-8")
     except OSError:
@@ -101,7 +101,7 @@ def _parse_imports(path: Path, module: str) -> Set[str]:
     return imported
 
 
-def _internalize_import(name: str, module_map: Dict[str, Path]) -> Optional[str]:
+def _internalize_import(name: str, module_map: dict[str, Path]) -> str | None:
     """Map an import name to a known internal module if possible."""
     if not name:
         return None
@@ -170,9 +170,9 @@ def _run_ruff_c901(scan_paths: list[str]) -> list[dict[str, Any]]:
 
 def _try_radon() -> tuple[bool, Any, Any, Any]:
     try:
-        from radon.complexity import cc_visit  # type: ignore[import-not-found]
-        from radon.metrics import mi_visit, mi_rank  # type: ignore[import-not-found]
-    except Exception:
+        from radon.complexity import cc_visit
+        from radon.metrics import mi_rank, mi_visit
+    except ImportError:
         return False, None, None, None
     return True, cc_visit, mi_visit, mi_rank
 
@@ -192,7 +192,9 @@ def _top_n(items: list[tuple[Any, float]], n: int) -> list[tuple[Any, float]]:
 
 
 def _parse_args(argv: list[str] | None) -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Generate repo complexity report (JSON + Markdown).")
+    parser = argparse.ArgumentParser(
+        description="Generate repo complexity report (JSON + Markdown)."
+    )
     parser.add_argument(
         "--paths",
         nargs="*",
@@ -209,7 +211,9 @@ def _parse_args(argv: list[str] | None) -> argparse.Namespace:
         default=str(DEFAULT_OUT_DIR / "complexity_report.md"),
         help="Where to write the Markdown summary.",
     )
-    parser.add_argument("--top", type=int, default=15, help="How many items to show in 'top' lists.")
+    parser.add_argument(
+        "--top", type=int, default=15, help="How many items to show in 'top' lists."
+    )
     return parser.parse_args(argv)
 
 
@@ -239,7 +243,9 @@ def _build_dependency_graph(
                 continue
             internal_imports.add(internal)
 
-            if (fs.module.startswith("core.") or fs.module == "core") and internal.startswith("agents."):
+            if (fs.module.startswith("core.") or fs.module == "core") and internal.startswith(
+                "agents."
+            ):
                 layering_violations.append(
                     {
                         "module": fs.module,
@@ -368,7 +374,9 @@ def _render_markdown(
 
     md_lines.append("## Ruff C901 (Too Complex) Summary")
     md_lines.append(f"- Files with C901 violations: `{len(c901_by_file)}`")
-    md_lines.append("- Tip: adjust threshold via `[tool.ruff.lint.mccabe] max-complexity` in `pyproject.toml`.")
+    md_lines.append(
+        "- Tip: adjust threshold via `[tool.ruff.lint.mccabe] max-complexity` in `pyproject.toml`."
+    )
     if c901_by_file:
         worst = _top_n([(k, float(v)) for k, v in c901_by_file.items()], top)
         for path, cnt in worst:

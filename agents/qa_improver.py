@@ -2,12 +2,13 @@
 
 from __future__ import annotations
 
-import json
 from dataclasses import dataclass, field
+import json
 from typing import Any
 
 from pydantic import ValidationError
 
+from agents.qa_improver_async import _SYSTEM as QA_IMPROVE_SYSTEM, _USER as QA_IMPROVE_USER
 from agents.qa_shared import ResumeQAResult
 from agents.resume_composer import COMPOSER_SCHEMA_TEXT
 from core.config import get_default_model
@@ -15,7 +16,6 @@ from core.json_utils import parse_json_object
 from core.llm_client import LLMClient
 from core.models import JDAnalysisResult, ProfessionalProfile, TailoredResume
 from core.obs import Logger, NullLogger
-from agents.qa_improver_async import _SYSTEM as QA_IMPROVE_SYSTEM, _USER as QA_IMPROVE_USER
 
 
 class QAImproveError(RuntimeError):
@@ -86,4 +86,3 @@ class QAImproveAgent:
 
 
 QA_IMPROVE_SCHEMA_TEXT = COMPOSER_SCHEMA_TEXT
-

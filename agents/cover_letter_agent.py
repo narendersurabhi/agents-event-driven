@@ -7,12 +7,10 @@ from typing import Any
 
 from pydantic import ValidationError
 
-from agents.common_prompts import build_composer_messages
 from core.config import get_default_model
 from core.json_utils import parse_json_object
 from core.llm_client import LLMClient
 from core.models import CoverLetter, JDAnalysisResult, ProfessionalProfile, TailoredResume
-
 
 COVER_LETTER_SCHEMA_TEXT = """
 from typing import Optional

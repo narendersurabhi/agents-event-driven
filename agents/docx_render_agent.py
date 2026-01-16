@@ -9,12 +9,13 @@ Templates can reference root fields directly, e.g.:
 
 from __future__ import annotations
 
-import io
+from collections.abc import Mapping
 from dataclasses import dataclass, field
+import io
 from types import SimpleNamespace
-from typing import Any, Mapping
+from typing import Any
 
-from docxtpl import DocxTemplate  # type: ignore[import-not-found]
+from docxtpl import DocxTemplate
 from jinja2 import Environment
 from pydantic import BaseModel
 

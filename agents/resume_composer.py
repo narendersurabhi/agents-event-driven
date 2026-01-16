@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-import logging
 from dataclasses import dataclass, field
+import logging
 from typing import Any
 
 from pydantic import ValidationError
@@ -121,12 +121,14 @@ Notes:
 Return ONLY JSON for TailoredResume. No commentary.
 """
 
+
 class ComposeError(RuntimeError):
     """Base error for composition."""
 
 
 class ComposeInvalidResponse(ComposeError):
     """Raised when the composer output cannot be parsed/validated."""
+
 
 @dataclass(slots=True)
 class _ComposerShared:  # pylint: disable=too-few-public-methods

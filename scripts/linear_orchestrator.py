@@ -7,7 +7,6 @@ It lives under `scripts/` (not `core/`) because it imports domain agents directl
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Optional
 
 import anyio
 
@@ -29,8 +28,8 @@ class OrchestrationResult:
     profile: ProfessionalProfile
     plan: ResumePlan
     tailored: TailoredResume
-    qa: Optional[ResumeQAResult] = None
-    improved: Optional[TailoredResume] = None
+    qa: ResumeQAResult | None = None
+    improved: TailoredResume | None = None
 
 
 class ResumePipelineOrchestrator:
@@ -109,8 +108,8 @@ class ResumePipelineOrchestrator:
             tailored = await self.compose_agent.compose(jd, profile, plan)
             self.sm.trigger("compose")
 
-            qa_result: Optional[ResumeQAResult] = None
-            improved: Optional[TailoredResume] = None
+            qa_result: ResumeQAResult | None = None
+            improved: TailoredResume | None = None
 
             if self.run_qa:
                 qa_result = await self.qa_agent.review(jd, profile, tailored)
@@ -143,4 +142,3 @@ class ResumePipelineOrchestrator:
 
 
 __all__ = ["OrchestrationResult", "ResumePipelineOrchestrator"]
-

@@ -1,6 +1,6 @@
 from agents.jd_analysis import JDAnalysisAgent
-from core.llm_client import OpenAILLMClient
 from core.config import get_default_model
+from core.llm_client import OpenAILLMClient
 
 jd_text = """
 We are looking for a Senior Machine Learning Engineer at Netflix to build
