@@ -8,6 +8,7 @@ import json
 
 from pydantic import ValidationError
 
+from agents.prompt_context import append_candidate_context
 from agents.qa_shared import QA_SYSTEM_PROMPT, QA_USER_TEMPLATE, ResumeQAResult
 from core.config import get_default_model
 from core.llm_client import AsyncLLMClient
@@ -41,16 +42,14 @@ class AsyncResumeQAAgent:
         resume: TailoredResume,
     ) -> ResumeQAResult:
         """Reviews the tailored resume against the job description and professional profile."""
+        content = QA_USER_TEMPLATE.format(
+            jd=jd.model_dump_json(),
+            profile=profile.model_dump_json(),
+            resume=resume.model_dump_json(),
+        )
         msgs = [
             {"role": "system", "content": QA_SYSTEM_PROMPT},
-            {
-                "role": "user",
-                "content": QA_USER_TEMPLATE.format(
-                    jd=jd.model_dump_json(),
-                    profile=profile.model_dump_json(),
-                    resume=resume.model_dump_json(),
-                ),
-            },
+            {"role": "user", "content": append_candidate_context(content)},
         ]
         raw = await self.llm.chat(messages=msgs, model=self.model, temperature=0.0)
         self.logger.info("resume_qa.raw_response", raw=raw, raw_chars=len(raw))

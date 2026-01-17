@@ -3,9 +3,9 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "jd-agent-project"
+name = "govguard"
 version = "0.1.0"
-description = "Single-responsibility JD analysis agent (sync + async) with FastAPI API."
+description = "Event-driven model governance and release gatekeeper."
 requires-python = ">=3.11"
 authors = [
   { name = "Narender" }
@@ -15,7 +15,7 @@ authors = [
 
 [tool.pytest.ini_options]
 minversion = "8.0"
-addopts = "-q --cov=agents --cov=core --cov=api --cov-report=term-missing"
+addopts = "-q --cov=govguard --cov-report=term-missing"
 testpaths = ["tests"]
 python_files = ["test_*.py"]
 asyncio_mode = "auto"
@@ -44,9 +44,8 @@ ignore_missing_imports = true
 
 # Target your code
 files = [
-  "agents",
-  "core",
-  "api",
+  "src/govguard",
+  "tests",
 ]
 
 [[tool.mypy.overrides]]
@@ -67,13 +66,19 @@ ignore_missing_imports = true
 [tool.ruff]
 line-length = 100
 target-version = "py311"
-src = ["."]
+src = ["src"]
 exclude = [
   ".git",
   ".venv",
   "__pycache__",
   ".mypy_cache",
   ".ruff_cache",
+  "agents",
+  "api",
+  "core",
+  "scripts",
+  "ui",
+  "templates",
 ]
 
 [tool.ruff.lint]
@@ -91,7 +96,7 @@ ignore = [
 ]
 
 [tool.ruff.lint.isort]
-known-first-party = ["agents", "core", "api"]
+known-first-party = ["govguard"]
 combine-as-imports = true
 force-sort-within-sections = true
 

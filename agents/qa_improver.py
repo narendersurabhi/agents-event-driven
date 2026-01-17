@@ -8,6 +8,7 @@ from typing import Any
 
 from pydantic import ValidationError
 
+from agents.prompt_context import append_candidate_context
 from agents.qa_improver_async import _SYSTEM as QA_IMPROVE_SYSTEM, _USER as QA_IMPROVE_USER
 from agents.qa_shared import ResumeQAResult
 from agents.resume_composer import COMPOSER_SCHEMA_TEXT
@@ -42,17 +43,15 @@ class QAImproveAgent:
         qa: ResumeQAResult,
     ) -> list[dict[str, str]]:
         """Build chat messages for QA-based resume improvement."""
+        content = QA_IMPROVE_USER.format(
+            jd_json=jd.model_dump_json(),
+            profile_json=profile.model_dump_json(),
+            resume_json=resume.model_dump_json(),
+            suggestions_json=json.dumps(qa.suggestions, ensure_ascii=False, indent=2),
+        )
         return [
             {"role": "system", "content": QA_IMPROVE_SYSTEM},
-            {
-                "role": "user",
-                "content": QA_IMPROVE_USER.format(
-                    jd_json=jd.model_dump_json(),
-                    profile_json=profile.model_dump_json(),
-                    resume_json=resume.model_dump_json(),
-                    suggestions_json=json.dumps(qa.suggestions, ensure_ascii=False, indent=2),
-                ),
-            },
+            {"role": "user", "content": append_candidate_context(content)},
         ]
 
     def parse_result(self, data: dict[str, Any]) -> TailoredResume:
