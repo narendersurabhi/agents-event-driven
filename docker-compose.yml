@@ -1,0 +1,19 @@
+version: "3.9"
+
+services:
+  nats:
+    image: nats:2.10
+    ports:
+      - "4222:4222"
+
+  govguard:
+    build: .
+    command: ["python", "-m", "govguard.demo.service"]
+    environment:
+      GOVGUARD_BUS: "nats"
+      NATS_URL: "nats://nats:4222"
+      GOVGUARD_METRICS_PORT: "8005"
+    depends_on:
+      - nats
+    ports:
+      - "8005:8005"

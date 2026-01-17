@@ -1,0 +1,52 @@
+required_checks:
+  prod:
+    risk_tier_0: [eval, security, drift_bias, cost_latency, lineage]
+    risk_tier_1: [eval, security, drift_bias, cost_latency, lineage]
+    risk_tier_2: [eval, security, drift_bias, cost_latency, lineage]
+  stage:
+    risk_tier_0: [eval, security, drift_bias, cost_latency, lineage]
+    risk_tier_1: [eval, security, drift_bias, cost_latency, lineage]
+    risk_tier_2: [eval, security, drift_bias, cost_latency, lineage]
+  dev:
+    risk_tier_0: [eval, security, drift_bias, cost_latency, lineage]
+    risk_tier_1: [eval, security, drift_bias, cost_latency, lineage]
+    risk_tier_2: [eval, security, drift_bias, cost_latency, lineage]
+
+decision_tolerance:
+  dev: "warnings"
+  stage: "warnings"
+  prod: "strict"
+
+thresholds:
+  eval:
+    auroc_min:
+      dev: 0.75
+      stage: 0.78
+      prod: 0.8
+    f1_min:
+      dev: 0.7
+      stage: 0.72
+      prod: 0.75
+  llm:
+    groundedness_min:
+      dev: 0.7
+      stage: 0.75
+      prod: 0.8
+    citation_coverage_min:
+      dev: 0.8
+      stage: 0.85
+      prod: 0.9
+  drift_bias:
+    psi_max:
+      dev: 0.25
+      stage: 0.2
+      prod: 0.15
+  cost_latency:
+    p95_ms_max:
+      dev: 1200
+      stage: 900
+      prod: 700
+    cost_usd_per_1k_max:
+      dev: 0.02
+      stage: 0.015
+      prod: 0.01

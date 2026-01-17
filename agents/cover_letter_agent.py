@@ -7,6 +7,7 @@ from typing import Any
 
 from pydantic import ValidationError
 
+from agents.prompt_context import append_candidate_context
 from core.config import get_default_model
 from core.json_utils import parse_json_object
 from core.llm_client import LLMClient
@@ -92,16 +93,14 @@ class CoverLetterAgent:
         profile: ProfessionalProfile,
         resume: TailoredResume,
     ) -> list[dict[str, str]]:
+        content = USER_TEMPLATE.format(
+            jd_json=jd.model_dump_json(),
+            profile_json=profile.model_dump_json(),
+            resume_json=resume.model_dump_json(),
+        )
         return [
             {"role": "system", "content": SYSTEM_PROMPT},
-            {
-                "role": "user",
-                "content": USER_TEMPLATE.format(
-                    jd_json=jd.model_dump_json(),
-                    profile_json=profile.model_dump_json(),
-                    resume_json=resume.model_dump_json(),
-                ),
-            },
+            {"role": "user", "content": append_candidate_context(content)},
         ]
 
     def parse_result(self, data: dict[str, Any]) -> CoverLetter:

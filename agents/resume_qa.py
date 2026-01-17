@@ -9,6 +9,7 @@ from typing import Any, cast
 
 from pydantic import ValidationError
 
+from agents.prompt_context import append_candidate_context
 from agents.qa_shared import QA_SYSTEM_PROMPT, QA_USER_TEMPLATE, ResumeQAResult
 from core.config import get_default_model
 from core.json_utils import parse_json_object
@@ -30,16 +31,14 @@ class ResumeQAAgent:
         resume: TailoredResume,
     ) -> list[dict[str, str]]:
         """Build chat messages for resume QA."""
+        content = QA_USER_TEMPLATE.format(
+            jd=jd.model_dump_json(),
+            profile=profile.model_dump_json(),
+            resume=resume.model_dump_json(),
+        )
         return [
             {"role": "system", "content": QA_SYSTEM_PROMPT},
-            {
-                "role": "user",
-                "content": QA_USER_TEMPLATE.format(
-                    jd=jd.model_dump_json(),
-                    profile=profile.model_dump_json(),
-                    resume=resume.model_dump_json(),
-                ),
-            },
+            {"role": "user", "content": append_candidate_context(content)},
         ]
 
     def parse_result(self, data: dict[str, Any]) -> ResumeQAResult:
